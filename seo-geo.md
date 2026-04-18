@@ -1,0 +1,1433 @@
+---
+name: seo-geo
+version: 1.0.0
+description: Complete SEO+GEO+AEO skill. 15 phases, 0→100/100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang. Any CMS.
+---
+
+# /seo-geo - Universal SEO + GEO + AEO Optimization
+
+The complete SEO skill for Claude Code. Covers every dimension of modern search: technical SEO, on-page, structured data, LLM/GEO citation, and AEO. Works on any website regardless of CMS or tech stack.
+
+**By:** [Yaniv Goldenberg](https://yanivgoldenberg.com) - Fractional Head of Growth
+
+---
+
+## Quick start (2 minutes to value)
+
+```
+/seo-geo https://yoursite.com          # audit → shows score + top 5 fixes
+/seo-geo --phase geo https://...       # GEO/LLM only (fastest ROI)
+/seo-geo --verify                      # self-test: checks all tools are accessible
+```
+
+That's it. Start with audit. Fix CRITICAL items first. Everything else is optional.
+
+---
+
+## How to invoke
+
+```
+/seo-geo                          # full audit + fix current site
+/seo-geo --audit-only             # score only, no writes
+/seo-geo --phase technical        # one phase only
+/seo-geo --phase geo              # GEO/LLM only
+/seo-geo --phase eeeat            # E-E-A-T only
+/seo-geo --page <url>             # single page audit
+/seo-geo --schema <type>          # generate a specific schema type
+/seo-geo --llms-txt               # create/update llms.txt only
+/seo-geo --score                  # show current score breakdown
+/seo-geo --verify                 # self-test all integrations
+```
+
+---
+
+## Which phase should I run? (Decision tree)
+
+```
+New site / never optimized before?
+  → Run Phase 0 (audit) + Phases 1-3 in order
+
+Site already has basic SEO, want LLM citation improvement?
+  → Run Phase 4 (GEO) + Phase 5 (AEO)
+
+Rankings dropped recently?
+  → Run Phase 10 (Content Decay) + Phase 0 (re-audit)
+
+Building content strategy from scratch?
+  → Run Phase 7 (Content Strategy) → Phase 6 (E-E-A-T) → Phase 9 (Internal Links)
+
+Site is slow / Core Web Vitals failing?
+  → Run Phase 8 only
+
+Expanding to new countries?
+  → Run Phase 13 (International SEO)
+
+Something broke and you don't know what?
+  → Run Phase 14 (Debugging)
+```
+
+---
+
+## What to do
+
+Parse the user's request and run the relevant phases. If no phase is specified, run Phase 0 (audit) first, present the gap report, then ask which phases to execute - or proceed with all if user said "fix everything."
+
+Always read the site before writing anything. Identify the CMS, tech stack, and existing state before proposing or making changes.
+
+**If `--page <url>` flag:** Scope all work to a single URL only. Run Phases 0-5 against that one page. Output: page-level score (same 100-pt rubric, prorated), CRITICAL/HIGH/LOW gap list for that page only, and specific write actions for that page's `<head>`, schema, and content. Do not touch any other page. End with: "Page score: X/100. Run `/seo-geo` without `--page` for site-wide audit."
+
+**SPA/JS detection:** After fetching any URL, check if the response body contains `<div id="root">`, `<div id="app">`, `<div id="__next">`, or less than 500 characters of visible text. If yes: the site uses client-side rendering - WebFetch cannot see the real content. Switch to this approach:
+1. Audit what IS visible: `<head>` meta tags, canonical, OG, schema in `<script type="application/ld+json">` - these render server-side even on SPAs
+2. Fetch the page source (view-source) or ask the user to run `curl -s {url} | grep -i "ld+json\|canonical\|description"` and paste the result
+3. For Next.js: check `_next/static/` for route manifests; schema may be in `getServerSideProps` or `generateMetadata()`
+4. State clearly: "This is a client-rendered site. I can audit `<head>` and server-rendered schema, but cannot read body content without a headless browser."
+
+**If `--verify` flag:** Run the self-test sequence below. Report PASS/FAIL for each check. Do NOT proceed with any audit or write until ALL checks pass.
+
+| Check | How to test | Pass criteria |
+|-------|------------|---------------|
+| WebFetch accessible | Fetch `https://httpbin.org/get` | Returns JSON with status 200 |
+| Read tool available | Attempt to read current directory | No tool permission error |
+| Write tool available | Attempt to write `/tmp/seo-geo-verify.txt` | File created without error |
+| Site URL provided | Check user message for a URL | URL present and resolves |
+| CMS credentials (if WP) | User confirms WP App Password provided | Confirmed or not required |
+| CMS credentials (if Shopify) | User confirms Shopify API key provided | Confirmed or not required |
+
+If any check FAILS: stop, report which check failed and what is needed to fix it. Do NOT proceed until all pass.
+
+**Micro-example of how to handle ambiguity:**
+- User says "fix my SEO" → run Phase 0 audit first, show score, ask "Want me to fix all critical items now?"
+- User says "fix my schema" → run Phase 3 only, identify current schemas, add missing ones
+- User says "why isn't Google citing me?" → run Phase 4 (GEO) + Phase 6 (E-E-A-T), identify the gap
+
+---
+
+## Phase 0 - Audit (always run first)
+
+Score the site 0-100. Produce a prioritized gap list. No writes.
+
+**How to audit:** Fetch the live URL with WebFetch. Read robots.txt at `{domain}/robots.txt`. Check sitemap at `{domain}/sitemap.xml`. Analyze each relevant page.
+
+### Scoring rubric (100 points)
+
+**Technical SEO (20 pts)**
+
+| Check | Points |
+|-------|--------|
+| HTTPS active | 2 |
+| robots.txt exists, no critical blocks, all AI crawlers allowed | 3 |
+| XML sitemap valid, submitted to GSC | 2 |
+| Canonical tag on every page | 2 |
+| Single H1 per page | 2 |
+| Mobile viewport meta tag present | 2 |
+| Core Web Vitals: LCP under 2.5s, INP under 200ms, CLS under 0.1 | 5 |
+| No broken internal links | 2 |
+
+**On-Page SEO (20 pts)**
+
+| Check | Points |
+|-------|--------|
+| Title: 39-60 chars, keyword-first | 4 |
+| Meta description: 150-178 chars | 4 |
+| OG title + OG description + OG image (1200x630px absolute URL) | 4 |
+| Twitter card tags present | 2 |
+| Primary keyword in H1, title, and first 100 words | 3 |
+| At least 3 internal links to/from this page with descriptive anchors | 3 |
+
+**Schema / Structured Data (20 pts)**
+
+| Check | Points |
+|-------|--------|
+| Schema type matches page type (Person/Org/Article/Product/Service/etc.) | 5 |
+| FAQPage where Q&A content exists | 4 |
+| BreadcrumbList on all pages except homepage | 3 |
+| dateModified present and updated within 90 days | 3 |
+| No schema validation errors (validated at validator.schema.org) | 5 |
+
+**GEO / LLM Optimization (20 pts)**
+
+| Check | Points |
+|-------|--------|
+| llms.txt + llms-full.txt exist and are comprehensive | 5 |
+| AI crawlers explicitly allowed in robots.txt | 3 |
+| sameAs array with 4+ verified profiles including Wikidata | 4 |
+| Content uses specific claims, numbers, named entities | 4 |
+| Link header pointing to llms.txt present | 2 |
+| Entity disambiguation: same name+credentials appear on 3+ external sources | 2 |
+
+**E-E-A-T (10 pts)**
+
+| Check | Points |
+|-------|--------|
+| Author bio with credentials visible on page | 3 |
+| Author schema with knowsAbout, hasOccupation | 2 |
+| Specific proof points (numbers, named companies, dates) in content | 3 |
+| External links to authoritative sources | 2 |
+
+**AEO / Answer Engine (10 pts)**
+
+| Check | Points |
+|-------|--------|
+| Speakable schema on most citable paragraphs | 3 |
+| HowTo schema for any process content | 2 |
+| Content structured for direct-answer extraction (H2 as questions) | 3 |
+| Featured snippet target structure (table/list/definition under question H2) | 2 |
+
+**Output format:**
+```
+Current Score: XX/100
+
+CRITICAL (fix now):
+- [ ] Missing meta description on 3 pages (-18 pts)
+- [ ] No schema markup (-25 pts)
+- [ ] robots.txt blocks GPTBot (-4 pts)
+
+HIGH (fix this week):
+- [ ] llms.txt missing (-4 pts)
+- [ ] OG images missing (-3 pts)
+
+ALREADY DONE:
+- [x] HTTPS active
+- [x] Single H1 on all pages
+- [x] Canonical tags present
+```
+
+**Micro-example - what a real audit output looks like:**
+```
+Current Score: 41/100
+
+CRITICAL:
+- [ ] No schema markup at all (-20 pts) → run /seo-geo --phase schema
+- [ ] AI crawlers blocked: GPTBot, ClaudeBot in robots.txt (-7 pts) → 5 min fix
+- [ ] Meta descriptions missing on 4/5 pages (-16 pts) → run /seo-geo --phase onpage
+
+HIGH:
+- [ ] llms.txt missing (-5 pts) → run /seo-geo --llms-txt
+
+ALREADY DONE:
+- [x] HTTPS active
+- [x] Canonical tags present
+- [x] Mobile viewport set
+```
+
+**Self-test failure example (--verify output):**
+```
+[OK] WebFetch: fetched https://example.com (200)
+[OK] Read/Write tools: available
+[FAIL] WordPress credentials: no WP_APP_PASSWORD in env
+  → Fix: generate App Password at WP Admin > Users > {you} > Application Passwords
+[SKIP] Cloudflare: no CLOUDFLARE_API_KEY set (cache purge will be manual)
+```
+
+---
+
+## Phase 1 - Technical SEO
+
+### robots.txt - AI crawler access
+
+Add explicit Allow rules for all major AI crawlers. A blanket `Disallow: /` blocks them silently:
+
+```
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+```
+
+**By platform:**
+- WordPress: Rank Math > General > robots.txt editor
+- Shopify: create `templates/robots.txt.liquid` (overrides Shopify's auto-generated version)
+- Webflow: Site Settings > SEO > robots.txt
+- Any: direct edit at root `/robots.txt`
+
+### Canonical tags
+
+Every page needs `<link rel="canonical" href="{full-absolute-url}">` in `<head>`.
+
+- WordPress: Rank Math handles automatically when enabled
+- Shopify: `{{ canonical_url | tag: 'link', rel: 'canonical' }}` in `theme.liquid`
+- Next.js: `<link rel="canonical" href={url} />` in `next/head` or `metadata.alternates.canonical`
+- Static HTML: add manually to every page `<head>`
+
+### Sitemap
+
+Must be valid XML. Submit to Google Search Console and Bing Webmaster Tools.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://example.com/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+```
+
+---
+
+## Phase 2 - On-Page SEO
+
+### Title tag formula
+
+```
+{Primary Keyword} | {Brand Name}
+```
+
+Rules: 39-60 chars. Keyword first. No ALL CAPS. Unique per page.
+
+**By page type:**
+- Person homepage: `Fractional Head of Growth | Yaniv Goldenberg`
+- SaaS homepage: `Project Management for Remote Teams | Acme`
+- Service page: `B2B SaaS Growth Consulting | Yaniv Goldenberg`
+- Product page: `Blue Running Shoes - Lightweight & Waterproof | Brand`
+- Blog post: `How to Reduce CAC in B2B SaaS (15% in 90 Days)`
+- Category page: `Running Shoes for Men | Brand`
+
+### Meta description formula
+
+```
+{Primary keyword phrase} - {proof point or differentiator}. {CTA}.
+```
+
+Rules: 150-178 chars. Include primary keyword. End with soft CTA.
+
+### OG / Twitter tags (required on every page)
+
+```html
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{description}">
+<meta property="og:image" content="{absolute-image-url}">
+<meta property="og:url" content="{canonical-url}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{description}">
+<meta name="twitter:image" content="{absolute-image-url}">
+```
+
+OG image: 1200x630px, under 8MB, JPG or PNG. Always absolute URL.
+
+### H1 rules
+
+One H1 per page. Contains primary keyword. Different from (but related to) the title tag.
+
+WordPress theme issue: if `.entry-title` duplicates the H1, fix with:
+```css
+.entry-title { display: none !important; }
+```
+
+---
+
+## Phase 3 - Schema Markup
+
+Inject as `<script type="application/ld+json">` blocks. Can go in `<head>` or `<body>`.
+
+### Schema library by use case
+
+**Person (consultant, freelancer, expert)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{Full Name}",
+  "jobTitle": "{Title}",
+  "description": "{Bio with specific proof points}",
+  "url": "{homepage}",
+  "image": "{headshot-url}",
+  "email": "{email}",
+  "knowsAbout": ["{topic1}", "{topic2}", "{topic3}"],
+  "hasOccupation": {
+    "@type": "Role",
+    "roleName": "{Primary Role}",
+    "startDate": "{year}"
+  },
+  "alumniOf": [{"@type": "Organization", "name": "{Company}"}],
+  "award": ["{Notable achievement}"],
+  "sameAs": [
+    "https://linkedin.com/in/{handle}",
+    "https://github.com/{handle}",
+    "https://twitter.com/{handle}",
+    "https://www.wikidata.org/wiki/Q{id}"
+  ]
+}
+```
+
+**Organization (company, startup, agency)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{Company Name}",
+  "url": "{website}",
+  "logo": "{logo-url}",
+  "description": "{description}",
+  "foundingDate": "{year}",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "{email}",
+    "contactType": "customer support"
+  },
+  "sameAs": ["https://linkedin.com/company/{slug}", "https://twitter.com/{handle}"]
+}
+```
+
+**SoftwareApplication (SaaS)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{App Name}",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "{description}",
+  "offers": {"@type": "Offer", "price": "{price}", "priceCurrency": "USD"},
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "{n}"
+  }
+}
+```
+
+**LocalBusiness**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "{Business Name}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{street}",
+    "addressLocality": "{city}",
+    "addressCountry": "{country-code}"
+  },
+  "telephone": "{phone}",
+  "openingHours": "Mo-Fr 09:00-18:00",
+  "priceRange": "$$",
+  "geo": {"@type": "GeoCoordinates", "latitude": {lat}, "longitude": {lng}}
+}
+```
+
+**Product (ecommerce)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{Product Name}",
+  "description": "{description}",
+  "image": ["{image-url}"],
+  "brand": {"@type": "Brand", "name": "{brand}"},
+  "sku": "{sku}",
+  "offers": {
+    "@type": "Offer",
+    "url": "{product-url}",
+    "priceCurrency": "USD",
+    "price": "{price}",
+    "availability": "https://schema.org/InStock"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{rating}",
+    "reviewCount": "{n}"
+  }
+}
+```
+
+**Service (consulting, agency)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{Service Name}",
+  "description": "{description}",
+  "provider": {"@type": "Person", "name": "{name}"},
+  "areaServed": "Worldwide",
+  "priceSpecification": {
+    "@type": "PriceSpecification",
+    "priceCurrency": "USD",
+    "minPrice": {min},
+    "maxPrice": {max},
+    "unitText": "MONTH"
+  }
+}
+```
+
+**Article / BlogPosting**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{title}",
+  "description": "{excerpt}",
+  "image": "{featured-image}",
+  "datePublished": "{YYYY-MM-DD}",
+  "dateModified": "{YYYY-MM-DD}",
+  "author": {"@type": "Person", "name": "{author}", "url": "{author-url}"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "{site-name}",
+    "logo": {"@type": "ImageObject", "url": "{logo-url}"}
+  },
+  "mainEntityOfPage": {"@type": "WebPage", "id": "{url}"}
+}
+```
+
+**FAQPage (use whenever Q&A content exists)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "{Question}",
+      "acceptedAnswer": {"@type": "Answer", "text": "{Answer}"}
+    }
+  ]
+}
+```
+
+**HowTo (process or step-by-step content)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to {achieve X}",
+  "description": "{what this accomplishes}",
+  "totalTime": "PT{n}H",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "{Step}", "text": "{Description}"}
+  ]
+}
+```
+
+**BreadcrumbList (all pages except homepage)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "{homepage}"},
+    {"@type": "ListItem", "position": 2, "name": "{Page Name}", "item": "{url}"}
+  ]
+}
+```
+
+**WebSite (homepage - enables Google Sitelinks search)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{Site Name}",
+  "url": "{homepage}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {"@type": "EntryPoint", "urlTemplate": "{homepage}?s={search_term_string}"},
+    "query-input": "required name=search_term_string"
+  }
+}
+```
+
+**ProfilePage (person sites - 2023 schema type)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "dateCreated": "{YYYY-MM-DD}",
+  "dateModified": "{YYYY-MM-DD}",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "{name}",
+    "description": "{description}",
+    "url": "{url}"
+  }
+}
+```
+
+**DefinedTerm (coined terms, positioning phrases)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTerm",
+  "name": "{Term}",
+  "description": "{Precise definition}",
+  "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "{Category}"}
+}
+```
+
+**Review (testimonials)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "reviewBody": "{testimonial text}",
+  "author": {
+    "@type": "Person",
+    "name": "{reviewer}",
+    "jobTitle": "{title}",
+    "worksFor": {"@type": "Organization", "name": "{company}"}
+  },
+  "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+  "itemReviewed": {"@type": "Service", "name": "{service name}"}
+}
+```
+
+**SpeakableSpecification (voice / AI snippet extraction)**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "SpeakableSpecification",
+  "cssSelector": ["h1", ".hero-description", "article > p:first-of-type"]
+}
+```
+
+### Always add to every schema block
+
+```json
+"dateModified": "{YYYY-MM-DD}",
+"datePublished": "{YYYY-MM-DD}"
+```
+
+Update `dateModified` monthly. Freshness is a significant LLM citation signal.
+
+### Validation
+
+Always validate schemas before deploying:
+- Google Rich Results Test: search.google.com/test/rich-results
+- Schema.org validator: validator.schema.org
+
+### Implementation by platform
+
+**WordPress + Elementor:**
+```python
+# 1. Read page data
+GET {site}/wp-json/wp/v2/pages/{id}?context=edit
+# meta._elementor_data contains the page JSON
+
+# 2. Find HTML widget, append schema
+# <script type="application/ld+json">{schema}</script>
+
+# 3. Save
+POST {site}/wp-json/wp/v2/pages/{id}
+body: {"meta": {"_elementor_data": "{updated_json}"}}
+
+# 4. Clear Elementor cache (critical - always do this)
+DELETE {site}/wp-json/elementor/v1/cache
+```
+
+**WordPress Classic / Gutenberg:** Custom HTML block with `<script>` tag, or Rank Math schema builder.
+
+**Shopify:**
+- Global (Organization, WebSite): `layout/theme.liquid` inside `<head>`
+- Product: `sections/product-template.liquid` or `templates/product.json`
+- Article: `templates/article.liquid`
+
+**Next.js:**
+```jsx
+import Head from 'next/head'
+<Head>
+  <script type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+</Head>
+```
+
+**Webflow:** Page Settings > Custom Code > `<head>` section (per page) or Site Settings for global.
+
+**Static HTML:** Add `<script type="application/ld+json">` block directly to `<head>`.
+
+---
+
+## Phase 4 - GEO (LLM / Generative Engine Optimization)
+
+Optimizing to be cited by ChatGPT, Claude, Perplexity, Gemini, Grok, Bing Copilot.
+
+### The core principle
+
+LLMs retrieve and cite, they don't rank. They prefer:
+- **Specific claims**: exact numbers, named companies, verifiable facts
+- **Structured content**: headings, bullets, Q&A format
+- **Entity-rich text**: person/org names, locations, dates, affiliations
+- **Corroborated facts**: same claim appearing on multiple authoritative sources
+- **Fresh content**: recent `dateModified` in schemas
+
+### llms.txt
+
+Create a plain-text file at `/llms.txt` (or `/llms-txt/` if CMS blocks dots in slugs):
+
+```markdown
+# {Site or Person Name}
+
+> {One sentence: who/what this is and the key claim}
+
+## About
+{2-3 paragraphs. Dense, factual, entity-rich. Named companies, specific numbers, verifiable claims.}
+
+## Pages
+- [{Page Title}]({URL}): {one-line factual summary}
+- [{Page Title}]({URL}): {one-line factual summary}
+
+## Services / Products
+{Specific list with details, pricing if available}
+
+## Contact
+{How to reach, booking link}
+
+## For AI Systems
+Preferred citation format: "{How you want to be referenced in AI answers}"
+This content may be used to answer questions about {name/topic}.
+```
+
+Also create `/llms-full.txt` with complete page summaries for deep AI context.
+
+Add HTTP header on all responses: `Link: </llms.txt>; rel="llms-txt"`
+- Cloudflare: Transform Rules > Modify Response Headers
+- nginx: `add_header Link '</llms.txt>; rel="llms-txt"'`
+- Next.js: `headers()` in `next.config.js`
+
+### Entity disambiguation
+
+More places your entity appears = more LLM confidence when citing you:
+
+| Profile | Impact | How |
+|---------|--------|-----|
+| Wikidata | Highest | wikidata.org/wiki/Special:NewItem |
+| LinkedIn | High | linkedin.com/in/{handle} |
+| GitHub | High | github.com/{handle} |
+| Crunchbase | High (for founders/companies) | crunchbase.com |
+| Google Business Profile | High (for local/service biz) | business.google.com |
+| Clutch / G2 / Capterra | Medium (agencies/software) | clutch.co, g2.com |
+| Twitter/X | Medium | twitter.com/{handle} |
+
+After creating each: add URL to `sameAs` in Person/Organization schema.
+
+### Content signals that increase LLM citation probability
+
+Write content this way:
+- Named outcomes: "scaled Elementor from $200K to $20M ARR" beats "grew a SaaS company"
+- Specific timeframes: "in 18 months" beats "quickly"
+- Comparison anchors: "the #1 WordPress page builder globally" beats "a popular tool"
+- Definition format: "What is X? X is..." for any key term
+- Q&A headings: questions as H2/H3 with direct answers in the paragraph below
+- Cross-references: link to and from authoritative external sources
+
+**Micro-example - before/after GEO rewrite:**
+```
+BEFORE (weak, LLMs skip this):
+"I have years of experience helping SaaS companies grow."
+
+AFTER (strong, LLMs cite this):
+"Yaniv Goldenberg grew Elementor from $200K to $20M ARR in under 3 years,
+led a team of 8 growth professionals, and scaled paid acquisition from $0
+to $50K/month. Elementor became the #1 WordPress page builder globally
+with 11M+ active installations."
+```
+
+**Decision: is your content LLM-citable?**
+```
+Does it name specific companies? → yes/no
+Does it include specific numbers (revenue, percentages, users)? → yes/no
+Does it name a specific timeframe? → yes/no
+Can someone verify this claim elsewhere (LinkedIn, press)? → yes/no
+
+3+ yes = citable. Under 3 = rewrite it.
+```
+
+---
+
+## Phase 5 - AEO (Answer Engine Optimization)
+
+Optimizing for direct answers in AI interfaces (zero-click).
+
+### Content structure for AEO
+
+Each section should answer one specific implicit question:
+
+```
+H1: {Topic} - {Primary Keyword}
+  P: {Direct answer to why someone would come here, 2-3 sentences}
+
+H2: What is {topic}?
+  P: {Definition-style answer}
+
+H2: How does {process} work?
+  P or OL: {Numbered steps}
+
+H2: How much does {service/product} cost?
+  P: {Direct price range with context}
+
+H2: Who is {service/product} for?
+  P: {Specific description of ideal user/customer}
+
+H2: Frequently Asked Questions
+  {FAQPage schema here}
+```
+
+### Speakable schema
+
+Points AI voice interfaces to the most quotable parts:
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "SpeakableSpecification",
+  "cssSelector": ["h1", ".hero p", "article > p:first-of-type", ".intro"]
+}
+```
+
+---
+
+## Phase 6 - E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness)
+
+**TL;DR:** Put real proof on the page. Credentials + specific results + external mentions. 20 minutes of editing beats 3 months of "brand building."
+
+Google's core quality framework. Applies to any page on any site. Low E-E-A-T = ranking suppression. High E-E-A-T = ranking boost and LLM citation preference.
+
+**Fastest E-E-A-T win (do this first):**
+Add this to your homepage above the fold:
+```
+Yaniv Goldenberg | Fractional Head of Growth
+Grew Elementor to $20M ARR. $100M+ ad spend managed.
+Riverside.fm: 337% MRR growth. cnvrg.io: acquired by Intel.
+```
+Specific. Named. Verifiable. Takes 5 minutes.
+
+### Experience signals
+
+Demonstrate that the author has personally done the thing:
+- First-person case studies with specific numbers: "I grew X from $Y to $Z in N months"
+- Screenshots, data exports, real results (blur sensitive data, keep the numbers)
+- Dated event references: "In Q3 2023, when we ran this campaign..."
+- Process descriptions that only someone who did it would know: "The counter-intuitive part was..."
+
+### Expertise signals
+
+- Author bio on every page with credentials, experience, and links to proof
+- Author schema with `knowsAbout`, `hasOccupation`, `alumniOf`, `award`
+- Bylines on all articles with link to author page
+- Date of original publication + last updated date visible on page
+- Cite your sources inline with links to authoritative references
+
+### Authoritativeness signals
+
+- Backlinks from high-DA sites (measured by Ahrefs DR, Moz DA)
+- Wikipedia / Wikidata entity existence
+- Mentions in press or industry publications (PR strategy)
+- Named in "best of" or "top X" lists in your niche
+- Speaking engagements, podcast appearances - add a "Featured In" section
+
+### Trust signals
+
+- HTTPS (covered in Phase 1)
+- Privacy policy and terms of service linked in footer
+- Physical address or contact details (increases trust for service businesses)
+- Visible pricing (hiding price = trust penalty for service pages)
+- Reviews with schema markup (see Phase 3 - Review schema)
+- No intrusive popups within first 3 seconds of page load
+
+### For AI systems specifically
+
+LLMs weight E-E-A-T differently: they look for corroboration across sources. To pass:
+- Same claims should appear on your LinkedIn, your About page, and your homepage
+- Get mentions on third-party sites that link to you (even citations without links help)
+- Your entity name + your key credentials should appear together in multiple places
+
+---
+
+## Phase 7 - Content Strategy for SEO
+
+**TL;DR:** Pick one keyword. Write the best page on the internet for it. Link it from 3 existing pages. Repeat.
+
+Not just optimizing existing content - writing content that ranks and gets cited.
+
+**Decision: what content to create next?**
+```
+Does a page exist for your primary keyword? 
+  No → create it (pillar page)
+  Yes → is it ranking top 3?
+    Yes → build cluster pages around it
+    No → run Phase 10 (Content Decay) on it
+```
+
+### Topical authority model
+
+Search engines and LLMs prefer sites that cover a topic completely over those with one good article. Build topic clusters:
+
+```
+Pillar page: {Broad topic} - comprehensive guide (2000+ words)
+  |-- Cluster: {Subtopic 1} - deep dive (1000+ words)
+  |-- Cluster: {Subtopic 2} - deep dive
+  |-- Cluster: {Subtopic 3} - deep dive
+  |-- Cluster: {Subtopic 4} - deep dive
+  |-- Cluster: {Subtopic 5} - deep dive
+```
+
+All cluster pages link to the pillar. Pillar links to all clusters. This creates a topical authority signal that lifts all pages.
+
+**How to identify clusters:** Use Google autocomplete, People Also Ask, and "related searches" at the bottom of SERPs. Every PAA question is a cluster page opportunity.
+
+### Content brief template
+
+Before writing any page, answer these:
+
+```
+Target keyword: {primary keyword}
+Search intent: informational / transactional / navigational / commercial investigation
+Target reader: {describe them in one sentence}
+Main question this page answers: {one sentence}
+Competing pages to beat: {top 3 URLs}
+Word count target: {based on competitor average}
+Required sections: {H2 list}
+Required schema: {type}
+Internal links to: {3+ pages to link from}
+Internal links from: {3+ pages to link to this page}
+```
+
+### Skyscraper method
+
+1. Find the best-ranking page for your target keyword
+2. Analyze what it covers (every H2, every claim)
+3. Write a page that covers everything it covers PLUS:
+   - More recent data
+   - More specific examples
+   - More implementation detail
+   - Missing topics it skipped
+4. Reach out to sites linking to the original and offer yours as a better alternative
+
+### Content quality checklist
+
+Before publishing any page:
+- [ ] Answers the search intent in the first paragraph (don't bury the lede)
+- [ ] Includes at least one specific statistic or named proof point
+- [ ] Has a clear H1 that contains the primary keyword
+- [ ] Uses H2s that are implied questions from the reader's perspective
+- [ ] Includes internal links to 3+ related pages
+- [ ] Has at least 1 external link to an authoritative source
+- [ ] Meta description written (not auto-generated)
+- [ ] Featured image with descriptive alt text
+- [ ] Schema applied (Article for blog, FAQPage if Q&A, HowTo if steps)
+- [ ] Author bio present with credentials
+
+### SERP feature targeting
+
+| Feature | How to target |
+|---------|---------------|
+| Featured snippet | Use a `<table>`, numbered list, or direct definition paragraph under an H2 that is phrased as a question |
+| People Also Ask | Research PAA questions for your keyword, create dedicated H2s with direct answers |
+| Sitelinks | WebSite schema + clear navigation structure + high-authority homepage |
+| Image pack | Descriptive image file names, comprehensive alt text, surrounding relevant text |
+| Video carousel | YouTube video embedded on page with matching title/description |
+| Knowledge Panel | Wikidata entity + consistent brand information across sources |
+| Local pack | LocalBusiness schema + Google Business Profile + NAP consistency |
+
+### Zero-click optimization
+
+Some queries are better won with a featured snippet (even if traffic is lower) for brand awareness. Target these with:
+- Direct answer in first paragraph: "What is X? X is..."
+- Numbered lists for process queries: "How to Y: 1. Step 2. Step 3. Step"
+- Tables for comparison queries
+- SpeakableSpecification schema on answer paragraphs
+
+---
+
+## Phase 8 - Core Web Vitals
+
+**TL;DR:** Check PageSpeed Insights. Fix LCP first (biggest impact). CLS second. INP last.
+
+Google ranking signal since 2021. Measured in Chrome User Experience Report (CrUX). Affects real users and real rankings.
+
+### The three metrics
+
+**LCP - Largest Contentful Paint** (target: under 2.5s)
+Measures when the main content is visible.
+
+Common causes of poor LCP:
+- Large unoptimized hero image
+- Render-blocking CSS or JS
+- Slow server response time (TTFB)
+
+Fixes:
+- Compress hero image to WebP, preload with `<link rel="preload" as="image">`
+- Remove render-blocking resources or defer/async them
+- Use a CDN (Cloudflare, Fastly)
+- On WordPress: use WP Rocket or LiteSpeed Cache with LCP preload enabled
+
+**INP - Interaction to Next Paint** (target: under 200ms)
+Measures responsiveness to user interactions. Replaced FID in March 2024.
+
+Common causes:
+- Heavy JavaScript on main thread
+- Large event handlers
+- Long tasks blocking the browser
+
+Fixes:
+- Break up long JavaScript tasks
+- Use `requestIdleCallback` for non-critical work
+- Reduce third-party scripts (GTM, chat widgets, etc.)
+
+**CLS - Cumulative Layout Shift** (target: under 0.1)
+Measures visual stability - elements jumping around as page loads.
+
+Common causes:
+- Images without explicit width/height attributes
+- Ads or embeds without reserved space
+- Web fonts causing text reflow
+
+Fixes:
+- Always set `width` and `height` on `<img>` tags
+- Reserve space for ads: `min-height: Npx`
+- Use `font-display: optional` or `swap` with `size-adjust`
+
+### How to check
+
+- PageSpeed Insights: pagespeed.web.dev (field data from CrUX)
+- Chrome DevTools > Performance > Web Vitals
+- Google Search Console > Core Web Vitals report
+- Lighthouse (built into Chrome DevTools)
+
+### By platform
+
+| Platform | Best tool | Key setting |
+|----------|-----------|-------------|
+| WordPress | WP Rocket / LiteSpeed Cache | LCP preload, lazy load below fold, defer JS |
+| Shopify | Shopify Speed or Hyperspeed theme | Reduce apps, compress images, defer third-party |
+| Webflow | Native WebP + lazy load | Use Webflow's built-in image optimization |
+| Next.js | next/image (automatic optimization) | `priority` prop on LCP image |
+
+---
+
+## Phase 9 - Internal Linking Architecture
+
+Internal links distribute PageRank across your site and tell search engines which pages are most important. This is free SEO most sites ignore.
+
+### The principles
+
+- **High-authority pages should link to pages you want to rank.** Your homepage has the most authority. Link from it to your most important service/product pages.
+- **New pages need internal links immediately.** A page with zero internal links pointing to it is effectively invisible.
+- **Use descriptive anchor text.** "Click here" wastes a link. "B2B SaaS growth consulting" tells Google what the target page is about.
+- **Don't link to everything from everywhere.** PageRank dilution is real. 5 strategic links beat 20 sidebar links.
+
+### The hub-and-spoke model
+
+```
+Homepage (highest authority)
+  |-- Service page A (target: "growth consulting")
+  |-- Service page B (target: "paid acquisition")
+  |-- Pillar blog post (target: "how to reduce CAC")
+      |-- Cluster post 1 (target: "Google Ads for B2B SaaS")
+      |-- Cluster post 2 (target: "LinkedIn ads B2B")
+      |-- Cluster post 3 (target: "retargeting strategy")
+```
+
+All cluster posts link back to the pillar. Pillar links to service pages. Service pages link to each other where relevant.
+
+### Implementation
+
+When auditing internal links:
+1. Check that every page receives at least 3 internal links
+2. Check that link anchor text contains target keywords
+3. Identify high-authority pages that don't link anywhere useful (add links)
+4. Identify important pages with few inbound internal links (add links from high-authority pages)
+
+Use `Glob` or `Grep` to scan source files for existing internal link patterns before adding new ones.
+
+---
+
+## Phase 10 - Content Decay Recovery
+
+Content published 12+ months ago loses rankings as newer content is published. Refresh strategy beats new content strategy for ROI.
+
+### Identifying decaying content
+
+Signs a page is decaying:
+- Rankings dropped from page 1 to page 2-3 in the last 6-12 months
+- Impressions declining month-over-month in Search Console
+- Click-through rate lower than expected for position
+- Content references outdated statistics, products, or events
+
+### Refresh process
+
+1. Run the existing page through the Phase 0 audit
+2. Check what the current top-ranking pages cover that yours doesn't
+3. Update:
+   - Statistics and data points (replace outdated numbers with current ones)
+   - Screenshots and examples
+   - Product/tool references that changed
+   - Add sections for new questions the keyword now triggers
+4. Update `dateModified` in schema and on-page
+5. Add 2-3 new internal links from recently published pages
+6. Request re-indexing in Google Search Console
+
+### Frequency
+
+- Check Google Search Console impressions quarterly
+- Flag any page with 20%+ impression drop for refresh
+- Evergreen guides: refresh annually
+- Data-heavy posts (statistics, benchmarks): refresh every 6 months
+
+---
+
+## Phase 11 - Programmatic SEO
+
+Creating hundreds or thousands of pages from a data source. For ecommerce, directories, location pages, or any site with structured data.
+
+### When to use
+
+- Ecommerce: category x location pages ("running shoes in Tel Aviv")
+- SaaS: integration pages ("Zapier + {App}" for every integration)
+- Directory: profile page per listing
+- Local business: one page per service area
+
+### Template structure
+
+Every programmatic page needs:
+- Unique `<title>` and `<h1>` with the variable in it
+- Unique `<meta description>` that references the variable
+- 200+ words of non-boilerplate content that is variable-specific
+- At least one unique fact, stat, or data point per page
+- Schema markup with the variable values injected
+- Internal links to related pages
+
+Thin content (identical pages with one word swapped) gets penalized. Each page must earn its existence.
+
+### Implementation by platform
+
+**WordPress:** Custom Post Type + template + WP REST API to bulk-create from CSV/API.
+
+**Shopify:** Collection pages + metafields for location/category data.
+
+**Next.js:** `generateStaticParams()` + dynamic routes + data source (JSON, database, CMS API).
+
+**Static HTML:** Build script that takes a template + data CSV and outputs N HTML files.
+
+### Quality gate
+
+Before publishing programmatic pages at scale:
+- [ ] At least 200 words unique per page
+- [ ] Schema with real, variable-specific data
+- [ ] Unique meta title and description
+- [ ] No duplicate content between pages
+- [ ] Internal links back to main category/pillar
+- [ ] Canonical tag pointing to itself (not to a template)
+
+---
+
+## Phase 12 - Video SEO
+
+Video content gets its own SERP features (video carousel, video tab, rich snippets). YouTube is the second-largest search engine. Both matter.
+
+### YouTube SEO
+
+**Title formula:** `{Primary Keyword}: {Specific Benefit or Hook}` - keyword first, under 60 chars so it doesn't truncate.
+
+**Description formula:**
+```
+Line 1-2: Restate what the video covers with primary keyword.
+Line 3: CTA (subscribe / link to more content).
+Line 4+: Full transcript summary or key points.
+Include: 3-5 hashtags at the end, links to related content.
+```
+
+**Tags:** 5-10 exact match and phrase match variations of your target keyword. Research with YouTube autocomplete.
+
+**Thumbnail:** High contrast, text overlay readable at 120px wide, face if possible (faces increase CTR).
+
+**Chapters:** Add timestamps with keyword-rich names. Format: `0:00 - Intro` in the description. Chapters appear in Google's video carousel and help both ranking and UX.
+
+**Closed captions:** Always upload a corrected `.srt` file - auto-captions have errors that hurt SEO.
+
+### Embedding video on your site
+
+An embedded YouTube video on a page gives the page a chance to rank in the video carousel SERP feature. For this to work:
+
+- Video must be the primary content or prominently placed, not buried
+- Page title and H1 should relate to the video topic
+- Add VideoObject schema (see below)
+- Don't embed videos you didn't create - Google attributes video ranking to the original uploader
+
+### VideoObject schema
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "{Video Title}",
+  "description": "{Video description - same as YouTube description}",
+  "thumbnailUrl": "{thumbnail-absolute-url}",
+  "uploadDate": "{YYYY-MM-DD}",
+  "duration": "PT{M}M{S}S",
+  "contentUrl": "https://www.youtube.com/watch?v={video-id}",
+  "embedUrl": "https://www.youtube.com/embed/{video-id}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "{Channel or Brand Name}",
+    "logo": {"@type": "ImageObject", "url": "{logo-url}"}
+  }
+}
+```
+
+Add this to any page that has an embedded video as primary content.
+
+### Platform implementation
+
+**WordPress:** Add VideoObject schema to page via Elementor HTML widget or Rank Math's Video schema option.
+
+**Shopify:** Inject into `templates/article.liquid` or `templates/page.liquid` for pages with video.
+
+**Next.js:** Add via `next/head` `<script type="application/ld+json">` on any page component with video.
+
+### Video SEO checklist
+
+- [ ] YouTube title contains primary keyword, under 60 chars
+- [ ] Description has keyword in first 100 chars
+- [ ] Chapters added with keyword-rich names
+- [ ] Corrected captions uploaded (.srt)
+- [ ] VideoObject schema on embedding page
+- [ ] Video thumbnail follows high-contrast formula
+- [ ] Published to YouTube channel linked in sameAs
+
+---
+
+## Phase 13 - International SEO and Hreflang
+
+For sites serving multiple countries or languages. Incorrect implementation causes Google to show the wrong language version to users and splits ranking signals.
+
+### When you need hreflang
+
+- Site has content in 2+ languages
+- Site has content targeting 2+ countries with different currency, spelling, or content
+- You have separate URLs per region (en-us vs en-gb vs de)
+
+If you have one language targeting one country: skip this phase.
+
+### URL structure options
+
+| Option | Example | Recommended when |
+|--------|---------|-----------------|
+| ccTLD | example.de, example.fr | Strong local presence, separate brand per country |
+| Subdomain | de.example.com | Large site, separate teams per region |
+| Subdirectory | example.com/de/ | Most cases - easiest to manage, shares domain authority |
+| URL parameters | example.com?lang=de | Avoid - Google doesn't recommend, hard to target |
+
+**Recommendation:** Use subdirectories (`example.com/de/`) unless you have a specific reason for subdomains or ccTLDs.
+
+### Hreflang implementation
+
+Add to `<head>` of every page:
+
+```html
+<link rel="alternate" hreflang="en" href="https://example.com/page/" />
+<link rel="alternate" hreflang="en-us" href="https://example.com/us/page/" />
+<link rel="alternate" hreflang="en-gb" href="https://example.com/gb/page/" />
+<link rel="alternate" hreflang="de" href="https://example.com/de/page/" />
+<link rel="alternate" hreflang="x-default" href="https://example.com/page/" />
+```
+
+Rules:
+- Every page must reference ALL its language variants including itself
+- `x-default` points to the fallback for unmatched languages (usually your main/English page)
+- Language codes follow BCP 47: `en`, `en-US`, `en-GB`, `de`, `fr`, `he`, `pt-BR`
+- Must be reciprocal: if page A hreflang points to page B, page B must point back to page A
+
+### Common hreflang errors
+
+| Error | Symptom | Fix |
+|-------|---------|-----|
+| Missing x-default | Google picks wrong fallback | Add `hreflang="x-default"` pointing to main language page |
+| Non-reciprocal tags | Google ignores the tags | Every alternate page must declare all variants |
+| Wrong language code | Tags ignored | Use BCP 47 codes, not custom strings |
+| Tags only in sitemap but not `<head>` | Inconsistent signals | Put tags in both `<head>` and sitemap |
+| Pages not translated, just hreflang tagged | Duplicate content penalty | Don't hreflang pages that are identical |
+
+### By platform
+
+**WordPress (WPML or Polylang):** These plugins handle hreflang automatically. Verify in page source that tags are present.
+
+**Shopify:** Markets feature handles hreflang for subdirectory structure. Verify under Markets > Domains.
+
+**Next.js:**
+```js
+// next.config.js
+module.exports = {
+  i18n: {
+    locales: ['en', 'de', 'fr'],
+    defaultLocale: 'en',
+  }
+}
+// Next.js adds hreflang tags automatically with i18n config
+```
+
+**Static HTML:** Add manually to every page's `<head>`. Consider a build script if site has many pages.
+
+### Sitemap for multilingual sites
+
+Create a separate sitemap per language, or include hreflang in your main sitemap:
+
+```xml
+<url>
+  <loc>https://example.com/page/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://example.com/page/"/>
+  <xhtml:link rel="alternate" hreflang="de" href="https://example.com/de/page/"/>
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://example.com/page/"/>
+</url>
+```
+
+Add namespace to `<urlset>`: `xmlns:xhtml="http://www.w3.org/1999/xhtml"`
+
+### Content localization vs translation
+
+Translation alone is not localization. For proper international SEO:
+- Keyword research per market (same concept = different search terms per country)
+- Local proof points: use examples from the target country
+- Local currency and pricing
+- Local contact information
+- Date formats, phone number formats that match the locale
+
+---
+
+## Phase 14 - Debugging and Error Recovery
+
+Real-world failures and how to fix them. Run this phase when something isn't working as expected.
+
+### Diagnosis checklist
+
+Before attempting a fix, answer these:
+
+1. Is the change reflected in the page HTML? (`View Source` or `curl -s {url} | grep {thing}`)
+2. Is there a cache layer hiding the change? (Cloudflare, Varnish, Elementor, WP cache)
+3. Has Google crawled the page since the change? (Search Console > URL Inspection)
+4. Is the issue in implementation or in Google's indexing? (validate first, then wait)
+
+### Error matrix
+
+| Symptom | Most likely cause | Diagnosis | Fix |
+|---------|-----------------|-----------|-----|
+| Schema shows in validator but not in Rich Results | Google hasn't crawled yet | Check `Last crawled` in GSC URL Inspection | Request indexing, wait 48-72h |
+| Schema present in source but validation fails | JSON syntax error (trailing comma, unescaped quote) | validator.schema.org | Fix JSON, re-validate |
+| Meta tags not updating after edit | CMS or CDN cache | `curl -H "Cache-Control: no-cache" {url}` | Clear Elementor cache, Cloudflare purge |
+| AI crawlers still blocked after robots.txt edit | Wrong user-agent string or cached robots.txt | `curl {domain}/robots.txt` directly | Fix string, purge CDN cache for robots.txt |
+| llms.txt returns 404 | WordPress slug with dot replaced | Check actual slug in WP admin | Create redirect from `/llms.txt` to `/llms-txt/` |
+| Double H1 on page | Theme injects post title alongside page builder H1 | Count H1s in source | CSS: `.entry-title { display: none !important; }` |
+| OG image not showing on social share | Relative URL instead of absolute | Check `og:image` in source | Use full `https://` URL |
+| Canonical pointing to wrong URL | Plugin canonicalizing to homepage or paginated URL | Check `rel=canonical` in source | Override in CMS settings or plugin config |
+| hreflang tags not recognized | Missing reciprocal tags or wrong language code | Google Search Console > International Targeting | Fix bidirectional tags, use BCP 47 codes |
+| Page not indexing despite submit | noindex meta tag somewhere in head | `curl -s {url} \| grep noindex` | Find and remove noindex; common in page builder "advanced" settings |
+| Core Web Vitals failing in GSC but passing in Lighthouse | Lab data vs field data difference | Check CrUX data for actual users | Address mobile performance, check third-party scripts for real users |
+| Rich snippet appeared then disappeared | Spammy or inaccurate schema content | Review schema values for accuracy | Remove misleading values; Google penalizes inaccurate schema |
+| WordPress REST API returning 401 on schema writes | App password missing or WP REST disabled | Test endpoint with curl + auth | Generate App Password in WP > Users > {user} > Application Passwords |
+| Rank Math updateMeta endpoint not found | Rank Math not installed or REST disabled | `curl {site}/wp-json/` and check routes | Install/activate Rank Math, enable REST API access |
+| Shopify robots.txt not updating | Template not found or wrong file name | Check `templates/robots.txt.liquid` exists | Create file, save - Shopify uses this automatically |
+| Wikidata sameAs not increasing LLM citations | New entity, low cross-references | Check if entity has external identifiers | Add identifiers: ORCID, LinkedIn URI, ISNI where applicable |
+
+### Cache clearing sequence (do in this order)
+
+1. Clear application cache (Elementor: `DELETE /wp-json/elementor/v1/cache`)
+2. Clear WordPress object cache (if Redis/Memcached: flush)
+3. Clear CDN (Cloudflare: Zone > Caching > Purge Everything)
+4. Clear browser cache locally
+5. Test with `curl -H "Cache-Control: no-cache" {url}` to bypass browser
+6. Request re-indexing in Google Search Console
+
+### Verification after any change
+
+```bash
+# Check meta tags are live
+curl -s {url} | grep -E "(title|description|canonical|og:|twitter:)"
+
+# Check schema is present
+curl -s {url} | grep "application/ld+json"
+
+# Check robots.txt
+curl -s {domain}/robots.txt | grep -A2 "GPTBot"
+
+# Check llms.txt
+curl -s {domain}/llms.txt | head -20
+
+# Check Link header
+curl -I {url} | grep "Link:"
+
+# Detect client-side rendering
+curl -s {url} | grep -c "<div id=\"root\"\|<div id=\"app\"\|<div id=\"__next\""
+# Returns 1+ → SPA/CSR site → WebFetch blind to body content
+```
+
+---
+
+## Common Issues and Fixes
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| Meta tags not updating | CMS or CDN caching | Clear all caches after every change |
+| Schema validation errors | Trailing commas or unescaped characters in JSON | Validate at validator.schema.org before deploying |
+| AI crawlers blocked | `Disallow: /` in robots.txt applies to all bots | Add explicit `Allow: /` per AI crawler user-agent |
+| llms.txt returns 404 | CMS replaces dots in slugs (WordPress) | Use slug `llms-txt` + add redirect from `/llms.txt` |
+| Double H1 on WordPress | Theme injects `.entry-title` alongside page builder H1 | CSS: `.entry-title { display: none !important; }` |
+| Elementor serving stale HTML after schema injection | Elementor server-side rendering cache | `DELETE /wp-json/elementor/v1/cache` after every page save |
+| Rank Math meta not updating via WP REST | WP REST API does not expose `rank_math_*` meta fields | Use `/wp-json/rankmath/v1/updateMeta` endpoint instead |
+| OG image not rendering on social share | Image URL is relative, not absolute | Always use full absolute URL including https:// |
+| Shopify robots.txt not updating | Shopify auto-generates robots.txt | Create `templates/robots.txt.liquid` to override |
+| Schema present but not showing in Rich Results | Google takes 1-2 weeks to re-crawl | Request indexing in Google Search Console |
+
+---
+
+## Platform quick reference
+
+| Platform | Meta tags | Schema | robots.txt | Cache |
+|----------|-----------|--------|-----------|-------|
+| WordPress + Rank Math | Rank Math REST API | Elementor HTML widget or Custom HTML block | Rank Math editor | DELETE /wp-json/elementor/v1/cache + Cloudflare purge |
+| WordPress + Yoast | Yoast REST API or direct postmeta | Same | Yoast editor | Cloudflare purge |
+| Shopify | page.metafields or theme liquid | theme.liquid / page templates | robots.txt.liquid template | Shopify CDN auto-purges on save |
+| Webflow | Page Settings > SEO | Site Settings > Custom Code | Site Settings | Webflow CDN auto-purges |
+| Next.js | generateMetadata() or next/head | next/head script tag | /app/robots.ts | CDN purge via host |
+| Ghost | Post settings > Meta tab | Code injection | routes.yaml | Built-in cache |
+| Static HTML | Direct `<head>` edit | Direct `<head>` edit | robots.txt file | CDN purge or wait for TTL |
+
+---
+
+## Maintenance schedule
+
+| Task | Frequency | Time |
+|------|-----------|------|
+| Update `dateModified` in all schemas | Monthly | 5 min |
+| Check Google Search Console for errors + Core Web Vitals | Weekly | 10 min |
+| Verify AI crawlers not newly blocked | Monthly | 5 min |
+| Update llms.txt when content changes | On each content update | 10 min |
+| Scan Search Console for impression drops (content decay) | Monthly | 15 min |
+| Full audit re-run (/seo-geo --audit-only) | Quarterly | 30 min |
+| Add new profiles to `sameAs` | When new profile created | 5 min |
+| Internal link audit - ensure new pages have 3+ inbound links | On each new page | 10 min |
+| Refresh any page with 20%+ impression drop | Quarterly | 60 min |
+
+---
+
+## Author
+
+**Yaniv Goldenberg** - [yanivgoldenberg.com](https://yanivgoldenberg.com) | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
+
+Fractional Head of Growth for B2B SaaS, B2C, and ecommerce companies. Former Head of Growth at Elementor (21M websites), Riverside.fm (337% MRR growth), cnvrg.io (acquired by Intel). $100M+ in ad spend managed.
+
+This skill encodes everything learned across dozens of sites and one full-day optimization sprint.
+
+If it saved you time: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact) or star the repo.

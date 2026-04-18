@@ -1,0 +1,36 @@
+# Changelog
+
+All notable changes to the seo-geo skill.
+
+Format: [version] - YYYY-MM-DD
+
+---
+
+## [1.0.0] - 2026-04-18
+
+Initial release.
+
+### Added
+- Phase 0: Audit (100-pt scoring rubric, 6 dimensions)
+- Phase 1: Technical SEO (robots.txt, canonical, sitemap, mobile)
+- Phase 2: On-Page SEO (titles, meta, OG tags, H1 hierarchy)
+- Phase 3: Schema (16 types: Person, Organization, Product, Service, Article, FAQPage, HowTo, BreadcrumbList, Review, WebSite, ProfilePage, DefinedTerm, SpeakableSpecification, LocalBusiness, SoftwareApplication, VideoObject)
+- Phase 4: GEO - LLM/generative engine optimization (llms.txt, llms-full.txt, entity signals, sameAs, AI crawler access for 9 bots)
+- Phase 5: AEO - Answer engine optimization (Speakable schema, direct-answer content)
+- Phase 6: E-E-A-T (author schema, trust signals, credentials, external citations)
+- Phase 7: Content Strategy (topical authority, skyscraper method, content briefs, SERP features)
+- Phase 8: Core Web Vitals (LCP, INP, CLS - measurement and platform-specific fixes)
+- Phase 9: Internal Linking (hub-and-spoke, PageRank flow, anchor text audit)
+- Phase 10: Content Decay (refresh strategy, GSC impression tracking)
+- Phase 11: Programmatic SEO (template + data approach, quality gates)
+- Phase 12: Video SEO (VideoObject schema, YouTube optimization, video sitemap)
+- Phase 13: International SEO / Hreflang (hreflang tags, x-default, locale detection)
+- Phase 14: Debugging and Error Recovery (15-row error matrix, curl verification, cache clearing)
+- `--verify` self-test with pass/fail table
+- `--page <url>` single-page audit mode
+- SPA/JS-rendered site detection and fallback strategy
+- Decision tree for phase selection
+- Common Issues table (10 issues)
+- Platform quick reference (7 platforms: WordPress, Shopify, Webflow, Next.js, Ghost, Static HTML)
+- Maintenance schedule
+- PolyForm Noncommercial 1.0.0 license
