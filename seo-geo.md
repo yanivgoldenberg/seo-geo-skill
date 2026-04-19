@@ -1,7 +1,7 @@
 ---
 name: seo-geo
-version: 1.0.0
-description: Complete SEO+GEO+AEO skill. 15 phases, 0→100/100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang. Any CMS.
+version: 1.1.0
+description: Complete SEO+GEO+AEO skill. 15 phases + Security phase, 0→100/100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, PII audit. Any CMS.
 ---
 
 # /seo-geo - Universal SEO + GEO + AEO Optimization
@@ -1419,6 +1419,323 @@ curl -s {url} | grep -c "<div id=\"root\"\|<div id=\"app\"\|<div id=\"__next\""
 | Add new profiles to `sameAs` | When new profile created | 5 min |
 | Internal link audit - ensure new pages have 3+ inbound links | On each new page | 10 min |
 | Refresh any page with 20%+ impression drop | Quarterly | 60 min |
+
+---
+
+## Phase 15 - Security Hardening (WordPress)
+
+Security directly impacts SEO: hacked sites get deindexed, malware warnings destroy CTR, exposed endpoints invite spam and credential stuffing. Run this phase on any WordPress site before or after the main SEO audit.
+
+### Risk surface map
+
+| Endpoint | Default state | Risk |
+|----------|--------------|------|
+| `/xmlrpc.php` | Returns 200, accepts XML-RPC | Brute force amplifier (multicall), DDoS vector |
+| `/wp-login.php` | Returns 200 | Credential stuffing target |
+| `/wp-json/wp/v2/users` | Returns author list with slug, email hash, avatars | User enumeration for targeted attacks |
+| `/?author=1` | Redirects to `/author/yaniv-goldenberg/` | Exposes exact admin username |
+| `readme.html` | Exposes WP version | Version fingerprinting |
+| WP generator `<meta>` | `<meta name="generator" content="WordPress X.X.X">` | Version fingerprinting |
+| Script/style version params | `?ver=6.4.3` on CSS/JS | Version fingerprinting |
+
+### Audit checklist
+
+```bash
+# 1. xmlrpc.php active?
+curl -s -o /dev/null -w "%{http_code}" https://site.com/xmlrpc.php
+# 200 = active (bad). 403/404 = blocked (good).
+
+# 2. wp-login.php exposed?
+curl -s -o /dev/null -w "%{http_code}" https://site.com/wp-login.php
+# 200 = exposed. Should be rate-limited or IP-restricted.
+
+# 3. User enumeration via REST
+curl -s "https://site.com/wp-json/wp/v2/users" | python3 -c "import json,sys; u=json.load(sys.stdin); print([{'name':x['name'],'slug':x['slug']} for x in u])"
+# Should return empty list or 401.
+
+# 4. User enumeration via author redirect
+curl -s -o /dev/null -w "%{http_code} %{redirect_url}" "https://site.com/?author=1"
+# Should return 404 or loop, not reveal username.
+
+# 5. Generator tag exposed?
+curl -s "https://site.com/" | grep "generator"
+# Should find nothing.
+
+# 6. readme.html accessible?
+curl -s -o /dev/null -w "%{http_code}" https://site.com/readme.html
+# Should be 404.
+
+# 7. Security headers present?
+curl -I "https://site.com/" | grep -E "(X-Content-Type|Referrer-Policy|X-Frame|Strict-Transport)"
+# X-Content-Type-Options: nosniff required.
+# Strict-Transport-Security required (HSTS).
+```
+
+### Fixes - programmatic (WP REST API)
+
+```python
+# Disable pingback (WP REST API)
+import httpx, base64, os
+from dotenv import load_dotenv
+load_dotenv()
+user = os.getenv('WEBSITE_WP_ADMIN_USER')
+pw = os.getenv('YANIV_WP_APP_PASSWORD')
+token = base64.b64encode(f'{user}:{pw}'.encode()).decode()
+H = {'Authorization': f'Basic {token}', 'Content-Type': 'application/json'}
+SITE = os.getenv('YANIV_WEBSITE_URL')
+
+# Disable pingback
+r = httpx.post(f'{SITE}/wp-json/wp/v2/settings', headers=H,
+    json={'default_ping_status': 'closed', 'default_comment_status': 'closed'})
+print(r.status_code, r.text[:80])
+
+# Clear user bio (reduces enumeration surface)
+r2 = httpx.post(f'{SITE}/wp-json/wp/v2/users/1', headers=H,
+    json={'description': '', 'url': ''})
+print(r2.status_code)
+
+# Inject security headers into global header template (Elementor HTML widget)
+# Add to the HTML widget in header template 41 (or whichever is the global header)
+SECURITY_META = """
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+"""
+# Inject into existing HTML widget - see Phase 3 for Elementor widget write pattern
+```
+
+### Fixes - Cloudflare WAF (manual or API)
+
+Requires Zone.Firewall:Edit permission on your API token.
+
+**WAF Rule 1 - Block xmlrpc.php:**
+```
+Expression: (http.request.uri.path contains "/xmlrpc.php")
+Action: Block
+```
+
+**WAF Rule 2 - Challenge wp-login.php:**
+```
+Expression: (http.request.uri.path eq "/wp-login.php")
+Action: Managed Challenge
+```
+
+**WAF Rule 3 - Block readme.html:**
+```
+Expression: (http.request.uri.path contains "/readme.html")
+Action: Block
+```
+
+Via API (requires token with Zone.Firewall:Edit):
+```bash
+CF_ZONE="your_zone_id"
+CF_TOKEN="your_token"
+
+curl -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE/firewall/rules" \
+  -H "Authorization: Bearer $CF_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '[{
+    "filter": {"expression": "(http.request.uri.path contains \"/xmlrpc.php\")"},
+    "action": "block",
+    "description": "Block xmlrpc.php"
+  }]'
+```
+
+**HSTS (Cloudflare dashboard only):**
+SSL/TLS > Edge Certificates > HTTP Strict Transport Security > Enable
+Min TLS: 1.2 | Max-Age: 31536000 | Include subdomains: On | Preload: On
+
+### Fixes - RankMath plugin (WP Admin only)
+
+In WP Admin > RankMath > General Settings:
+- Webmaster Tools tab: Enable "Remove Generator Tag"
+- Advanced tab: Enable "Disable Author Archives"
+- Advanced tab: Enable "Remove Version From Scripts"
+
+Or install WP security plugin (Wordfence, iThemes Security) that handles all above.
+
+### robots.txt AI crawler template
+
+Always include explicit Allow rules for all known AI crawlers. Default `User-agent: *` Disallow rules do NOT automatically apply to AI bots that ignore them - but explicit Allow rules signal intent and improve cooperation:
+
+```
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: ImagesiftBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+Sitemap: https://yoursite.com/sitemap_index.xml
+```
+
+**Cloudflare robots.txt:** If Cloudflare "Manage robots.txt: Content Signals Policy" is On, it can override your WordPress robots.txt for AI crawlers. Set this to **Off** to let WordPress/RankMath serve the file directly.
+
+### PII audit checklist (10-point)
+
+Run before any site goes live or after schema injection:
+
+```bash
+SITE="https://yoursite.com"
+
+# 1. No real email in page source (only obfuscated or JS-rendered)
+curl -s $SITE | grep -oE '[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}' | grep -v "schema.org"
+
+# 2. No client names in page source (grep for known client words)
+curl -s $SITE | grep -i "client_name"
+
+# 3. WP REST users endpoint - check exposure
+curl -s "$SITE/wp-json/wp/v2/users" | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d), 'users exposed')"
+
+# 4. Author archive accessible?
+curl -s -o /dev/null -w "%{http_code}" "$SITE/?author=1"
+
+# 5. No WP version in meta generator
+curl -s $SITE | grep "generator"
+
+# 6. xmlrpc blocked?
+curl -s -o /dev/null -w "%{http_code}" "$SITE/xmlrpc.php"
+
+# 7. readme.html blocked?
+curl -s -o /dev/null -w "%{http_code}" "$SITE/readme.html"
+
+# 8. Security headers present?
+curl -I $SITE | grep -E "(X-Content-Type|Referrer|Strict-Transport)"
+
+# 9. No debug log accessible
+curl -s -o /dev/null -w "%{http_code}" "$SITE/wp-content/debug.log"
+
+# 10. No .env or config files accessible
+curl -s -o /dev/null -w "%{http_code}" "$SITE/.env"
+curl -s -o /dev/null -w "%{http_code}" "$SITE/wp-config.php.bak"
+```
+
+### Security score rubric (add to Phase 0 audit)
+
+| Check | Points | Pass condition |
+|-------|--------|---------------|
+| xmlrpc.php blocked | 3 | Returns 403 or 404 |
+| wp-login.php rate-limited | 3 | CF managed challenge or 429 on repeated hits |
+| User enumeration blocked | 2 | `/wp-json/wp/v2/users` returns 401 or empty |
+| Generator tag removed | 1 | No `<meta name="generator">` in source |
+| Version params removed | 1 | No `?ver=` on CSS/JS |
+| readme.html blocked | 1 | Returns 404 |
+| Security headers present | 2 | X-Content-Type-Options + Referrer-Policy |
+| HSTS enabled | 2 | Strict-Transport-Security in response headers |
+| AI crawlers allowed in robots.txt | 3 | GPTBot, ClaudeBot, PerplexityBot all have `Allow: /` |
+| No PII in page source | 2 | No raw emails, client names, internal paths |
+
+**Total: 20 security points** (integrates with main 100-pt rubric as a bonus dimension)
+
+---
+
+## WordPress-specific Patterns
+
+### Elementor write protocol
+
+Elementor stores page content as JSON in `wp_postmeta` key `_elementor_data`. The REST API writes to this key. Critical rules:
+
+1. **Always read before writing** - fetch current `_elementor_data` via `GET /wp-json/wp/v2/pages/{id}?context=edit` first
+2. **Preserve existing widget IDs** - changing IDs breaks Elementor's CSS lookup; the file `post-{id}.css` maps to container IDs
+3. **Write to the CSS-serving container** - check `wp-content/uploads/elementor/css/post-{id}.css` for the active container ID; if it differs from what the API returns, there are duplicate postmeta rows
+4. **Always clear cache after write** - `DELETE /wp-json/elementor/v1/cache` is the canonical fix
+5. **Duplicate postmeta symptom** - page doesn't change after successful API update (200 OK); fix: write to OLD container IDs that match the CSS file, then clear cache
+
+```python
+# Elementor safe write pattern
+import httpx, json, base64
+
+def elementor_safe_write(site, auth_token, page_id, update_fn):
+    H = {'Authorization': f'Basic {auth_token}', 'Content-Type': 'application/json'}
+
+    # 1. Read current data
+    r = httpx.get(f'{site}/wp-json/wp/v2/pages/{page_id}?context=edit', headers=H)
+    current = json.loads(r.json()['meta'].get('_elementor_data', '[]'))
+
+    # 2. Apply update
+    updated = update_fn(current)
+
+    # 3. Write
+    r2 = httpx.post(f'{site}/wp-json/wp/v2/pages/{page_id}', headers=H,
+        json={'meta': {'_elementor_data': json.dumps(updated)}})
+    assert r2.status_code == 200, f"Write failed: {r2.text[:200]}"
+
+    # 4. Clear cache (mandatory)
+    r3 = httpx.delete(f'{site}/wp-json/elementor/v1/cache', headers=H)
+    print(f"Cache cleared: {r3.status_code}")
+    return r2
+```
+
+### RankMath meta update pattern
+
+```python
+# Update meta title + description for any page
+r = httpx.post(f'{site}/wp-json/rankmath/v1/updateMeta', headers=H,
+    json={
+        'objectID': page_id,
+        'objectType': 'post',
+        'title': 'Your SEO Title | Brand',
+        'description': 'Meta description under 160 chars.',
+    })
+# Returns {"success": true} on success
+```
+
+### WP App Password auth
+
+```python
+import base64, os
+from dotenv import load_dotenv
+load_dotenv()
+
+user = os.getenv('WP_ADMIN_USER')          # admin username
+pw = os.getenv('WP_APP_PASSWORD')          # from WP > Users > Application Passwords
+token = base64.b64encode(f'{user}:{pw}'.encode()).decode()
+H = {'Authorization': f'Basic {token}', 'Content-Type': 'application/json'}
+
+# Note: App Passwords authenticate REST API calls only.
+# They do NOT create a session cookie.
+# admin-ajax.php calls and WP File Manager require a cookie session (wp_nonce).
+# For admin-ajax.php: use a headless browser (Browserless + Puppeteer) to log in and extract cookies.
+```
+
+### Cache-busting sequence (canonical order)
+
+1. `DELETE /wp-json/elementor/v1/cache` - clears Elementor server-side render cache
+2. Cloudflare Purge Everything (Zone > Caching) - clears CDN layer
+3. If Redis/Memcached is used: `redis-cli FLUSHDB` on the cache DB
+4. Request re-indexing in Google Search Console after content changes
 
 ---
 
