@@ -1431,3 +1431,55 @@ Fractional Head of Growth for B2B SaaS, B2C, and ecommerce companies. Former Hea
 This skill encodes everything learned across dozens of sites and one full-day optimization sprint.
 
 If it saved you time: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact) or star the repo.
+
+---
+
+## Schema Gotcha: Review Snippets Allowed Parents (2026-04-20)
+
+Google Rich Results only renders `aggregateRating` + `review` when attached to one of these parent `@type` values:
+
+> Book · Course · CreativeWorkSeason · CreativeWorkSeries · Episode · Event · Game · HowTo · LocalBusiness · MediaObject · Movie · MusicPlaylist · MusicRecording · Organization · Product · Recipe · SoftwareApplication
+
+**Invalid parents** (Google will flag "Invalid object type for field '<parent_node>'"):
+
+- `Person` (even for personal-brand sites)
+- `Service` (even though schema.org permits it syntactically)
+- `WebPage`, `Article`, `ProfilePage`, `WebSite`
+
+### Fix pattern for consulting / SaaS service sites
+
+Package the offering as `@type: "Product"` with `category: "Business Consulting Service"`:
+
+```json
+{
+  "@type": "Product",
+  "name": "Fractional Head of Growth",
+  "category": "Business Consulting Service",
+  "brand": { "@type": "Person", "name": "Your Name" },
+  "offers": {
+    "@type": "Offer",
+    "price": "15000",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition"
+  },
+  "aggregateRating": {...},
+  "review": [...]
+}
+```
+
+### Validator
+
+A one-file pre-push validator is included in consumer implementations:
+
+```python
+VALID_PARENTS = {
+  "Book","Course","CreativeWorkSeason","CreativeWorkSeries","Episode",
+  "Event","Game","HowTo","LocalBusiness","MediaObject","Movie",
+  "MusicPlaylist","MusicRecording","Organization","Product","Recipe",
+  "SoftwareApplication"
+}
+```
+
+Walk every JSON-LD block. If a dict has `review` or `aggregateRating` and its `@type` is not in `VALID_PARENTS`, fail the build.
+
