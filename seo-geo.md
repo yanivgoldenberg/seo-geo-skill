@@ -1483,3 +1483,47 @@ VALID_PARENTS = {
 
 Walk every JSON-LD block. If a dict has `review` or `aggregateRating` and its `@type` is not in `VALID_PARENTS`, fail the build.
 
+
+---
+
+## Elementor Pro + REST API Gotchas (2026-04-20)
+
+When building Elementor templates programmatically (via REST API or JSON import), beware these render failures:
+
+### Theme widgets silently fail when built via REST
+
+Elementor Pro widgets scoped to theme contexts may not render HTML even though settings save correctly:
+
+- `theme-post-title`
+- `theme-archive-title`
+- `theme-post-featured-image`
+- `theme-post-excerpt`
+
+**Fix pattern**: Replace with a standard widget + Elementor dynamic tag:
+
+```json
+{
+  "widgetType": "heading",
+  "settings": {
+    "header_size": "h1",
+    "__dynamic__": {
+      "title": "[elementor-tag id=\"post-title\" name=\"post-title\" settings=\"%7B%7D\"]"
+    }
+  }
+}
+```
+
+Standard widgets (`heading`, `text-editor`, `html`, `image`, `posts`) save and render reliably via REST.
+
+### WordPress `the_content` filter strips H1 from post body
+
+Inline `<h1>` tags in post body HTML are stripped during rendering (reserved for the theme template). Detection: `<h1` exists in `?context=edit` raw content but not in live HTML output.
+
+**Fix**: Put H1 in the Elementor template (via heading widget as above) — never in the post body.
+
+### /llms.txt at root requires a plugin
+
+WordPress routes root-level file paths through `index.php` → 404 handler before redirection plugins can catch them. WP Media uploads + Rank Math Redirections do not work for `/llms.txt`.
+
+**Fix**: Use a purpose-built plugin that hooks `template_redirect` early and streams the content directly. Shipping the llms.txt via `/wp-content/uploads/` URL also works if you accept the non-root path.
+
