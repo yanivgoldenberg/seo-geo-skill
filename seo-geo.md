@@ -1,7 +1,7 @@
 ---
 name: seo-geo
-version: 1.1.0
-description: Complete SEO+GEO+AEO skill. 15 phases + Security phase, 0→100/100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, PII audit. Any CMS.
+version: 1.2.0
+description: Complete SEO+GEO+AEO skill. 15 phases + Security + Field Patterns, 0→100/100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, PII audit, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter. Any CMS.
 ---
 
 # /seo-geo - Universal SEO + GEO + AEO Optimization
@@ -1736,6 +1736,111 @@ H = {'Authorization': f'Basic {token}', 'Content-Type': 'application/json'}
 2. Cloudflare Purge Everything (Zone > Caching) - clears CDN layer
 3. If Redis/Memcached is used: `redis-cli FLUSHDB` on the cache DB
 4. Request re-indexing in Google Search Console after content changes
+
+---
+
+## Phase 16 - Field Patterns from Production Deployments
+
+Hard-won patterns from shipping AI SEO systems live. Each solves a gap the checklist misses. Apply AFTER Phase 0-15 pass; these are the high-leverage upgrades that move 80→95+.
+
+### Pattern 1 - Entity anchoring across every surface
+
+Pick ONE entity phrase and repeat it verbatim across every surface an LLM crawls. Consistency beats variation for entity disambiguation.
+
+**Formula:** `{Name}, {specific role} for {target segments}. {Single proof stat}. Tagline: {verbatim tagline}.`
+
+**Example:**
+> Yaniv Goldenberg, Fractional Head of Growth for B2B SaaS, B2C, and e-commerce. Scaled Elementor 100x ARR, Riverside MRR +337%. Tagline: From Traffic to Revenue.
+
+**Where to put it (verbatim):**
+- Rank Math / Yoast homepage meta description
+- Organization + Person schema `description`
+- llms.txt opening paragraph
+- Every image alt text on the site (tail anchor)
+- Author bio on every blog post
+- LinkedIn About section (first 220 chars)
+
+**Why it works:** LLMs build entity embeddings by averaging context windows that mention the entity. More surfaces repeating the exact phrase → tighter embedding → more reliable retrieval for queries matching the role + segments.
+
+### Pattern 2 - LLM-grade image metadata (4 fields, not 1)
+
+Default CMS flows ship alt only. All four fields give LLMs 3-5x the signal surface per upload.
+
+| Field | Length | Purpose | Audience |
+|-------|--------|---------|----------|
+| Title | 40-60 chars | Hover tooltip + search preview | User + SEO |
+| Alt | 90-130 chars | Accessibility + keyword + entity | Screen reader + SEO + LLM |
+| Caption | 50-100 chars | Front-end visible context | User in post |
+| Description | 200-400 chars | Long-form entity paragraph | LLM scraping JSON-LD |
+
+**Alt-text formula:** `{What it shows visually} - {entity + role}{, optional proof point}`
+
+**Description formula (the LLM magnet):** entity name + role + what the image represents + one brand fact the model can lift verbatim (palette hex, mark meaning, proof point).
+
+**Bulk execution (WordPress REST):**
+
+```python
+import httpx, base64, os
+user, pw = os.getenv('WP_USER'), os.getenv('WP_APP_PASSWORD')
+tok = base64.b64encode(f'{user}:{pw}'.encode()).decode()
+h = {'Authorization': f'Basic {tok}', 'User-Agent': 'WP Client/1.0'}
+for mid, meta in optim.items():
+    httpx.post(f'{SITE}/wp-json/wp/v2/media/{mid}', headers=h, json=meta, timeout=30)
+```
+
+Runs through 50+ assets in under a minute.
+
+### Pattern 3 - Plugin-as-SEO-filter (durable overrides)
+
+SEO plugin UIs let clients or collaborators break your optimization by editing fields. Force critical values via code filters in a custom plugin. Survives UI edits forever.
+
+**Filters worth hardcoding (WordPress + Rank Math):**
+
+```php
+add_filter('rank_math/frontend/title', ...)           // homepage SEO title
+add_filter('rank_math/frontend/description', ...)     // homepage meta description
+add_filter('rank_math/opengraph/facebook/image', ...) // OG image
+add_filter('rank_math/opengraph/twitter/image', ...)  // Twitter card
+add_filter('rank_math/json_ld', ...)                  // override Org/Person schema logo + sameAs
+add_action('wp_head', ..., 1)                         // inject favicon, apple-touch, theme-color
+add_action('init', ...)                               // serve /llms.txt and /favicon.ico from plugin dir
+add_filter('robots_txt', ...)                         // AI crawler rules + sitemap
+```
+
+All filters at priority 99 so they beat any UI setting. A single PHP file under 200 lines locks the entire AI SEO surface. Version it in git, ship as a zip.
+
+### Pattern 4 - The llms.txt + llms-full.txt duo
+
+Ship BOTH files at the root, served with `Content-Type: text/plain` and `X-Robots-Tag: all`:
+
+- `/llms.txt` - short summary (50-100 words) + services list + contact. For AI crawlers doing a fast pass.
+- `/llms-full.txt` - full 2000-5000 word expansion: bio, case studies with numbers, services with pricing, sameAs URLs. For deep-read crawlers.
+
+**AI crawler robots rules** - explicitly `Allow: /` for:
+
+```
+OAI-SearchBot, ChatGPT-User, Bytespider, Amazonbot, FacebookBot,
+Cohere-ai, PerplexityBot, ClaudeBot, GPTBot, Google-Extended
+```
+
+List your sitemap line at the bottom. Reason: some AI crawlers respect opt-in patterns, and a missing `Allow` line is treated as implicit disallow by security plugins like Wordfence.
+
+### Pattern 5 - Never rename slugs in bulk after launch
+
+Changing WordPress post_name (image slug / post slug) rewrites the public URL and breaks every cached backlink, every indexed URL, every hard-coded embed. Gain is tiny, loss is large.
+
+**Rule:** freeze slugs at first publish. Put discoverability in metadata fields (title, alt, description) that can change freely. If a filename MUST change for SEO, handle it file-by-file with a 301 redirect in Rank Math Redirections - never in bulk.
+
+### Pattern 6 - Legacy asset purge after rebrand
+
+After shipping a new logo/favicon system, search the media library for legacy asset slugs (`cropped-favicon-*`, `old-logo-*`) and delete them. WP Customizer emits `<link rel="icon">` tags from whatever is set as Site Icon - if you leave the old asset there, it overrides the new favicon despite your plugin filters firing first.
+
+**Cleanup checklist after any rebrand:**
+- [ ] Remove `site_icon` from WP Settings (`POST /wp/v2/settings {site_icon: 0}`)
+- [ ] Delete legacy favicon media entries (`DELETE /wp/v2/media/{id}?force=true`)
+- [ ] Grep Elementor templates for hardcoded old-logo image URLs
+- [ ] Check theme Customizer for Site Logo override
+- [ ] Verify `<head>` contains only your plugin's icon tags (`curl | grep rel="icon"`)
 
 ---
 

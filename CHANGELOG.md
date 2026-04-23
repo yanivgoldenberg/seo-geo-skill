@@ -12,6 +12,24 @@ Format: [version] - YYYY-MM-DD
 - `examples/wordpress/yg-geo-fixes/` - reference WordPress plugin implementing the site-wide + per-page GEO pattern (serves `/llms.txt`, patches robots.txt with 5 AI UAs + Sitemap, enriches Person.sameAs, auto-fills Rank Math meta descriptions on publish, injects FAQPage schema on `/services/*` children)
 - `docs/patterns/auto-geo-on-publish.md` - architectural pattern doc: 10 fixes that moved composite GEO 61 -> 69 on a real WordPress + Elementor + Rank Math site, split into one-shot vs auto-hook; YGM integration pattern; Next.js / Astro / Ghost adaptation guide
 
+## [1.2.0] - 2026-04-24
+
+Field Patterns appendix added. Sourced from production deployment on yanivgoldenberg.com brand system launch.
+
+### Added
+- Phase 16: Field Patterns from Production Deployments (6 patterns)
+  1. Entity anchoring across every surface (verbatim phrase repeated across meta/schema/llms.txt/alt/bio)
+  2. LLM-grade image metadata (4 fields per image, not just alt - title/alt/caption/description with bulk WP REST snippet)
+  3. Plugin-as-SEO-filter (durable code-level overrides surviving UI edits)
+  4. llms.txt + llms-full.txt duo (short fast-pass + long deep-read)
+  5. Never rename slugs in bulk (301 per-file rule)
+  6. Legacy asset purge after rebrand (WP site_icon cleanup checklist)
+
+### Changed
+- Description metadata updated to reflect 6 new patterns
+- Version bumped 1.1.0 -> 1.2.0
+
+---
 ## [1.0.0] - 2026-04-18
 
 Initial release.
