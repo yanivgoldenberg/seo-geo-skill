@@ -6,6 +6,19 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.6.1] - 2026-04-24
+
+Paid-offer + trust hardening pass following the external 78/100 audit. Scoring rubric, phase count, and benchmark count were already aligned in 1.6.0; this release adds the paid audit CTA, a sample audit artifact, and a banned-endpoint policy test so the policy cannot regress silently.
+
+### Added
+- `docs/sample-paid-audit.md` - redacted version of the artifact every paid audit client receives. Same structure as production deliverables: composite score, 6-dimension breakdown, competitor benchmark, top 10 ranked fixes with impact/effort/risk, before-after diff example, 30-day implementation plan. Linked from README so buyers see the output before applying.
+- `tests/test_banned_endpoints.py` - pins the Phase 17 safety contract: required bans present in `seo-geo.md`, `SECURITY.md` mirrors the list, `_is_banned()` guard + `BANNED_ENDPOINTS` constant are documented, no example under `examples/` calls a banned user-mutation endpoint.
+
+### Changed
+- README closing section replaced the generic "book a 15-min call" line with an application-only **AI Search Visibility Audit** offer: deliverables, format, credited-toward-implementation pricing, and a link to the sample audit doc. GitHub stars remain the secondary ask.
+
+---
+
 ## [1.6.0] - 2026-04-24
 
 Bundled audit/fix release. Addresses three converging audit reports (internal phase-by-phase, security, and external 78/100 audit). Biggest win: one canonical scoring rubric shared by the skill body AND the benchmark script, enforced by a new parity test.

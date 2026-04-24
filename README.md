@@ -10,7 +10,7 @@
 
 *A Phase 0 audit + 19-phase Claude Code workflow for AI Search Visibility. Scores your site, finds the gaps blocking AI citation, produces a safe ranked fix plan. Any CMS.*
 
-[![Version](https://img.shields.io/badge/version-1.6.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.6.1-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
 [![Benchmark](https://img.shields.io/badge/13_sites_benchmarked-brightgreen?style=flat-square)](docs/benchmarks.md)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-orange?style=flat-square)](LICENSE)
@@ -153,7 +153,26 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 
 Former Head of Growth at a PLG SaaS with 20M+ users (100x ARR), a consumer SaaS (+337% MRR), an MLOps SaaS acquired by a Fortune 100. $100M+ in ad spend managed.
 
-If this saved you an afternoon - star the repo. If you want help applying it at scale: [book a 15-min call](https://yanivgoldenberg.com/contact).
+If this saved you an afternoon, star the repo.
+
+---
+
+## Want this applied to your SaaS site?
+
+I run a paid **AI Search Visibility Audit** for post-PMF SaaS, B2B, and e-commerce brands.
+
+**What you get:**
+- 0-100 AI Search Readiness score across 6 dimensions (Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10)
+- Head-to-head benchmark vs 3 competitors
+- Top 10 fixes ranked by impact, effort, and implementation risk
+- Implementation plan your dev team can ship
+- 30-minute walkthrough
+
+**Format:** application-only. Fee is quoted after the application based on scope and is credited in full if you continue into the Implementation Sprint ($7.5K-$15K, depending on scope).
+
+**Sample output:** [`docs/sample-paid-audit.md`](docs/sample-paid-audit.md) - see exactly what a finished audit looks like before applying.
+
+[**Apply for the AI Search Visibility Audit →**](https://yanivgoldenberg.com/contact)
 
 ---
 
