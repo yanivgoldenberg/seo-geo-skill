@@ -6,7 +6,9 @@
 
 *The only Claude Code skill that closes every SEO, GEO, and AEO gap in one session.*
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
+[![Score](https://img.shields.io/badge/audit_score-94%2F100-brightgreen?style=flat-square)](#real-world-results)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-orange?style=flat-square)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-purple?style=flat-square)](https://claude.ai/code)
 [![Platforms](https://img.shields.io/badge/platforms-WordPress%20%7C%20Shopify%20%7C%20Webflow%20%7C%20Next.js-green?style=flat-square)](#supported-platforms)
@@ -15,7 +17,23 @@
 
 ---
 
-From `robots.txt` to `llms.txt` - every signal that affects whether humans and AI find you, scored and fixed in one Claude Code session. 15 phases. 16 schema types. 7 platforms. Any CMS.
+From `robots.txt` to `llms.txt` - every signal that affects whether humans and AI find you, scored and fixed in one Claude Code session. 19 phases. 16 schema types. 4 first-class CMS adapters. Any CMS.
+
+## Real-world results
+
+**yanivgoldenberg.com: 61 → 94/100 in one session.**
+
+| Dimension | Before | After | Delta |
+|---|---|---|---|
+| Technical SEO | 72 | 95 | +23 |
+| On-page SEO | 58 | 92 | +34 |
+| Schema | 40 | 98 | +58 |
+| GEO (LLM citation) | 55 | 96 | +41 |
+| AEO (answer engine) | 48 | 88 | +40 |
+| E-E-A-T | 68 | 92 | +24 |
+| **Composite** | **61** | **94** | **+33** |
+
+Before/after audit reports available in `docs/case-studies/yanivgoldenberg.com.md`.
 
 **Who this is for:**
 - Marketers who want citations in ChatGPT, Perplexity, and Google AI Overviews

@@ -1,7 +1,7 @@
 ---
 name: seo-geo
-version: 1.2.0
-description: Complete SEO+GEO+AEO skill. 15 phases + Security + Field Patterns, 0→100/100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, PII audit, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter. Any CMS.
+version: 1.3.0
+description: Complete SEO+GEO+AEO skill. 19 phases, 0→100/100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, PII audit, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, competitor benchmarking. Any CMS.
 ---
 
 # /seo-geo - Universal SEO + GEO + AEO Optimization
@@ -9,6 +9,34 @@ description: Complete SEO+GEO+AEO skill. 15 phases + Security + Field Patterns, 
 The complete SEO skill for Claude Code. Covers every dimension of modern search: technical SEO, on-page, structured data, LLM/GEO citation, and AEO. Works on any website regardless of CMS or tech stack.
 
 **By:** [Yaniv Goldenberg](https://yanivgoldenberg.com) - Fractional Head of Growth
+
+---
+
+## Table of Contents
+
+- [Quick start](#quick-start-2-minutes-to-value)
+- [Phase 0 - Audit](#phase-0---audit) — 100-pt scoring rubric, 6 dimensions
+- [Phase 1 - Technical SEO](#phase-1---technical-seo) — robots, canonical, sitemap, mobile
+- [Phase 2 - On-Page SEO](#phase-2---on-page-seo) — titles, meta, OG, H1
+- [Phase 3 - Schema](#phase-3---schema) — 16 types, JSON-LD, validation
+- [Phase 4 - GEO](#phase-4---geo-llm-generative-engine-optimization) — llms.txt, entity, AI crawler allow
+- [Phase 5 - AEO](#phase-5---aeo-answer-engine-optimization) — Speakable, direct-answer
+- [Phase 6 - E-E-A-T](#phase-6---e-e-a-t) — author, credentials, trust signals
+- [Phase 7 - Content optimization](#phase-7---content-optimization)
+- [Phase 8 - Core Web Vitals](#phase-8---core-web-vitals) — LCP, INP, CLS
+- [Phase 9 - Internal linking](#phase-9---internal-linking)
+- [Phase 10 - Content refresh](#phase-10---content-refresh-strategy)
+- [Phase 11 - Programmatic SEO](#phase-11---programmatic-seo)
+- [Phase 12 - Video SEO](#phase-12---video-seo)
+- [Phase 13 - International SEO + hreflang](#phase-13---international-seo-and-hreflang)
+- [Phase 14 - Debugging](#phase-14---debugging-and-error-recovery)
+- [Phase 15 - WordPress security hardening](#phase-15---security-hardening-wordpress)
+- [Phase 16 - Field patterns from production](#phase-16---field-patterns-from-production-deployments) *(v1.2.0+)*
+- [Phase 17 - Dry-run safety gates](#phase-17---dry-run-safety-gates) *(v1.3.0+)*
+- [Phase 18 - Multi-platform adapters](#phase-18---multi-platform-adapters) *(v1.3.0+)*
+- [Phase 19 - Competitor benchmarking](#phase-19---competitor-benchmarking) *(v1.3.0+)*
+- [Maintenance schedule](#maintenance-schedule)
+- [Platform quick reference](#platform-quick-reference)
 
 ---
 
@@ -1841,6 +1869,253 @@ After shipping a new logo/favicon system, search the media library for legacy as
 - [ ] Grep Elementor templates for hardcoded old-logo image URLs
 - [ ] Check theme Customizer for Site Logo override
 - [ ] Verify `<head>` contains only your plugin's icon tags (`curl | grep rel="icon"`)
+
+---
+
+## Phase 17 - Dry-run safety gates
+
+Every phase that writes (schema injection, media metadata bulk-update, Elementor modifications, Rank Math overrides) MUST default to dry-run. Writes are opt-in via `--apply`.
+
+### CLI contract
+
+```bash
+/seo-geo https://site.com              # audit only, no writes, always safe
+/seo-geo --phase schema https://site.com           # shows proposed schema diff, no writes
+/seo-geo --phase schema --apply https://site.com   # EXPLICIT opt-in: writes allowed
+/seo-geo --apply-all https://site.com              # applies every fix after confirmation prompt
+```
+
+### Hard rules for any write path
+
+1. **Print the diff first.** Before any POST/PUT/PATCH, print the exact change (before/after) and the target URL.
+2. **Require `--apply` flag for non-interactive runs.** Absent it, log "would write X" and exit 0.
+3. **Interactive confirmation gate** when `--apply` is set but no `--yes`:
+   ```python
+   print(f"About to POST {url} with payload:\n{json.dumps(body, indent=2)}\n")
+   if input("Apply? [y/N]: ").strip().lower() != 'y': raise SystemExit(0)
+   ```
+4. **Audit log.** Append every write to `.seo-geo/audit.log` with timestamp, URL, payload hash, response status.
+5. **Banned endpoints.** The skill MUST NOT touch:
+   - `POST /wp-json/wp/v2/users/{id}` with a `password` field (credential mutation)
+   - `DELETE /wp-json/wp/v2/users/{id}` (user deletion)
+   - Anything that rotates API keys, app passwords, or Coolify env vars
+
+If a task requires a banned endpoint, STOP and surface the step to the human with exact manual instructions.
+
+### Implementation snippet (Python adapter for WP REST)
+
+```python
+def wp_write(session, url, body, apply=False, yes=False):
+    print(f"[dry-run] POST {url}")
+    print(f"  body: {json.dumps(body, indent=2)[:400]}")
+    if not apply:
+        return {'dry_run': True, 'url': url}
+    if not yes and input(f"Apply write to {url}? [y/N]: ").strip().lower() != 'y':
+        raise SystemExit(0)
+    r = session.post(url, json=body, timeout=30)
+    with open('.seo-geo/audit.log', 'a') as f:
+        f.write(f"{datetime.utcnow().isoformat()} {url} {r.status_code}\n")
+    return r.json()
+```
+
+---
+
+## Phase 18 - Multi-platform adapters
+
+Same patterns, four CMS targets. Copy the snippet that matches the site.
+
+### Adapter: WordPress + Rank Math
+
+Already covered in Phases 3, 4, 14, 15 + WordPress-specific Patterns section. Core recipe:
+- Schema: REST `/wp-json/wp/v2/pages/{id}` with `meta.rank_math_rich_snippet`
+- llms.txt: custom plugin `add_action('init', ...)` serving at `/llms.txt`
+- OG image: `add_filter('rank_math/opengraph/facebook/image', ...)`
+- Robots: `add_filter('robots_txt', ...)`
+
+### Adapter: Shopify
+
+Schema via metafields + theme liquid:
+
+```liquid
+{# theme.liquid, inside head #}
+<script type="application/ld+json">
+  {{ shop.metafields.seo.organization_jsonld }}
+</script>
+```
+
+Write metafields via Admin API:
+
+```bash
+curl -X POST "https://{shop}.myshopify.com/admin/api/2025-01/metafields.json" \
+  -H "X-Shopify-Access-Token: $SHOPIFY_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"metafield":{"namespace":"seo","key":"organization_jsonld","type":"json","value":"{...schema...}","owner_resource":"shop"}}'
+```
+
+llms.txt via Shopify Pages + URL redirect: create a page with `template_suffix: llms`, then Admin > Online Store > Navigation > URL Redirects: `/llms.txt -> /pages/llms`.
+
+Robots.txt override via `robots.txt.liquid` template:
+
+```liquid
+{% for group in robots.default_groups %}
+{{- group.user_agent }}
+{%- for rule in group.rules -%}
+{{ rule }}
+{% endfor %}
+{% endfor %}
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: {{ shop.url }}/sitemap.xml
+```
+
+### Adapter: Webflow
+
+Schema via Site Settings > Custom Code > Head:
+
+```html
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"..."}
+</script>
+```
+
+Page-level schema via Page Settings > Custom Code > Head Code.
+
+llms.txt: Webflow doesn't serve arbitrary `.txt` at root. Two paths:
+1. Host llms.txt on a subdomain (`files.yoursite.com/llms.txt`) and add `<link rel="llms" href="...">` in head.
+2. Cloudflare Worker in front of Webflow to serve `/llms.txt` from a Worker KV store.
+
+Robots: Site Settings > SEO > Indexing only supports simple Disallow. For AI-crawler Allow rules, use the Cloudflare Worker approach.
+
+### Adapter: Next.js (App Router, 14+)
+
+```ts
+// app/layout.tsx
+export const metadata: Metadata = {
+  title: { default: 'Site', template: '%s | Site' },
+  description: '...',
+  openGraph: { images: ['/og.png'] },
+};
+
+// app/robots.ts
+import type { MetadataRoute } from 'next';
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [
+      { userAgent: '*', allow: '/' },
+      { userAgent: ['OAI-SearchBot','PerplexityBot','Bytespider','Amazonbot','ClaudeBot','GPTBot','Google-Extended'], allow: '/' },
+    ],
+    sitemap: 'https://yoursite.com/sitemap.xml',
+  };
+}
+
+// app/sitemap.ts
+import type { MetadataRoute } from 'next';
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [{ url: 'https://yoursite.com', lastModified: new Date(), priority: 1 }];
+}
+
+// app/llms.txt/route.ts - serve llms.txt from an App Router route
+export async function GET() {
+  const body = `# Site\n\n> ...`;
+  return new Response(body, { headers: { 'Content-Type': 'text/plain', 'X-Robots-Tag': 'all' } });
+}
+```
+
+For page-level JSON-LD schema in Next.js RSC, render it through a dedicated `<JsonLd>` component that sanitizes the stringified JSON (strip `<`, `>`, `&` via `JSON.stringify(..., null, 0).replace(/</g,'\\u003c')`), or use next-seo's `ArticleJsonLd` / `OrganizationJsonLd` built-ins which handle escaping for you. Do not inject untrusted user-generated content into the script tag.
+
+### Adapter matrix
+
+| Capability | WordPress | Shopify | Webflow | Next.js |
+|---|---|---|---|---|
+| Page-level schema | Rank Math + REST | Liquid in theme | Custom Code per page | `<JsonLd>` RSC |
+| Site schema | `rank_math/json_ld` filter | Metafield + liquid | Site-wide custom code | `app/layout.tsx` |
+| Robots.txt | `robots_txt` filter | `robots.txt.liquid` | Cloudflare Worker | `app/robots.ts` |
+| llms.txt | Plugin `init` action | Page + redirect | Subdomain or Worker | `app/llms.txt/route.ts` |
+| OG image | `rank_math/opengraph/*` | Theme settings | Custom code meta | `metadata.openGraph` |
+| Sitemap | Rank Math sitemap | Native /sitemap.xml | Native /sitemap.xml | `app/sitemap.ts` |
+| hreflang | Polylang / WPML | Markets + liquid | Site localization | `alternates.languages` |
+
+---
+
+## Phase 19 - Competitor benchmarking
+
+Run a head-to-head score against a named competitor. Produces a gap list you can close in a week.
+
+### CLI
+
+```
+/seo-geo --benchmark https://competitor.com https://yoursite.com
+/seo-geo --benchmark-batch competitors.txt https://yoursite.com
+```
+
+### What it scores (mirrors Phase 0 rubric so numbers are comparable)
+
+```
+              | You    | Competitor | Gap   | Closable in 1 week
+-------------------------------------------------------------
+Technical SEO |  85    |  90        |  -5   | yes (canonical)
+On-page SEO   |  78    |  86        |  -8   | yes (H1 + meta)
+Schema        |  65    |  88        |  -23  | yes (Organization + Person)
+GEO           |  55    |  72        |  -17  | yes (llms.txt + sameAs)
+AEO           |  45    |  60        |  -15  | partial (Speakable only)
+E-E-A-T       |  82    |  82        |   0   | no (tied)
+-------------------------------------------------------------
+Composite     |  68    |  80        |  -12  | ~8 points in one week
+```
+
+### Data sources (all public)
+
+| Signal | Tool / endpoint |
+|---|---|
+| Schema on competitor homepage | curl + parse `<script type="application/ld+json">` |
+| Meta / OG / Twitter card | curl + parse head |
+| llms.txt / llms-full.txt | `curl -I {domain}/llms.txt` |
+| Robots.txt AI-crawler rules | `curl {domain}/robots.txt` |
+| sameAs profile count | Parse Organization/Person schema |
+| Core Web Vitals | PageSpeed Insights API |
+| Backlink count | Ahrefs API if available, Semrush fallback |
+| AI citations | Perplexity/ChatGPT search; sample 10 queries in the vertical |
+| Content depth | Crawl top 20 pages, measure word count + heading structure |
+
+### Output: gap-closure plan
+
+```markdown
+# Benchmark: yoursite.com vs competitor.com
+
+## You: 68 | Competitor: 80 | Gap: -12
+
+### Quick wins (close in 1 week)
+- [ ] Add Organization + Person schema on homepage (+8)
+- [ ] Publish llms.txt + llms-full.txt (+5)
+- [ ] Add sameAs entries for 6 profiles you have but don't declare (+3)
+
+### Medium-term (2-4 weeks)
+- [ ] Rewrite homepage meta description with entity anchor + proof stat (+2)
+- [ ] Add FAQPage schema to top 3 money pages (+3)
+
+### Structural (1-3 months)
+- [ ] Get cited on 5 authoritative third-party sources the competitor is cited on (+4)
+```
+
+### Implementation sketch
+
+```python
+def benchmark(you: str, them: str) -> dict:
+    you_score = audit(you)
+    them_score = audit(them)
+    gaps = {k: them_score[k] - you_score[k] for k in you_score if them_score.get(k, 0) > you_score[k]}
+    return {
+        'you': you_score,
+        'them': them_score,
+        'gaps': sorted(gaps.items(), key=lambda kv: -kv[1]),
+        'closable_in_1_week': [k for k, v in gaps.items() if v >= 3 and k in QUICK_WINS],
+    }
+```
 
 ---
 

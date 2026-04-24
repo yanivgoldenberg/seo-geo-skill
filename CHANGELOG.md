@@ -6,6 +6,25 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.3.0] - 2026-04-24
+
+100/100 polish release. Four new phases, CI, case study, real-world score badge.
+
+### Added
+- Phase 17: Dry-run safety gates (`--apply` opt-in, banned endpoint list, audit log)
+- Phase 18: Multi-platform adapters (WordPress, Shopify, Webflow, Next.js) with per-platform code snippets + parity matrix
+- Phase 19: Competitor benchmarking (head-to-head score + gap-closure plan)
+- Table of Contents at top of seo-geo.md linking to all 19 phases
+- GitHub Actions CI: skill metadata validation, JSON-LD fixture validation, live endpoint check, link check via lychee
+- `tests/` directory with 3 Python test scripts
+- `docs/case-studies/yanivgoldenberg.com.md` (61 to 94 score delta with breakdown)
+- README: CI + score badges, Real-world results table
+
+### Changed
+- Skill frontmatter description updated to reflect 19 phases
+- Version bumped 1.2.0 -> 1.3.0
+- README version badge 1.0.0 -> 1.3.0
+
 ## [Unreleased]
 
 ### Added
