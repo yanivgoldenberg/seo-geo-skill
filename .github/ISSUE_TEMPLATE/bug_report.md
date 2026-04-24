@@ -1,23 +1,20 @@
 ---
 name: Bug report
-about: Something not working as expected
-title: '[BUG] '
+about: Something in the skill produces incorrect output
 labels: bug
-assignees: yanivgoldenberg
 ---
 
-**Describe the bug**
-What happened? What did you expect to happen?
+**Phase:** (e.g., Phase 4 GEO)
+**Platform:** WordPress / Shopify / Webflow / Next.js / other
+**Command I ran:**
+```
+/seo-geo ...
+```
 
-**To reproduce**
-1. Which phase or flag were you running? (e.g. `/seo-geo --phase schema`)
-2. What CMS / platform? (WordPress, Shopify, etc.)
-3. What did the skill output?
+**What I expected:**
 
-**Expected behavior**
-What should have happened instead?
+**What actually happened:**
 
-**Environment**
-- Claude Code version:
-- CMS / platform:
-- Any relevant error messages:
+**Site URL (if public):**
+
+**Skill version** (run `/seo-geo --verify` to check):
