@@ -1,5 +1,9 @@
 # seo-geo-skill
 
+<p align="center">
+  <img src="docs/assets/seo-geo-cover-1600x900.png" alt="seo-geo-skill — 19-phase SEO + GEO + AEO skill for Claude Code. Real case study: 61 to 94/100 in one session." width="100%" />
+</p>
+
 <div align="center">
 
 **Your site is invisible to AI. This fixes it.**
