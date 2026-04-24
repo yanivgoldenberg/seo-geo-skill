@@ -8,7 +8,7 @@
 
 ## The 10 fixes that moved 61 -> 69 on a real WordPress site
 
-Reference site: a personal-brand Fractional Head of Growth site on WordPress + Elementor + Rank Math SEO + Cloudflare.
+Reference site: a personal-brand Fractional Head of Growth site on WordPress + a B2B SaaS + Rank Math SEO + Cloudflare.
 
 ### Site-wide (one-shot, fix once)
 
@@ -28,7 +28,7 @@ Reference site: a personal-brand Fractional Head of Growth site on WordPress + E
 | 7 | FAQPage JSON-LD on 3 service pages | Schema +10, AI Citability +5 | `rank_math/json_ld` filter -> inject when parent=services |
 | 8 | Rank Math rich-snippet type defaulted to `article` on service children | Schema +2 | `transition_post_status` -> set meta |
 | 9 | Canonical URL sanity check (log warnings when Rank Math defaults don't resolve) | Technical +2 | `transition_post_status` -> `error_log` |
-| 10 | Elementor cache flush after any of the above (Elementor caches rendered HTML + JSON-LD) | Ambient (required for fixes 6-9 to actually show up) | `DELETE /wp-json/elementor/v1/cache` after deploy |
+| 10 | a B2B SaaS cache flush after any of the above (a B2B SaaS caches rendered HTML + JSON-LD) | Ambient (required for fixes 6-9 to actually show up) | `DELETE /wp-json/elementor/v1/cache` after deploy |
 
 **Composite result: 61 -> 69 (+8).** Technical GEO 79 -> 94, Schema 79 -> 89, Platform 50 -> 65.
 

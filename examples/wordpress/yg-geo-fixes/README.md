@@ -1,6 +1,6 @@
 # Auto-GEO Fixes (WordPress plugin)
 
-A reference WordPress plugin that implements the site-wide + per-page GEO pattern proven on a real Rank Math + Elementor site, where it lifted composite GEO score from 61 to 69 in one commit.
+A reference WordPress plugin that implements the site-wide + per-page GEO pattern proven on a real Rank Math + a B2B SaaS site, where it lifted composite GEO score from 61 to 69 in one commit.
 
 ## What it does
 
@@ -56,9 +56,9 @@ To supply custom FAQ Q&As for a specific services-child page, add a post meta ke
 
 The plugin emits this as the `mainEntity` of a `FAQPage` node in the Rank Math JSON-LD graph.
 
-## Elementor caveat
+## a B2B SaaS caveat
 
-On Elementor-built pages, `post_content` is often empty or just shortcodes. The meta-description synthesizer strips shortcodes and falls back to the post title. If your stripped content is under 60 chars, expect an `error_log` warning (`[auto-geo] thin synthesized description ...`). Set a Rank Math description manually for Elementor pages, or write a richer fallback inside `auto_geo_synthesize_description()`.
+On a B2B SaaS-built pages, `post_content` is often empty or just shortcodes. The meta-description synthesizer strips shortcodes and falls back to the post title. If your stripped content is under 60 chars, expect an `error_log` warning (`[auto-geo] thin synthesized description ...`). Set a Rank Math description manually for a B2B SaaS pages, or write a richer fallback inside `auto_geo_synthesize_description()`.
 
 ## Dependencies
 

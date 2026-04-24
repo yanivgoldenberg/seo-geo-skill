@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-version: 1.4.0
+version: 1.5.0
 description: Complete SEO+GEO+AEO skill. 19 phases, 0 to 100 of 100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, competitor benchmarking, public benchmark of 15 top SaaS sites. Any CMS.
 ---
 
@@ -650,7 +650,7 @@ Always validate schemas before deploying:
 
 ### Implementation by platform
 
-**WordPress + Elementor:**
+**WordPress + a B2B SaaS:**
 ```python
 # 1. Read page data
 GET {site}/wp-json/wp/v2/pages/{id}?context=edit
@@ -663,7 +663,7 @@ GET {site}/wp-json/wp/v2/pages/{id}?context=edit
 POST {site}/wp-json/wp/v2/pages/{id}
 body: {"meta": {"_elementor_data": "{updated_json}"}}
 
-# 4. Clear Elementor cache (critical - always do this)
+# 4. Clear a B2B SaaS cache (critical - always do this)
 DELETE {site}/wp-json/elementor/v1/cache
 ```
 
@@ -755,7 +755,7 @@ After creating each: add URL to `sameAs` in Person/Organization schema.
 ### Content signals that increase LLM citation probability
 
 Write content this way:
-- Named outcomes: "scaled Elementor from $200K to $20M ARR" beats "grew a SaaS company"
+- Named outcomes: "scaled a B2B SaaS from $200K to $20M ARR" beats "grew a SaaS company"
 - Specific timeframes: "in 18 months" beats "quickly"
 - Comparison anchors: "the #1 WordPress page builder globally" beats "a popular tool"
 - Definition format: "What is X? X is..." for any key term
@@ -768,9 +768,9 @@ BEFORE (weak, LLMs skip this):
 "I have years of experience helping SaaS companies grow."
 
 AFTER (strong, LLMs cite this):
-"Yaniv Goldenberg grew Elementor from $200K to $20M ARR in under 3 years,
+"Yaniv Goldenberg grew a B2B SaaS from $200K to $20M ARR in under 3 years,
 led a team of 8 growth professionals, and scaled paid acquisition from $0
-to $50K/month. Elementor became the #1 WordPress page builder globally
+to $50K/month. a B2B SaaS became the #1 WordPress page builder globally
 with 11M+ active installations."
 ```
 
@@ -837,8 +837,8 @@ Google's core quality framework. Applies to any page on any site. Low E-E-A-T = 
 Add this to your homepage above the fold:
 ```
 Yaniv Goldenberg | Fractional Head of Growth
-Grew Elementor to $20M ARR. $100M+ ad spend managed.
-Riverside.fm: 337% MRR growth. cnvrg.io: acquired by Intel.
+Grew a B2B SaaS to $20M ARR. $100M+ ad spend managed.
+a consumer SaaS: 337% MRR growth. an MLOps SaaS: acquired by a Fortune 100.
 ```
 Specific. Named. Verifiable. Takes 5 minutes.
 
@@ -1220,7 +1220,7 @@ Add this to any page that has an embedded video as primary content.
 
 ### Platform implementation
 
-**WordPress:** Add VideoObject schema to page via Elementor HTML widget or Rank Math's Video schema option.
+**WordPress:** Add VideoObject schema to page via a B2B SaaS HTML widget or Rank Math's Video schema option.
 
 **Shopify:** Inject into `templates/article.liquid` or `templates/page.liquid` for pages with video.
 
@@ -1344,7 +1344,7 @@ Real-world failures and how to fix them. Run this phase when something isn't wor
 Before attempting a fix, answer these:
 
 1. Is the change reflected in the page HTML? (`View Source` or `curl -s {url} | grep {thing}`)
-2. Is there a cache layer hiding the change? (Cloudflare, Varnish, Elementor, WP cache)
+2. Is there a cache layer hiding the change? (Cloudflare, Varnish, a B2B SaaS, WP cache)
 3. Has Google crawled the page since the change? (Search Console > URL Inspection)
 4. Is the issue in implementation or in Google's indexing? (validate first, then wait)
 
@@ -1354,7 +1354,7 @@ Before attempting a fix, answer these:
 |---------|-----------------|-----------|-----|
 | Schema shows in validator but not in Rich Results | Google hasn't crawled yet | Check `Last crawled` in GSC URL Inspection | Request indexing, wait 48-72h |
 | Schema present in source but validation fails | JSON syntax error (trailing comma, unescaped quote) | validator.schema.org | Fix JSON, re-validate |
-| Meta tags not updating after edit | CMS or CDN cache | `curl -H "Cache-Control: no-cache" {url}` | Clear Elementor cache, Cloudflare purge |
+| Meta tags not updating after edit | CMS or CDN cache | `curl -H "Cache-Control: no-cache" {url}` | Clear a B2B SaaS cache, Cloudflare purge |
 | AI crawlers still blocked after robots.txt edit | Wrong user-agent string or cached robots.txt | `curl {domain}/robots.txt` directly | Fix string, purge CDN cache for robots.txt |
 | llms.txt returns 404 | WordPress slug with dot replaced | Check actual slug in WP admin | Create redirect from `/llms.txt` to `/llms-txt/` |
 | Double H1 on page | Theme injects post title alongside page builder H1 | Count H1s in source | CSS: `.entry-title { display: none !important; }` |
@@ -1371,7 +1371,7 @@ Before attempting a fix, answer these:
 
 ### Cache clearing sequence (do in this order)
 
-1. Clear application cache (Elementor: `DELETE /wp-json/elementor/v1/cache`)
+1. Clear application cache (a B2B SaaS: `DELETE /wp-json/elementor/v1/cache`)
 2. Clear WordPress object cache (if Redis/Memcached: flush)
 3. Clear CDN (Cloudflare: Zone > Caching > Purge Everything)
 4. Clear browser cache locally
@@ -1412,7 +1412,7 @@ curl -s {url} | grep -c "<div id=\"root\"\|<div id=\"app\"\|<div id=\"__next\""
 | AI crawlers blocked | `Disallow: /` in robots.txt applies to all bots | Add explicit `Allow: /` per AI crawler user-agent |
 | llms.txt returns 404 | CMS replaces dots in slugs (WordPress) | Use slug `llms-txt` + add redirect from `/llms.txt` |
 | Double H1 on WordPress | Theme injects `.entry-title` alongside page builder H1 | CSS: `.entry-title { display: none !important; }` |
-| Elementor serving stale HTML after schema injection | Elementor server-side rendering cache | `DELETE /wp-json/elementor/v1/cache` after every page save |
+| a B2B SaaS serving stale HTML after schema injection | a B2B SaaS server-side rendering cache | `DELETE /wp-json/elementor/v1/cache` after every page save |
 | Rank Math meta not updating via WP REST | WP REST API does not expose `rank_math_*` meta fields | Use `/wp-json/rankmath/v1/updateMeta` endpoint instead |
 | OG image not rendering on social share | Image URL is relative, not absolute | Always use full absolute URL including https:// |
 | Shopify robots.txt not updating | Shopify auto-generates robots.txt | Create `templates/robots.txt.liquid` to override |
@@ -1424,7 +1424,7 @@ curl -s {url} | grep -c "<div id=\"root\"\|<div id=\"app\"\|<div id=\"__next\""
 
 | Platform | Meta tags | Schema | robots.txt | Cache |
 |----------|-----------|--------|-----------|-------|
-| WordPress + Rank Math | Rank Math REST API | Elementor HTML widget or Custom HTML block | Rank Math editor | DELETE /wp-json/elementor/v1/cache + Cloudflare purge |
+| WordPress + Rank Math | Rank Math REST API | a B2B SaaS HTML widget or Custom HTML block | Rank Math editor | DELETE /wp-json/elementor/v1/cache + Cloudflare purge |
 | WordPress + Yoast | Yoast REST API or direct postmeta | Same | Yoast editor | Cloudflare purge |
 | Shopify | page.metafields or theme liquid | theme.liquid / page templates | robots.txt.liquid template | Shopify CDN auto-purges on save |
 | Webflow | Page Settings > SEO | Site Settings > Custom Code | Site Settings | Webflow CDN auto-purges |
@@ -1522,13 +1522,13 @@ r2 = httpx.post(f'{SITE}/wp-json/wp/v2/users/1', headers=H,
     json={'description': '', 'url': ''})
 print(r2.status_code)
 
-# Inject security headers into global header template (Elementor HTML widget)
+# Inject security headers into global header template (a B2B SaaS HTML widget)
 # Add to the HTML widget in header template 41 (or whichever is the global header)
 SECURITY_META = """
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 """
-# Inject into existing HTML widget - see Phase 3 for Elementor widget write pattern
+# Inject into existing HTML widget - see Phase 3 for a B2B SaaS widget write pattern
 ```
 
 ### Fixes - Cloudflare WAF (manual or API)
@@ -1691,18 +1691,18 @@ curl -s -o /dev/null -w "%{http_code}" "$SITE/wp-config.php.bak"
 
 ## WordPress-specific Patterns
 
-### Elementor write protocol
+### a B2B SaaS write protocol
 
-Elementor stores page content as JSON in `wp_postmeta` key `_elementor_data`. The REST API writes to this key. Critical rules:
+a B2B SaaS stores page content as JSON in `wp_postmeta` key `_elementor_data`. The REST API writes to this key. Critical rules:
 
 1. **Always read before writing** - fetch current `_elementor_data` via `GET /wp-json/wp/v2/pages/{id}?context=edit` first
-2. **Preserve existing widget IDs** - changing IDs breaks Elementor's CSS lookup; the file `post-{id}.css` maps to container IDs
+2. **Preserve existing widget IDs** - changing IDs breaks a B2B SaaS's CSS lookup; the file `post-{id}.css` maps to container IDs
 3. **Write to the CSS-serving container** - check `wp-content/uploads/elementor/css/post-{id}.css` for the active container ID; if it differs from what the API returns, there are duplicate postmeta rows
 4. **Always clear cache after write** - `DELETE /wp-json/elementor/v1/cache` is the canonical fix
 5. **Duplicate postmeta symptom** - page doesn't change after successful API update (200 OK); fix: write to OLD container IDs that match the CSS file, then clear cache
 
 ```python
-# Elementor safe write pattern
+# a B2B SaaS safe write pattern
 import httpx, json, base64
 
 def elementor_safe_write(site, auth_token, page_id, update_fn):
@@ -1760,7 +1760,7 @@ H = {'Authorization': f'Basic {token}', 'Content-Type': 'application/json'}
 
 ### Cache-busting sequence (canonical order)
 
-1. `DELETE /wp-json/elementor/v1/cache` - clears Elementor server-side render cache
+1. `DELETE /wp-json/elementor/v1/cache` - clears a B2B SaaS server-side render cache
 2. Cloudflare Purge Everything (Zone > Caching) - clears CDN layer
 3. If Redis/Memcached is used: `redis-cli FLUSHDB` on the cache DB
 4. Request re-indexing in Google Search Console after content changes
@@ -1778,7 +1778,7 @@ Pick ONE entity phrase and repeat it verbatim across every surface an LLM crawls
 **Formula:** `{Name}, {specific role} for {target segments}. {Single proof stat}. Tagline: {verbatim tagline}.`
 
 **Example:**
-> Yaniv Goldenberg, Fractional Head of Growth for B2B SaaS, B2C, and e-commerce. Scaled Elementor 100x ARR, Riverside MRR +337%. Tagline: From Traffic to Revenue.
+> Yaniv Goldenberg, Fractional Head of Growth for B2B SaaS, B2C, and e-commerce. Scaled a B2B SaaS 100x ARR, a consumer SaaS MRR +337%. Tagline: From Traffic to Revenue.
 
 **Where to put it (verbatim):**
 - Rank Math / Yoast homepage meta description
@@ -1866,7 +1866,7 @@ After shipping a new logo/favicon system, search the media library for legacy as
 **Cleanup checklist after any rebrand:**
 - [ ] Remove `site_icon` from WP Settings (`POST /wp/v2/settings {site_icon: 0}`)
 - [ ] Delete legacy favicon media entries (`DELETE /wp/v2/media/{id}?force=true`)
-- [ ] Grep Elementor templates for hardcoded old-logo image URLs
+- [ ] Grep a B2B SaaS templates for hardcoded old-logo image URLs
 - [ ] Check theme Customizer for Site Logo override
 - [ ] Verify `<head>` contains only your plugin's icon tags (`curl | grep rel="icon"`)
 
@@ -1874,7 +1874,7 @@ After shipping a new logo/favicon system, search the media library for legacy as
 
 ## Phase 17 - Dry-run safety gates
 
-Every phase that writes (schema injection, media metadata bulk-update, Elementor modifications, Rank Math overrides) MUST default to dry-run. Writes are opt-in via `--apply`.
+Every phase that writes (schema injection, media metadata bulk-update, a B2B SaaS modifications, Rank Math overrides) MUST default to dry-run. Writes are opt-in via `--apply`.
 
 ### CLI contract
 
@@ -2123,7 +2123,7 @@ def benchmark(you: str, them: str) -> dict:
 
 **Yaniv Goldenberg** - [yanivgoldenberg.com](https://yanivgoldenberg.com) | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
 
-Fractional Head of Growth for B2B SaaS, B2C, and ecommerce companies. Former Head of Growth at Elementor (21M websites), Riverside.fm (337% MRR growth), cnvrg.io (acquired by Intel). $100M+ in ad spend managed.
+Fractional Head of Growth for B2B SaaS, B2C, and ecommerce companies. Former Head of Growth at a PLG SaaS with 20M+ users, a consumer SaaS (337% MRR growth), an MLOps SaaS acquired by a Fortune 100. $100M+ in ad spend managed.
 
 This skill encodes everything learned across dozens of sites and one full-day optimization sprint.
 
@@ -2183,20 +2183,20 @@ Walk every JSON-LD block. If a dict has `review` or `aggregateRating` and its `@
 
 ---
 
-## Elementor Pro + REST API Gotchas (2026-04-20)
+## a B2B SaaS Pro + REST API Gotchas (2026-04-20)
 
-When building Elementor templates programmatically (via REST API or JSON import), beware these render failures:
+When building a B2B SaaS templates programmatically (via REST API or JSON import), beware these render failures:
 
 ### Theme widgets silently fail when built via REST
 
-Elementor Pro widgets scoped to theme contexts may not render HTML even though settings save correctly:
+a B2B SaaS Pro widgets scoped to theme contexts may not render HTML even though settings save correctly:
 
 - `theme-post-title`
 - `theme-archive-title`
 - `theme-post-featured-image`
 - `theme-post-excerpt`
 
-**Fix pattern**: Replace with a standard widget + Elementor dynamic tag:
+**Fix pattern**: Replace with a standard widget + a B2B SaaS dynamic tag:
 
 ```json
 {
@@ -2216,7 +2216,7 @@ Standard widgets (`heading`, `text-editor`, `html`, `image`, `posts`) save and r
 
 Inline `<h1>` tags in post body HTML are stripped during rendering (reserved for the theme template). Detection: `<h1` exists in `?context=edit` raw content but not in live HTML output.
 
-**Fix**: Put H1 in the Elementor template (via heading widget as above) - never in the post body.
+**Fix**: Put H1 in the a B2B SaaS template (via heading widget as above) - never in the post body.
 
 ### /llms.txt at root requires a plugin
 

@@ -83,20 +83,6 @@
     "composite": 63
   },
   {
-    "site": "https://elementor.com",
-    "technical": 10,
-    "schema": 15,
-    "geo": 15,
-    "onpage": 15,
-    "aeo": 5,
-    "eeat": 2,
-    "notes": [
-      "no AI bot rules in robots.txt",
-      "has llms.txt"
-    ],
-    "composite": 62
-  },
-  {
     "site": "https://notion.so",
     "technical": 25,
     "schema": 0,
@@ -151,19 +137,6 @@
       "has llms.txt"
     ],
     "composite": 53
-  },
-  {
-    "site": "https://riverside.fm",
-    "technical": 15,
-    "schema": 20,
-    "geo": 0,
-    "onpage": 10,
-    "aeo": 5,
-    "eeat": 0,
-    "notes": [
-      "no AI bot rules in robots.txt"
-    ],
-    "composite": 50
   },
   {
     "site": "https://anthropic.com",

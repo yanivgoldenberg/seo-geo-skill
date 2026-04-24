@@ -3,7 +3,7 @@
 One-session optimization using the seo-geo skill v1.3.0.
 
 **Site:** https://yanivgoldenberg.com (Fractional Head of Growth consultancy)
-**Stack:** WordPress + Elementor + Rank Math + Cloudflare
+**Stack:** WordPress + a B2B SaaS + Rank Math + Cloudflare
 **Session date:** 2026-04-24
 **Operator:** Yaniv Goldenberg
 
@@ -33,4 +33,4 @@ One-session optimization using the seo-geo skill v1.3.0.
 
 - Admin credentials (banned per Phase 17 safety gates)
 - Post slugs (Phase 16, Pattern 5 rule: never rename in bulk)
-- Elementor header/footer HTML beyond scoped insertion
+- a B2B SaaS header/footer HTML beyond scoped insertion

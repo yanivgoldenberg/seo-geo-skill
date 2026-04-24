@@ -13,19 +13,16 @@ Methodology: audit-only `/seo-geo` against each site's homepage + robots.txt + /
 | 4 | planetscale.com | 15 | 15 | 15 | 15 | 5 | 0 | **65** |
 | 5 | vercel.com | 15 | 10 | 15 | 15 | 5 | 3 | **63** |
 | 5 | figma.com | 25 | 15 | 0 | 15 | 5 | 3 | **63** |
-| 7 | elementor.com | 10 | 15 | 15 | 15 | 5 | 2 | **62** |
 | 8 | notion.so | 25 | 0 | 15 | 15 | 5 | 0 | **60** |
 | 9 | mercury.com | 15 | 20 | 0 | 15 | 5 | 3 | **58** |
 | 10 | supabase.com | 10 | 0 | 25 | 15 | 5 | 0 | **55** |
 | 11 | linear.app | 15 | 0 | 15 | 15 | 5 | 3 | **53** |
-| 12 | riverside.fm | 15 | 20 | 0 | 10 | 5 | 0 | **50** |
 | 13 | anthropic.com | 15 | 0 | 0 | 10 | 5 | 0 | **30** |
 | 14 | ramp.com | 10 | 0 | 15 | 0 | 0 | 0 | **25** |
 | 15 | fly.io | 0 | 0 | 0 | 5 | 5 | 0 | **10** |
 
 ## What the data reveals
 
-**53% of top SaaS sites have no llms.txt.** Of 15 high-revenue SaaS brands, only 8 serve an `/llms.txt` file. The other 7 - including anthropic.com, figma.com, mercury.com, riverside.fm - are invisible to AI crawlers that respect the standard.
 
 **73% have no Person or Organization schema on the homepage.** Of the 15 sites, 11 either have no JSON-LD or an Organization/Person node that's missing core fields like `sameAs`, `logo`, or `description`. These sites will be harder to disambiguate in LLM answer generation.
 

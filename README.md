@@ -152,7 +152,7 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 
 **[Yaniv Goldenberg](https://yanivgoldenberg.com)** | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
 
-Former Head of Growth at Elementor (21M websites, 100x ARR), Riverside.fm (+337% MRR), cnvrg.io (acquired by Intel). $100M+ in ad spend managed.
+Former Head of Growth at a PLG SaaS with 20M+ users (100x ARR), a consumer SaaS (+337% MRR), an MLOps SaaS acquired by a Fortune 100. $100M+ in ad spend managed.
 
 If this saved you an afternoon - star the repo. If you want help applying it at scale: [book a 15-min call](https://yanivgoldenberg.com/contact).
 

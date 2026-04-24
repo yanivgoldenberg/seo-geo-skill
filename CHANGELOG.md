@@ -6,6 +6,23 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.5.0] - 2026-04-24
+
+Privacy release. Removed all references to past employers and current clients. Anonymized proof stats.
+
+### Changed
+- Removed Elementor, Riverside.fm, cnvrg.io, Intel, and current client names from all docs
+- Anonymized case study (yanivgoldenberg.com entry retained as sole self-benchmark)
+- Bio now reads: 15+ years operating growth, $100M+ ad budgets managed, multiple B2B SaaS scaled to $20M+ ARR
+- Dropped elementor.com and riverside.fm from public benchmark leaderboard (potential conflict of interest as past employers)
+- Plugin yg-geo-fixes v1.3.0 deployed with scrubbed llms.txt content
+- Homepage Rank Math meta description rewritten to anonymized proof
+
+### Removed
+- Specific company names in proof statements across README, seo-geo.md, case-studies, CHANGELOG references
+
+### Added
+- Nothing new; this is purely a privacy/positioning pass
 ## [1.4.0] - 2026-04-24
 
 Public benchmark release. Replace self-only case study with 15-site public leaderboard.
@@ -46,7 +63,7 @@ Public benchmark release. Replace self-only case study with 15-site public leade
 
 ### Added
 - `examples/wordpress/yg-geo-fixes/` - reference WordPress plugin implementing the site-wide + per-page GEO pattern (serves `/llms.txt`, patches robots.txt with 5 AI UAs + Sitemap, enriches Person.sameAs, auto-fills Rank Math meta descriptions on publish, injects FAQPage schema on `/services/*` children)
-- `docs/patterns/auto-geo-on-publish.md` - architectural pattern doc: 10 fixes that moved composite GEO 61 -> 69 on a real WordPress + Elementor + Rank Math site, split into one-shot vs auto-hook; YGM integration pattern; Next.js / Astro / Ghost adaptation guide
+- `docs/patterns/auto-geo-on-publish.md` - architectural pattern doc: 10 fixes that moved composite GEO 61 -> 69 on a real WordPress + a B2B SaaS + Rank Math site, split into one-shot vs auto-hook; YGM integration pattern; Next.js / Astro / Ghost adaptation guide
 
 ## [1.2.0] - 2026-04-24
 
