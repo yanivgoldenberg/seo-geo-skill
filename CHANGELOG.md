@@ -6,6 +6,17 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.5.1] - 2026-04-24
+
+Consistency fix. v1.5.0 removed elementor.com and riverside.fm from the leaderboard but left README/seo-geo.md references at "15 top SaaS sites". This aligns every surface to 13.
+
+### Changed
+- README leaderboard: dropped elementor.com (rank 7) and riverside.fm (rank 12) rows, renumbered
+- README hero and version/benchmark badges: 15 -> 13
+- seo-geo.md frontmatter version 1.5.0 -> 1.5.1, description now reads "13 top SaaS sites"
+- docs/benchmarks.md title and narrative: 15 -> 13
+- Corresponding WP blog post (yanivgoldenberg.com/blog/claude-code-seo-geo-skill) title, excerpt, and FAQ updated via REST API (FAQ also fixed stale "15 sequential phases" -> "19")
+
 ## [1.5.0] - 2026-04-24
 
 Privacy release. Removed all references to past employers and current clients. Anonymized proof stats.

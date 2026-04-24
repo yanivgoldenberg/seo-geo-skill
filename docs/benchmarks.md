@@ -1,4 +1,4 @@
-# Public Benchmark - 15 SaaS sites scored
+# Public Benchmark - 13 SaaS sites scored
 
 Run date: 2026-04-24.
 Methodology: audit-only `/seo-geo` against each site's homepage + robots.txt + /llms.txt + /llms-full.txt. Same 100-point rubric as Phase 0. No writes. Same scoring code for every site - reproducible.
@@ -24,7 +24,7 @@ Methodology: audit-only `/seo-geo` against each site's homepage + robots.txt + /
 ## What the data reveals
 
 
-**73% have no Person or Organization schema on the homepage.** Of the 15 sites, 11 either have no JSON-LD or an Organization/Person node that's missing core fields like `sameAs`, `logo`, or `description`. These sites will be harder to disambiguate in LLM answer generation.
+**73% have no Person or Organization schema on the homepage.** Of the 13 sites, 9 either have no JSON-LD or an Organization/Person node that's missing core fields like `sameAs`, `logo`, or `description`. These sites will be harder to disambiguate in LLM answer generation.
 
 **Anthropic's own site scores 30/100.** The company building Claude has no llms.txt, no Organization schema with sameAs, and no structured author attribution on its homepage. Even the AI companies are blind to AI.
 

@@ -10,9 +10,9 @@
 
 *The only Claude Code skill that closes every SEO, GEO, and AEO gap in one session.*
 
-[![Version](https://img.shields.io/badge/version-1.4.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.5.1-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
-[![Benchmark](https://img.shields.io/badge/15_sites_benchmarked-brightgreen?style=flat-square)](docs/benchmarks.md)
+[![Benchmark](https://img.shields.io/badge/13_sites_benchmarked-brightgreen?style=flat-square)](docs/benchmarks.md)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-orange?style=flat-square)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-purple?style=flat-square)](https://claude.ai/code)
 
@@ -34,7 +34,7 @@ One command. Full audit. Ranked fix list. Works on any CMS.
 
 ---
 
-## We benchmarked 15 top SaaS sites. Most are invisible to AI.
+## We benchmarked 13 top SaaS sites. Most are invisible to AI.
 
 | Rank | Site | Score | Why |
 |---:|---|---:|---|
@@ -44,15 +44,13 @@ One command. Full audit. Ranked fix list. Works on any CMS.
 | 4 | planetscale.com | 65 | No Person schema |
 | 5 | vercel.com | 63 | Thin Organization schema |
 | 5 | figma.com | 63 | No llms.txt |
-| 7 | elementor.com | 62 | Partial schema |
-| 8 | notion.so | 60 | No Organization schema on homepage |
-| 9 | mercury.com | 58 | No llms.txt |
-| 10 | supabase.com | 55 | No Organization schema |
-| 11 | linear.app | 53 | No schema on homepage at all |
-| 12 | riverside.fm | 50 | No llms.txt, thin meta |
-| 13 | **anthropic.com** | **30** | *The AI company itself: no llms.txt, no Organization schema* |
-| 14 | ramp.com | 25 | Minimal homepage markup |
-| 15 | fly.io | 10 | No robots.txt, no schema, no meta |
+| 7 | notion.so | 60 | No Organization schema on homepage |
+| 8 | mercury.com | 58 | No llms.txt |
+| 9 | supabase.com | 55 | No Organization schema |
+| 10 | linear.app | 53 | No schema on homepage at all |
+| 11 | **anthropic.com** | **30** | *The AI company itself: no llms.txt, no Organization schema* |
+| 12 | ramp.com | 25 | Minimal homepage markup |
+| 13 | fly.io | 10 | No robots.txt, no schema, no meta |
 
 **Full methodology + reproduce-yourself script:** [`docs/benchmarks.md`](docs/benchmarks.md)
 

@@ -1,7 +1,7 @@
 ---
 name: seo-geo
-version: 1.5.0
-description: Complete SEO+GEO+AEO skill. 19 phases, 0 to 100 of 100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, competitor benchmarking, public benchmark of 15 top SaaS sites. Any CMS.
+version: 1.5.1
+description: Complete SEO+GEO+AEO skill. 19 phases, 0 to 100 of 100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, competitor benchmarking, public benchmark of 13 top SaaS sites. Any CMS.
 ---
 
 # /seo-geo - Universal SEO + GEO + AEO Optimization
