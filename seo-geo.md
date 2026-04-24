@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-version: 1.5.1
+version: 1.5.2
 description: Complete SEO+GEO+AEO skill. 19 phases, 0 to 100 of 100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, competitor benchmarking, public benchmark of 13 top SaaS sites. Any CMS.
 ---
 
@@ -8,7 +8,7 @@ description: Complete SEO+GEO+AEO skill. 19 phases, 0 to 100 of 100. Technical S
 
 The complete SEO skill for Claude Code. Covers every dimension of modern search: technical SEO, on-page, structured data, LLM/GEO citation, and AEO. Works on any website regardless of CMS or tech stack.
 
-**By:** [Yaniv Goldenberg](https://yanivgoldenberg.com) - Fractional Head of Growth
+Author: see repo README.
 
 ---
 
@@ -328,9 +328,9 @@ Must be valid XML. Submit to Google Search Console and Bing Webmaster Tools.
 Rules: 39-60 chars. Keyword first. No ALL CAPS. Unique per page.
 
 **By page type:**
-- Person homepage: `Fractional Head of Growth | Yaniv Goldenberg`
+- Person homepage: `{Role} | {Your Name}` (e.g. `Fractional CMO | Jane Chen`)
 - SaaS homepage: `Project Management for Remote Teams | Acme`
-- Service page: `B2B SaaS Growth Consulting | Yaniv Goldenberg`
+- Service page: `{Service} | {Your Name or Brand}` (e.g. `B2B SaaS Growth Consulting | Jane Chen`)
 - Product page: `Blue Running Shoes - Lightweight & Waterproof | Brand`
 - Blog post: `How to Reduce CAC in B2B SaaS (15% in 90 Days)`
 - Category page: `Running Shoes for Men | Brand`
@@ -768,10 +768,12 @@ BEFORE (weak, LLMs skip this):
 "I have years of experience helping SaaS companies grow."
 
 AFTER (strong, LLMs cite this):
-"Yaniv Goldenberg grew a B2B SaaS from $200K to $20M ARR in under 3 years,
-led a team of 8 growth professionals, and scaled paid acquisition from $0
-to $50K/month. a B2B SaaS became the #1 WordPress page builder globally
-with 11M+ active installations."
+"{Your Name} grew {Company X} from ${start}K to ${end}M ARR in {N} years,
+led a team of {N} {roles}, and scaled paid acquisition from $0 to
+${budget}/month. {Company X} became the #1 {category} in {market}
+with {N}M+ active users."
+(Replace every placeholder with your own specific numbers, names, and outcomes.
+The power is in the specificity — vague numbers score zero for LLM citation.)
 ```
 
 **Decision: is your content LLM-citable?**
@@ -836,9 +838,9 @@ Google's core quality framework. Applies to any page on any site. Low E-E-A-T = 
 **Fastest E-E-A-T win (do this first):**
 Add this to your homepage above the fold:
 ```
-Yaniv Goldenberg | Fractional Head of Growth
-Grew a B2B SaaS to $20M ARR. $100M+ ad spend managed.
-a consumer SaaS: 337% MRR growth. an MLOps SaaS: acquired by a Fortune 100.
+{Your Name} | {Your Role}
+{One proof stat with a specific number, e.g. "Grew Company X to $20M ARR"}.
+{Two more concrete outcomes with numbers, each naming the company and the metric}
 ```
 Specific. Named. Verifiable. Takes 5 minutes.
 
@@ -1461,7 +1463,7 @@ Security directly impacts SEO: hacked sites get deindexed, malware warnings dest
 | `/xmlrpc.php` | Returns 200, accepts XML-RPC | Brute force amplifier (multicall), DDoS vector |
 | `/wp-login.php` | Returns 200 | Credential stuffing target |
 | `/wp-json/wp/v2/users` | Returns author list with slug, email hash, avatars | User enumeration for targeted attacks |
-| `/?author=1` | Redirects to `/author/yaniv-goldenberg/` | Exposes exact admin username |
+| `/?author=1` | Redirects to `/author/{admin-slug}/` | Exposes exact admin username |
 | `readme.html` | Exposes WP version | Version fingerprinting |
 | WP generator `<meta>` | `<meta name="generator" content="WordPress X.X.X">` | Version fingerprinting |
 | Script/style version params | `?ver=6.4.3` on CSS/JS | Version fingerprinting |
@@ -1506,11 +1508,11 @@ curl -I "https://site.com/" | grep -E "(X-Content-Type|Referrer-Policy|X-Frame|S
 import httpx, base64, os
 from dotenv import load_dotenv
 load_dotenv()
-user = os.getenv('WEBSITE_WP_ADMIN_USER')
-pw = os.getenv('YANIV_WP_APP_PASSWORD')
+user = os.getenv('WP_USER')
+pw = os.getenv('WP_APP_PASSWORD')
 token = base64.b64encode(f'{user}:{pw}'.encode()).decode()
 H = {'Authorization': f'Basic {token}', 'Content-Type': 'application/json'}
-SITE = os.getenv('YANIV_WEBSITE_URL')
+SITE = os.getenv('SITE_URL')
 
 # Disable pingback
 r = httpx.post(f'{SITE}/wp-json/wp/v2/settings', headers=H,
@@ -1778,7 +1780,7 @@ Pick ONE entity phrase and repeat it verbatim across every surface an LLM crawls
 **Formula:** `{Name}, {specific role} for {target segments}. {Single proof stat}. Tagline: {verbatim tagline}.`
 
 **Example:**
-> Yaniv Goldenberg, Fractional Head of Growth for B2B SaaS, B2C, and e-commerce. Scaled a B2B SaaS 100x ARR, a consumer SaaS MRR +337%. Tagline: From Traffic to Revenue.
+> {Your Name}, {Role} for {target segments, e.g. B2B SaaS, B2C, e-commerce}. {One proof stat with a specific number}. Tagline: {your verbatim tagline}.
 
 **Where to put it (verbatim):**
 - Rank Math / Yoast homepage meta description
@@ -2121,13 +2123,9 @@ def benchmark(you: str, them: str) -> dict:
 
 ## Author
 
-**Yaniv Goldenberg** - [yanivgoldenberg.com](https://yanivgoldenberg.com) | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
+See repo README at https://github.com/yanivgoldenberg/seo-geo-skill for author and contact details.
 
-Fractional Head of Growth for B2B SaaS, B2C, and ecommerce companies. Former Head of Growth at a PLG SaaS with 20M+ users, a consumer SaaS (337% MRR growth), an MLOps SaaS acquired by a Fortune 100. $100M+ in ad spend managed.
-
-This skill encodes everything learned across dozens of sites and one full-day optimization sprint.
-
-If it saved you time: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact) or star the repo.
+This skill encodes patterns learned across dozens of sites and a full-day optimization sprint.
 
 ---
 
@@ -2150,7 +2148,7 @@ Package the offering as `@type: "Product"` with `category: "Business Consulting 
 ```json
 {
   "@type": "Product",
-  "name": "Fractional Head of Growth",
+  "name": "{Service Name}",
   "category": "Business Consulting Service",
   "brand": { "@type": "Person", "name": "Your Name" },
   "offers": {

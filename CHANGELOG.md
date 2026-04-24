@@ -6,6 +6,26 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.5.2] - 2026-04-24
+
+Zero-identifier pass on the skill body. Previous versions baked author persona into schema examples and env var names, which installers would unknowingly copy into their own sites.
+
+### Changed
+- seo-geo.md: replaced author-specific bio examples with `{placeholder}` templates across Phase 2 (title patterns), Phase 6 (E-E-A-T AFTER example + fastest-win block), Phase 16 (entity anchoring example), and Phase 17 (Product schema example)
+- Env var names in WP hardening code: `YANIV_WP_APP_PASSWORD` -> `WP_APP_PASSWORD`, `YANIV_WEBSITE_URL` -> `SITE_URL`, `WEBSITE_WP_ADMIN_USER` -> `WP_USER`
+- Phase 15 security example: `/author/yaniv-goldenberg/` -> `/author/{admin-slug}/`
+- Author byline inside the skill body replaced with "Author: see repo README" pointer (full credit remains on GitHub README)
+- Footer "Author" block trimmed to a neutral reference; no persona copy, no proof stats, no contact links
+- Version bumped 1.5.1 -> 1.5.2
+
+### Security scan (performed during this release)
+- No hardcoded secrets (sk-*, ghp_*, AKIA, db URLs)
+- No dangerous shell ops (rm -rf, eval, exec, shell_exec, --no-verify, DROP TABLE)
+- PHP reference plugin (250 lines): zero user-input surfaces; `unserialize()` operates only on in-file constants (no injection path)
+
+### Hardening recommendation (not blocking)
+- Replace `unserialize(CONSTANT)` with plain `array(...)` in examples/wordpress/yg-geo-fixes to remove the code smell (serialized arrays in PHP constants)
+
 ## [1.5.1] - 2026-04-24
 
 Consistency fix. v1.5.0 removed elementor.com and riverside.fm from the leaderboard but left README/seo-geo.md references at "15 top SaaS sites". This aligns every surface to 13.
