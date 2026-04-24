@@ -1,7 +1,7 @@
 ---
 name: seo-geo
-version: 1.5.2
-description: Complete SEO+GEO+AEO skill. 19 phases, 0 to 100 of 100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, competitor benchmarking, public benchmark of 13 top SaaS sites. Any CMS.
+version: 1.6.0
+description: Phase 0 audit + 19 optimization phases for Claude Code. Canonical 100-pt rubric (Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10). Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, SSRF guard, competitor benchmarking, public benchmark of 13 top SaaS sites. Any CMS.
 ---
 
 # /seo-geo - Universal SEO + GEO + AEO Optimization
@@ -19,7 +19,7 @@ Author: see repo README.
 - [Phase 1 - Technical SEO](#phase-1---technical-seo) - robots, canonical, sitemap, mobile
 - [Phase 2 - On-Page SEO](#phase-2---on-page-seo) - titles, meta, OG, H1
 - [Phase 3 - Schema](#phase-3---schema) - 16 types, JSON-LD, validation
-- [Phase 4 - GEO](#phase-4---geo-llm-generative-engine-optimization) - llms.txt, entity, AI crawler allow
+- [Phase 4 - GEO](#phase-4---geo-llm--generative-engine-optimization) - llms.txt, entity, AI crawler allow
 - [Phase 5 - AEO](#phase-5---aeo-answer-engine-optimization) - Speakable, direct-answer
 - [Phase 6 - E-E-A-T](#phase-6---e-e-a-t) - author, credentials, trust signals
 - [Phase 7 - Content optimization](#phase-7---content-optimization)
@@ -49,6 +49,28 @@ Author: see repo README.
 ```
 
 That's it. Start with audit. Fix CRITICAL items first. Everything else is optional.
+
+---
+
+## Trust and safety boundaries (READ BEFORE RUNNING)
+
+Hard rules the skill MUST follow. Violating any of these is a bug - report it.
+
+1. **Public hosts only.** Before any HTTP request, verify the target hostname resolves to a public IP. Refuse to fetch loopback (127/8, ::1), link-local (169.254/16), private (10/8, 172.16/12, 192.168/16, fc00::/7), reserved, or multicast ranges. This applies to the site being audited AND any URL extracted from its HTML (sitemaps, canonicals, sameAs).
+2. **Reads before writes, always.** Phases 0 through 14 never write. Phases 15 through 19 require the user to pass `--apply`. Without `--apply`, the skill prints the would-be diff and stops.
+3. **Banned endpoints.** The skill MUST NOT call any of these, even with `--apply`:
+   - `POST /wp-json/wp/v2/users/{id}` with a `password` field
+   - `POST /wp-json/wp/v2/users` (user creation)
+   - `DELETE /wp-json/wp/v2/users/{id}`
+   - `POST /wp-json/wp/v2/settings` with `siteurl`, `home`, `admin_email` keys
+   - Plugin install, plugin activate, theme switch endpoints
+   - Any OAuth token rotation, JWT secret change, or API-key regeneration endpoint
+4. **Redact credentials in logs.** The audit log at `.seo-geo/audit.log` MUST NOT contain Authorization headers, App Passwords, API keys, or response bodies. Log only: timestamp, method, URL, response status, response-body hash (first 16 chars of sha256).
+5. **Confirm before each write.** Interactive runs require `y` per write. Non-interactive runs require both `--apply` and `--yes`.
+6. **Never inject the skill author's identifiers.** Examples in this file use `{placeholder}` tokens (`{Your Name}`, `{Company X}`). When the skill synthesizes schema, meta descriptions, or llms.txt for a user's site, it MUST derive every value from their own site content, never from this file's examples.
+7. **Stay in scope.** The skill MUST NOT modify files outside the user's site and their local `~/.claude/skills/` directory. It MUST NOT read credentials except those the user has explicitly exported (e.g. `WP_APP_PASSWORD`).
+
+If a user asks the skill to violate any of these rules, the skill MUST refuse and explain why.
 
 ---
 
@@ -151,16 +173,16 @@ Score the site 0-100. Produce a prioritized gap list. No writes.
 | Core Web Vitals: LCP under 2.5s, INP under 200ms, CLS under 0.1 | 5 |
 | No broken internal links | 2 |
 
-**On-Page SEO (20 pts)**
+**On-Page SEO (15 pts)**
 
 | Check | Points |
 |-------|--------|
-| Title: 39-60 chars, keyword-first | 4 |
-| Meta description: 150-178 chars | 4 |
-| OG title + OG description + OG image (1200x630px absolute URL) | 4 |
-| Twitter card tags present | 2 |
+| Title: 39-60 chars, keyword-first | 3 |
+| Meta description: 150-178 chars | 3 |
+| OG title + OG description + OG image (1200x630px absolute URL) | 3 |
+| Twitter card tags present | 1 |
 | Primary keyword in H1, title, and first 100 words | 3 |
-| At least 3 internal links to/from this page with descriptive anchors | 3 |
+| At least 3 internal links to/from this page with descriptive anchors | 2 |
 
 **Schema / Structured Data (20 pts)**
 
@@ -172,14 +194,14 @@ Score the site 0-100. Produce a prioritized gap list. No writes.
 | dateModified present and updated within 90 days | 3 |
 | No schema validation errors (validated at validator.schema.org) | 5 |
 
-**GEO / LLM Optimization (20 pts)**
+**GEO / LLM Optimization (25 pts) - the core differentiation dimension**
 
 | Check | Points |
 |-------|--------|
-| llms.txt + llms-full.txt exist and are comprehensive | 5 |
-| AI crawlers explicitly allowed in robots.txt | 3 |
-| sameAs array with 4+ verified profiles including Wikidata | 4 |
-| Content uses specific claims, numbers, named entities | 4 |
+| llms.txt + llms-full.txt exist and are comprehensive | 7 |
+| AI crawlers explicitly allowed in robots.txt (all 14+ known bots) | 5 |
+| sameAs array with 4+ verified profiles including Wikidata | 5 |
+| Content uses specific claims, numbers, named entities (LLM citation magnets) | 4 |
 | Link header pointing to llms.txt present | 2 |
 | Entity disambiguation: same name+credentials appear on 3+ external sources | 2 |
 
@@ -206,12 +228,12 @@ Score the site 0-100. Produce a prioritized gap list. No writes.
 Current Score: XX/100
 
 CRITICAL (fix now):
-- [ ] Missing meta description on 3 pages (-18 pts)
-- [ ] No schema markup (-25 pts)
-- [ ] robots.txt blocks GPTBot (-4 pts)
+- [ ] Missing meta description on 3 pages (-12 pts)
+- [ ] No schema markup (-20 pts)
+- [ ] robots.txt blocks GPTBot (-3 pts)
 
 HIGH (fix this week):
-- [ ] llms.txt missing (-4 pts)
+- [ ] llms.txt missing (-5 pts)
 - [ ] OG images missing (-3 pts)
 
 ALREADY DONE:
@@ -226,11 +248,12 @@ Current Score: 41/100
 
 CRITICAL:
 - [ ] No schema markup at all (-20 pts) → run /seo-geo --phase schema
-- [ ] AI crawlers blocked: GPTBot, ClaudeBot in robots.txt (-7 pts) → 5 min fix
-- [ ] Meta descriptions missing on 4/5 pages (-16 pts) → run /seo-geo --phase onpage
+- [ ] AI crawlers explicit-allow missing (-5 pts) → 5 min fix
+- [ ] Meta descriptions missing on 4/5 pages (-3 pts) → run /seo-geo --phase onpage
 
 HIGH:
-- [ ] llms.txt missing (-5 pts) → run /seo-geo --llms-txt
+- [ ] llms.txt + llms-full.txt missing (-7 pts) → run /seo-geo --llms-txt
+- [ ] sameAs array incomplete: no Wikidata, 1/4 profiles (-4 pts)
 
 ALREADY DONE:
 - [x] HTTPS active
@@ -650,7 +673,7 @@ Always validate schemas before deploying:
 
 ### Implementation by platform
 
-**WordPress + a B2B SaaS:**
+**WordPress + Elementor:**
 ```python
 # 1. Read page data
 GET {site}/wp-json/wp/v2/pages/{id}?context=edit
@@ -663,7 +686,7 @@ GET {site}/wp-json/wp/v2/pages/{id}?context=edit
 POST {site}/wp-json/wp/v2/pages/{id}
 body: {"meta": {"_elementor_data": "{updated_json}"}}
 
-# 4. Clear a B2B SaaS cache (critical - always do this)
+# 4. Clear Elementor cache (critical - always do this)
 DELETE {site}/wp-json/elementor/v1/cache
 ```
 
@@ -755,9 +778,9 @@ After creating each: add URL to `sameAs` in Person/Organization schema.
 ### Content signals that increase LLM citation probability
 
 Write content this way:
-- Named outcomes: "scaled a B2B SaaS from $200K to $20M ARR" beats "grew a SaaS company"
-- Specific timeframes: "in 18 months" beats "quickly"
-- Comparison anchors: "the #1 WordPress page builder globally" beats "a popular tool"
+- Named outcomes: "scaled a B2B SaaS from ${X}K to ${Y}M ARR in {N} months" beats "grew a SaaS company"
+- Specific timeframes: "in {N} months" beats "quickly"
+- Comparison anchors: "the #1 {category} in {market}" beats "a popular tool"
 - Definition format: "What is X? X is..." for any key term
 - Q&A headings: questions as H2/H3 with direct answers in the paragraph below
 - Cross-references: link to and from authoritative external sources
@@ -1222,7 +1245,7 @@ Add this to any page that has an embedded video as primary content.
 
 ### Platform implementation
 
-**WordPress:** Add VideoObject schema to page via a B2B SaaS HTML widget or Rank Math's Video schema option.
+**WordPress:** Add VideoObject schema to page via Elementor HTML widget or Rank Math's Video schema option.
 
 **Shopify:** Inject into `templates/article.liquid` or `templates/page.liquid` for pages with video.
 
@@ -1346,7 +1369,7 @@ Real-world failures and how to fix them. Run this phase when something isn't wor
 Before attempting a fix, answer these:
 
 1. Is the change reflected in the page HTML? (`View Source` or `curl -s {url} | grep {thing}`)
-2. Is there a cache layer hiding the change? (Cloudflare, Varnish, a B2B SaaS, WP cache)
+2. Is there a cache layer hiding the change? (Cloudflare, Varnish, Elementor, WP cache)
 3. Has Google crawled the page since the change? (Search Console > URL Inspection)
 4. Is the issue in implementation or in Google's indexing? (validate first, then wait)
 
@@ -1356,7 +1379,7 @@ Before attempting a fix, answer these:
 |---------|-----------------|-----------|-----|
 | Schema shows in validator but not in Rich Results | Google hasn't crawled yet | Check `Last crawled` in GSC URL Inspection | Request indexing, wait 48-72h |
 | Schema present in source but validation fails | JSON syntax error (trailing comma, unescaped quote) | validator.schema.org | Fix JSON, re-validate |
-| Meta tags not updating after edit | CMS or CDN cache | `curl -H "Cache-Control: no-cache" {url}` | Clear a B2B SaaS cache, Cloudflare purge |
+| Meta tags not updating after edit | CMS or CDN cache | `curl -H "Cache-Control: no-cache" {url}` | Clear Elementor cache, Cloudflare purge |
 | AI crawlers still blocked after robots.txt edit | Wrong user-agent string or cached robots.txt | `curl {domain}/robots.txt` directly | Fix string, purge CDN cache for robots.txt |
 | llms.txt returns 404 | WordPress slug with dot replaced | Check actual slug in WP admin | Create redirect from `/llms.txt` to `/llms-txt/` |
 | Double H1 on page | Theme injects post title alongside page builder H1 | Count H1s in source | CSS: `.entry-title { display: none !important; }` |
@@ -1373,7 +1396,7 @@ Before attempting a fix, answer these:
 
 ### Cache clearing sequence (do in this order)
 
-1. Clear application cache (a B2B SaaS: `DELETE /wp-json/elementor/v1/cache`)
+1. Clear application cache (Elementor: `DELETE /wp-json/elementor/v1/cache`)
 2. Clear WordPress object cache (if Redis/Memcached: flush)
 3. Clear CDN (Cloudflare: Zone > Caching > Purge Everything)
 4. Clear browser cache locally
@@ -1414,7 +1437,7 @@ curl -s {url} | grep -c "<div id=\"root\"\|<div id=\"app\"\|<div id=\"__next\""
 | AI crawlers blocked | `Disallow: /` in robots.txt applies to all bots | Add explicit `Allow: /` per AI crawler user-agent |
 | llms.txt returns 404 | CMS replaces dots in slugs (WordPress) | Use slug `llms-txt` + add redirect from `/llms.txt` |
 | Double H1 on WordPress | Theme injects `.entry-title` alongside page builder H1 | CSS: `.entry-title { display: none !important; }` |
-| a B2B SaaS serving stale HTML after schema injection | a B2B SaaS server-side rendering cache | `DELETE /wp-json/elementor/v1/cache` after every page save |
+| Elementor serving stale HTML after schema injection | Elementor server-side rendering cache | `DELETE /wp-json/elementor/v1/cache` after every page save |
 | Rank Math meta not updating via WP REST | WP REST API does not expose `rank_math_*` meta fields | Use `/wp-json/rankmath/v1/updateMeta` endpoint instead |
 | OG image not rendering on social share | Image URL is relative, not absolute | Always use full absolute URL including https:// |
 | Shopify robots.txt not updating | Shopify auto-generates robots.txt | Create `templates/robots.txt.liquid` to override |
@@ -1426,7 +1449,7 @@ curl -s {url} | grep -c "<div id=\"root\"\|<div id=\"app\"\|<div id=\"__next\""
 
 | Platform | Meta tags | Schema | robots.txt | Cache |
 |----------|-----------|--------|-----------|-------|
-| WordPress + Rank Math | Rank Math REST API | a B2B SaaS HTML widget or Custom HTML block | Rank Math editor | DELETE /wp-json/elementor/v1/cache + Cloudflare purge |
+| WordPress + Rank Math | Rank Math REST API | Elementor HTML widget or Custom HTML block | Rank Math editor | DELETE /wp-json/elementor/v1/cache + Cloudflare purge |
 | WordPress + Yoast | Yoast REST API or direct postmeta | Same | Yoast editor | Cloudflare purge |
 | Shopify | page.metafields or theme liquid | theme.liquid / page templates | robots.txt.liquid template | Shopify CDN auto-purges on save |
 | Webflow | Page Settings > SEO | Site Settings > Custom Code | Site Settings | Webflow CDN auto-purges |
@@ -1516,21 +1539,24 @@ SITE = os.getenv('SITE_URL')
 
 # Disable pingback
 r = httpx.post(f'{SITE}/wp-json/wp/v2/settings', headers=H,
-    json={'default_ping_status': 'closed', 'default_comment_status': 'closed'})
-print(r.status_code, r.text[:80])
+    json={'default_ping_status': 'closed', 'default_comment_status': 'closed'},
+    timeout=30)
+print(r.status_code)  # do NOT print r.text - WP often echoes credentials in error bodies
 
 # Clear user bio (reduces enumeration surface)
+# Note: this is a non-credential user update. Password/role mutations are banned by Phase 17.
 r2 = httpx.post(f'{SITE}/wp-json/wp/v2/users/1', headers=H,
-    json={'description': '', 'url': ''})
+    json={'description': '', 'url': ''},
+    timeout=30)
 print(r2.status_code)
 
-# Inject security headers into global header template (a B2B SaaS HTML widget)
+# Inject security headers into global header template (Elementor HTML widget)
 # Add to the HTML widget in header template 41 (or whichever is the global header)
 SECURITY_META = """
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 """
-# Inject into existing HTML widget - see Phase 3 for a B2B SaaS widget write pattern
+# Inject into existing HTML widget - see Phase 3 for Elementor widget write pattern
 ```
 
 ### Fixes - Cloudflare WAF (manual or API)
@@ -1628,6 +1654,21 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
 Sitemap: https://yoursite.com/sitemap_index.xml
 ```
 
@@ -1693,18 +1734,18 @@ curl -s -o /dev/null -w "%{http_code}" "$SITE/wp-config.php.bak"
 
 ## WordPress-specific Patterns
 
-### a B2B SaaS write protocol
+### Elementor write protocol
 
-a B2B SaaS stores page content as JSON in `wp_postmeta` key `_elementor_data`. The REST API writes to this key. Critical rules:
+Elementor stores page content as JSON in `wp_postmeta` key `_elementor_data`. The REST API writes to this key. Critical rules:
 
 1. **Always read before writing** - fetch current `_elementor_data` via `GET /wp-json/wp/v2/pages/{id}?context=edit` first
-2. **Preserve existing widget IDs** - changing IDs breaks a B2B SaaS's CSS lookup; the file `post-{id}.css` maps to container IDs
+2. **Preserve existing widget IDs** - changing IDs breaks Elementor's CSS lookup; the file `post-{id}.css` maps to container IDs
 3. **Write to the CSS-serving container** - check `wp-content/uploads/elementor/css/post-{id}.css` for the active container ID; if it differs from what the API returns, there are duplicate postmeta rows
 4. **Always clear cache after write** - `DELETE /wp-json/elementor/v1/cache` is the canonical fix
 5. **Duplicate postmeta symptom** - page doesn't change after successful API update (200 OK); fix: write to OLD container IDs that match the CSS file, then clear cache
 
 ```python
-# a B2B SaaS safe write pattern
+# Elementor safe write pattern
 import httpx, json, base64
 
 def elementor_safe_write(site, auth_token, page_id, update_fn):
@@ -1762,7 +1803,7 @@ H = {'Authorization': f'Basic {token}', 'Content-Type': 'application/json'}
 
 ### Cache-busting sequence (canonical order)
 
-1. `DELETE /wp-json/elementor/v1/cache` - clears a B2B SaaS server-side render cache
+1. `DELETE /wp-json/elementor/v1/cache` - clears Elementor server-side render cache
 2. Cloudflare Purge Everything (Zone > Caching) - clears CDN layer
 3. If Redis/Memcached is used: `redis-cli FLUSHDB` on the cache DB
 4. Request re-indexing in Google Search Console after content changes
@@ -1810,15 +1851,48 @@ Default CMS flows ship alt only. All four fields give LLMs 3-5x the signal surfa
 **Bulk execution (WordPress REST):**
 
 ```python
-import httpx, base64, os
+import base64
+import logging
+import os
+import time
+
+import httpx
+
+log = logging.getLogger('seo-geo.media')
+
 user, pw = os.getenv('WP_USER'), os.getenv('WP_APP_PASSWORD')
+if not user or not pw:
+    raise SystemExit('set WP_USER and WP_APP_PASSWORD in env')
 tok = base64.b64encode(f'{user}:{pw}'.encode()).decode()
 h = {'Authorization': f'Basic {tok}', 'User-Agent': 'WP Client/1.0'}
+
+def update_media(mid, meta, attempts=3):
+    for n in range(attempts):
+        try:
+            r = httpx.post(f'{SITE}/wp-json/wp/v2/media/{mid}',
+                           headers=h, json=meta, timeout=30)
+        except httpx.HTTPError as e:
+            log.warning('media %s attempt %s: %s', mid, n + 1, e)
+            time.sleep(2 ** n)
+            continue
+        if r.status_code in (200, 201):
+            return r
+        if r.status_code == 429:
+            retry_after = int(r.headers.get('Retry-After', 2 ** n))
+            log.warning('media %s rate-limited, sleeping %ss', mid, retry_after)
+            time.sleep(retry_after)
+            continue
+        log.error('media %s failed: %s (body hash redacted)', mid, r.status_code)
+        return r
+    log.error('media %s exhausted retries', mid)
+    return None
+
 for mid, meta in optim.items():
-    httpx.post(f'{SITE}/wp-json/wp/v2/media/{mid}', headers=h, json=meta, timeout=30)
+    update_media(mid, meta)
+    time.sleep(0.1)  # polite pacing
 ```
 
-Runs through 50+ assets in under a minute.
+Runs through 50+ assets in under a minute on a healthy host; retries + polite pacing protect you when WordPress is behind Cloudflare or a mu-plugin rate-limiter.
 
 ### Pattern 3 - Plugin-as-SEO-filter (durable overrides)
 
@@ -1868,7 +1942,7 @@ After shipping a new logo/favicon system, search the media library for legacy as
 **Cleanup checklist after any rebrand:**
 - [ ] Remove `site_icon` from WP Settings (`POST /wp/v2/settings {site_icon: 0}`)
 - [ ] Delete legacy favicon media entries (`DELETE /wp/v2/media/{id}?force=true`)
-- [ ] Grep a B2B SaaS templates for hardcoded old-logo image URLs
+- [ ] Grep Elementor templates for hardcoded old-logo image URLs
 - [ ] Check theme Customizer for Site Logo override
 - [ ] Verify `<head>` contains only your plugin's icon tags (`curl | grep rel="icon"`)
 
@@ -1876,7 +1950,7 @@ After shipping a new logo/favicon system, search the media library for legacy as
 
 ## Phase 17 - Dry-run safety gates
 
-Every phase that writes (schema injection, media metadata bulk-update, a B2B SaaS modifications, Rank Math overrides) MUST default to dry-run. Writes are opt-in via `--apply`.
+Every phase that writes (schema injection, media metadata bulk-update, Elementor modifications, Rank Math overrides) MUST default to dry-run. Writes are opt-in via `--apply`.
 
 ### CLI contract
 
@@ -1897,28 +1971,77 @@ Every phase that writes (schema injection, media metadata bulk-update, a B2B Saa
    if input("Apply? [y/N]: ").strip().lower() != 'y': raise SystemExit(0)
    ```
 4. **Audit log.** Append every write to `.seo-geo/audit.log` with timestamp, URL, payload hash, response status.
-5. **Banned endpoints.** The skill MUST NOT touch:
+5. **Banned endpoints.** The skill MUST NOT touch any of:
    - `POST /wp-json/wp/v2/users/{id}` with a `password` field (credential mutation)
+   - `POST /wp-json/wp/v2/users` (user creation)
    - `DELETE /wp-json/wp/v2/users/{id}` (user deletion)
+   - `POST /wp-json/wp/v2/settings` with `siteurl`, `home`, `admin_email` keys (site identity mutation)
+   - Plugin install, plugin activate, theme switch endpoints
+   - Any OAuth token rotation, JWT secret change, or API-key regeneration endpoint
    - Anything that rotates API keys, app passwords, or Coolify env vars
 
 If a task requires a banned endpoint, STOP and surface the step to the human with exact manual instructions.
 
+6. **Log redaction.** The audit log MUST NOT contain Authorization headers, App Passwords, API keys, or response bodies. Log only timestamp, method, URL, response status, and a short hash of the request body.
+
 ### Implementation snippet (Python adapter for WP REST)
 
 ```python
-def wp_write(session, url, body, apply=False, yes=False):
-    print(f"[dry-run] POST {url}")
+import hashlib
+import json
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from urllib.parse import urlparse
+
+BANNED_ENDPOINTS = (
+    ('POST', '/wp/v2/users/'),       # user update or create with password
+    ('POST', '/wp/v2/users'),        # user creation
+    ('DELETE', '/wp/v2/users/'),
+    ('POST', '/wp/v2/settings'),     # site identity
+    ('POST', '/wp/v2/plugins'),
+    ('POST', '/wp/v2/themes'),
+)
+SENSITIVE_SETTINGS_KEYS = {'siteurl', 'home', 'admin_email'}
+
+
+def _is_banned(method: str, url: str, body: dict) -> bool:
+    path = urlparse(url).path
+    for banned_method, banned_path in BANNED_ENDPOINTS:
+        if method == banned_method and banned_path in path:
+            if banned_path.endswith('settings') and isinstance(body, dict):
+                if not SENSITIVE_SETTINGS_KEYS.intersection(body.keys()):
+                    continue
+            return True
+    if isinstance(body, dict) and 'password' in body:
+        return True
+    return False
+
+
+def wp_write(session, url, body, apply=False, yes=False, method='POST'):
+    if _is_banned(method, url, body):
+        print(f"[REFUSED] banned endpoint: {method} {url}", file=sys.stderr)
+        raise SystemExit(2)
+
+    print(f"[dry-run] {method} {url}")
     print(f"  body: {json.dumps(body, indent=2)[:400]}")
     if not apply:
-        return {'dry_run': True, 'url': url}
-    if not yes and input(f"Apply write to {url}? [y/N]: ").strip().lower() != 'y':
+        return {'dry_run': True, 'method': method, 'url': url}
+    if not yes and input(f"Apply {method} to {url}? [y/N]: ").strip().lower() != 'y':
         raise SystemExit(0)
-    r = session.post(url, json=body, timeout=30)
-    with open('.seo-geo/audit.log', 'a') as f:
-        f.write(f"{datetime.utcnow().isoformat()} {url} {r.status_code}\n")
-    return r.json()
+
+    r = session.request(method, url, json=body, timeout=30)
+
+    log_dir = Path('.seo-geo')
+    log_dir.mkdir(exist_ok=True)
+    body_hash = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()[:16]
+    line = f"{datetime.now(timezone.utc).isoformat()} {method} {url} {r.status_code} body_sha256:{body_hash}\n"
+    with (log_dir / 'audit.log').open('a', encoding='utf-8') as f:
+        f.write(line)
+    return r
 ```
+
+The snippet above is the canonical template for every write the skill performs. All implementations MUST call `_is_banned()` before the request and MUST redact credentials and bodies from logs.
 
 ---
 
@@ -2181,20 +2304,20 @@ Walk every JSON-LD block. If a dict has `review` or `aggregateRating` and its `@
 
 ---
 
-## a B2B SaaS Pro + REST API Gotchas (2026-04-20)
+## Elementor Pro + REST API Gotchas (2026-04-20)
 
-When building a B2B SaaS templates programmatically (via REST API or JSON import), beware these render failures:
+When building Elementor templates programmatically (via REST API or JSON import), beware these render failures:
 
 ### Theme widgets silently fail when built via REST
 
-a B2B SaaS Pro widgets scoped to theme contexts may not render HTML even though settings save correctly:
+Elementor Pro widgets scoped to theme contexts may not render HTML even though settings save correctly:
 
 - `theme-post-title`
 - `theme-archive-title`
 - `theme-post-featured-image`
 - `theme-post-excerpt`
 
-**Fix pattern**: Replace with a standard widget + a B2B SaaS dynamic tag:
+**Fix pattern**: Replace with a standard widget + Elementor dynamic tag:
 
 ```json
 {
@@ -2214,7 +2337,7 @@ Standard widgets (`heading`, `text-editor`, `html`, `image`, `posts`) save and r
 
 Inline `<h1>` tags in post body HTML are stripped during rendering (reserved for the theme template). Detection: `<h1` exists in `?context=edit` raw content but not in live HTML output.
 
-**Fix**: Put H1 in the a B2B SaaS template (via heading widget as above) - never in the post body.
+**Fix**: Put H1 in the Elementor template (via heading widget as above) - never in the post body.
 
 ### /llms.txt at root requires a plugin
 

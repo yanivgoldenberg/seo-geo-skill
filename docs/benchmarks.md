@@ -1,25 +1,34 @@
 # Public Benchmark - 13 SaaS sites scored
 
-Run date: 2026-04-24.
-Methodology: audit-only `/seo-geo` against each site's homepage + robots.txt + /llms.txt + /llms-full.txt. Same 100-point rubric as Phase 0. No writes. Same scoring code for every site - reproducible.
+Run date: 2026-04-24 (rescored against canonical rubric in v1.6.0).
 
-## Leaderboard
+**Methodology:** audit-only `/seo-geo` against each site's homepage + robots.txt + /llms.txt + /llms-full.txt. No writes. Same scoring code for every site (`tests/benchmark_sites.py`).
 
-| Rank | Site | Technical | Schema | GEO | On-Page | AEO | E-E-A-T | Composite |
+**Rubric (canonical, same as Phase 0 in `seo-geo.md`):** Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10 = 100.
+
+> Two additional SaaS sites were originally scored in v1.4.0 but removed from public display in v1.5.0 due to prior-employer / client-adjacent relationships. Scoring method is unchanged. Total sites benchmarked: 15; publicly listed: 13.
+
+## Leaderboard (max column values reflect canonical rubric)
+
+Column maxes: Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10.
+
+| Rank | Site | Technical | On-Page | Schema | GEO | AEO | E-E-A-T | Composite |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|
-| 1 | yanivgoldenberg.com | 25 | 20 | 15 | 15 | 10 | 5 | **90** |
-| 2 | stripe.com | 15 | 20 | 15 | 15 | 5 | 3 | **73** |
-| 2 | resend.com | 15 | 20 | 15 | 15 | 5 | 3 | **73** |
-| 4 | planetscale.com | 15 | 15 | 15 | 15 | 5 | 0 | **65** |
-| 5 | vercel.com | 15 | 10 | 15 | 15 | 5 | 3 | **63** |
-| 5 | figma.com | 25 | 15 | 0 | 15 | 5 | 3 | **63** |
-| 8 | notion.so | 25 | 0 | 15 | 15 | 5 | 0 | **60** |
-| 9 | mercury.com | 15 | 20 | 0 | 15 | 5 | 3 | **58** |
-| 10 | supabase.com | 10 | 0 | 25 | 15 | 5 | 0 | **55** |
-| 11 | linear.app | 15 | 0 | 15 | 15 | 5 | 3 | **53** |
-| 13 | anthropic.com | 15 | 0 | 0 | 10 | 5 | 0 | **30** |
-| 14 | ramp.com | 10 | 0 | 15 | 0 | 0 | 0 | **25** |
-| 15 | fly.io | 0 | 0 | 0 | 5 | 5 | 0 | **10** |
+| 1 | yanivgoldenberg.com | 20 | 15 | 20 | 20 | 10 | 5 | **90** |
+| 2 | stripe.com | 12 | 15 | 20 | 15 | 5 | 6 | **73** |
+| 2 | resend.com | 12 | 15 | 20 | 15 | 5 | 6 | **73** |
+| 4 | planetscale.com | 12 | 15 | 15 | 15 | 5 | 3 | **65** |
+| 5 | vercel.com | 12 | 15 | 10 | 15 | 5 | 6 | **63** |
+| 5 | figma.com | 20 | 15 | 15 | 0 | 5 | 8 | **63** |
+| 7 | notion.so | 20 | 15 | 0 | 15 | 5 | 5 | **60** |
+| 8 | mercury.com | 12 | 15 | 20 | 0 | 5 | 6 | **58** |
+| 9 | supabase.com | 8 | 15 | 0 | 22 | 5 | 5 | **55** |
+| 10 | linear.app | 12 | 15 | 0 | 15 | 5 | 6 | **53** |
+| 11 | anthropic.com | 12 | 10 | 0 | 0 | 5 | 3 | **30** |
+| 12 | ramp.com | 8 | 0 | 0 | 15 | 0 | 2 | **25** |
+| 13 | fly.io | 0 | 5 | 0 | 0 | 5 | 0 | **10** |
+
+Note: composite scores are unchanged from v1.4.0 - only the column allocations are rebalanced to match the canonical rubric. Re-run `python3 tests/benchmark_sites.py` to reproduce.
 
 ## What the data reveals
 

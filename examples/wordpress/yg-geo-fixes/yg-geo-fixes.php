@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Auto-GEO Fixes
  * Description: GEO pattern: serves /llms.txt, patches robots.txt with AI UAs + Sitemap, enriches Person JSON-LD with sameAs, auto-fills Rank Math meta descriptions and FAQPage schema on publish for service-type pages.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: seo-geo-skill (https://github.com/yanivgoldenberg/seo-geo-skill)
  * License: PolyForm Noncommercial 1.0.0
  *
@@ -13,7 +13,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 // === CONFIGURE FOR YOUR SITE ===
-define('AUTO_GEO_VERSION', '1.1.0');
+define('AUTO_GEO_VERSION', '1.2.0');
 define('AUTO_GEO_SITEMAP_URL', 'https://YOUR_DOMAIN/sitemap_index.xml');
 define('AUTO_GEO_SERVICES_SLUG', 'services');
 define('AUTO_GEO_DESC_SUFFIX', ' - YOUR_BRAND_TAGLINE.');
@@ -21,18 +21,29 @@ define('AUTO_GEO_CONTACT_URL', 'https://YOUR_DOMAIN/contact/');
 
 // sameAs URLs to append to Person entity in Rank Math JSON-LD.
 // Example: ['https://www.youtube.com/@YOUR_HANDLE', 'https://medium.com/@YOUR_HANDLE']
-define('AUTO_GEO_PERSON_SAMEAS_EXTRAS', serialize([
+// Note: PHP 7+ allows arrays in define(); we avoid serialize()/unserialize() to
+// eliminate the object-injection class of bugs even when the source is trusted.
+define('AUTO_GEO_PERSON_SAMEAS_EXTRAS', [
     'YOUR_YOUTUBE_URL',
-]));
+]);
 
 // AI crawler user agents to explicitly allow in robots.txt.
-define('AUTO_GEO_AI_CRAWLERS', serialize([
+define('AUTO_GEO_AI_CRAWLERS', [
     'OAI-SearchBot',
     'Bytespider',
     'Amazonbot',
     'FacebookBot',
     'Cohere-ai',
-]));
+    'PerplexityBot',
+    'ClaudeBot',
+    'GPTBot',
+    'Google-Extended',
+    'ChatGPT-User',
+    'Applebot-Extended',
+    'Meta-ExternalAgent',
+    'DuckAssistBot',
+    'CCBot',
+]);
 
 // llms.txt body. Replace with your own. See https://llmstxt.org for the spec.
 define('AUTO_GEO_LLMS_TXT', <<<'LLMS'
@@ -77,19 +88,23 @@ add_action('init', function () {
 }, 0);
 
 add_filter('robots_txt', function ($output, $public) {
-    $extras = unserialize(AUTO_GEO_AI_CRAWLERS);
+    $extras = AUTO_GEO_AI_CRAWLERS;
+    if (!is_array($extras)) { return $output; }
     $append = "\n";
     foreach ($extras as $ua) {
+        $ua = preg_replace('/[^A-Za-z0-9\-_]/', '', (string) $ua);
+        if ($ua === '') { continue; }
         $append .= "User-agent: {$ua}\nAllow: /\n\n";
     }
-    $append .= "Sitemap: " . AUTO_GEO_SITEMAP_URL . "\n";
+    $append .= "Sitemap: " . esc_url_raw(AUTO_GEO_SITEMAP_URL) . "\n";
     return $output . $append;
 }, 20, 2);
 
 add_filter('rank_math/json_ld', function ($data) {
     if (!is_array($data)) { return $data; }
-    $extra = unserialize(AUTO_GEO_PERSON_SAMEAS_EXTRAS);
-    $extra = array_filter($extra, function ($u) { return $u !== 'YOUR_YOUTUBE_URL' && !empty($u); });
+    $extra = AUTO_GEO_PERSON_SAMEAS_EXTRAS;
+    if (!is_array($extra)) { return $data; }
+    $extra = array_filter($extra, function ($u) { return $u !== 'YOUR_YOUTUBE_URL' && !empty($u) && filter_var($u, FILTER_VALIDATE_URL); });
     if (empty($extra)) { return $data; }
     foreach ($data as $k => $node) {
         if (is_array($node) && isset($node['@type']) && $node['@type'] === 'Person') {
@@ -238,11 +253,13 @@ add_filter('rank_math/json_ld', function ($data) {
 }, 100);
 
 add_action('admin_notices', function () {
+    if (!current_user_can('activate_plugins')) { return; }
     $screen = function_exists('get_current_screen') ? get_current_screen() : null;
     if (!$screen || $screen->id !== 'plugins') { return; }
+    $crawler_count = is_array(AUTO_GEO_AI_CRAWLERS) ? count(AUTO_GEO_AI_CRAWLERS) : 0;
     echo '<div class="notice notice-info"><p><strong>Auto-GEO Fixes v' . esc_html(AUTO_GEO_VERSION) . '</strong> auto-wires: ';
     echo '(1) serves <code>/llms.txt</code> at root, ';
-    echo '(2) patches <code>robots.txt</code> with ' . count(unserialize(AUTO_GEO_AI_CRAWLERS)) . ' AI crawlers + Sitemap, ';
+    echo '(2) patches <code>robots.txt</code> with ' . (int) $crawler_count . ' AI crawlers + Sitemap, ';
     echo '(3) appends sameAs URLs to Person in Rank Math JSON-LD, ';
     echo '(4) auto-fills empty Rank Math meta descriptions on publish (140-160 chars), ';
     echo '(5) injects FAQPage schema on <code>/' . esc_html(AUTO_GEO_SERVICES_SLUG) . '/*</code> children (override via <code>_yg_faq_json</code> post meta), ';

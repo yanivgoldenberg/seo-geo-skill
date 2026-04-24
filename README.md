@@ -8,9 +8,9 @@
 
 **53% of top SaaS sites have no /llms.txt. 73% have broken Organization schema. This fixes both in one session.**
 
-*The only Claude Code skill that closes every SEO, GEO, and AEO gap in one session.*
+*A Phase 0 audit + 19-phase Claude Code workflow for AI Search Visibility. Scores your site, finds the gaps blocking AI citation, produces a safe ranked fix plan. Any CMS.*
 
-[![Version](https://img.shields.io/badge/version-1.5.1-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.6.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
 [![Benchmark](https://img.shields.io/badge/13_sites_benchmarked-brightgreen?style=flat-square)](docs/benchmarks.md)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-orange?style=flat-square)](LICENSE)
@@ -81,12 +81,13 @@ This skill automates all three in one session.
 
 ---
 
-## What it does (19 phases)
+## What it does (Phase 0 audit + 19 optimization phases)
 
 Open `seo-geo.md` for the full skill. At a glance:
 
-**The audit** (non-destructive, always safe):
-- Phase 0 - 100-point scoring rubric across 6 dimensions
+**The audit** (Phase 0, non-destructive, always safe):
+- 100-point rubric across 6 dimensions: Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10
+- Same rubric is used by `tests/benchmark_sites.py`; no methodology drift between docs and code
 - Phases 1-3 - Technical SEO, on-page, schema (16 types)
 - Phase 4 - LLM citation (llms.txt + entity anchoring)
 - Phase 5 - Answer engine optimization

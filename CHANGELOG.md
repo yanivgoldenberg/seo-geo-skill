@@ -6,6 +6,46 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.6.0] - 2026-04-24
+
+Bundled audit/fix release. Addresses three converging audit reports (internal phase-by-phase, security, and external 78/100 audit). Biggest win: one canonical scoring rubric shared by the skill body AND the benchmark script, enforced by a new parity test.
+
+### Changed - scoring rubric made canonical and consistent
+- Phase 0 rubric rebalanced to **Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10 = 100**. Previous split (20/20/20/20/10/10) under-weighted the skill's core differentiation (GEO).
+- `tests/benchmark_sites.py` rewritten to use the canonical rubric with explicit `MAX_POINTS` declaration, per-dimension clamping, SSRF guard, and 14-bot AI crawler detection.
+- `docs/benchmarks.md` column weights aligned; scores rebalanced across the 6 dimensions while preserving composite totals.
+- Leaderboard note added explaining the "15 benchmarked, 13 public" framing.
+
+### Changed - documentation accuracy
+- "19 phases" -> "Phase 0 audit + 19 optimization phases" everywhere it was ambiguous.
+- README hero replaced "closes every gap" with a credibility-safe "finds the gaps and produces a safe ranked fix plan" positioning.
+- Restored "Elementor" as the named page-builder in technical WordPress sections (a prior anonymization pass had garbled 22 lines with "a B2B SaaS" while leaving `/wp-json/elementor/v1/cache` URL paths intact).
+- Phase 0 audit micro-examples adjusted so every `(-N pts)` is reachable under the rubric (prior examples cited -4 and -7 which exceeded max dimension weights).
+- TOC anchor fixed for Phase 4 GEO heading (slash in heading generates double-hyphen slug on GitHub).
+- Benchmark leaderboard ranks renumbered after v1.5.0 removed two rows (no more 13/14/15 in a 13-site list).
+- CHANGELOG v1.0.0 error-matrix row count corrected from 15 to 16.
+
+### Added - new tests (all green)
+- `tests/test_scoring_parity.py` - Phase 0 rubric in seo-geo.md must match `MAX_POINTS` in benchmark_sites.py and must sum to 100.
+- `tests/test_leaderboard_integrity.py` - README and benchmarks.md leaderboards must each have 13 rows, ranks must be monotonic with valid tie-jumps, composite scores must agree across both files.
+- `tests/test_identifier_hygiene.py` - skill body must not contain author name, handle, former-employer names, or YANIV_* env vars. PHP plugin must not call unserialize() in code. admin_notices must check current_user_can().
+
+### Security - hardening pass
+- Added explicit **Trust and safety boundaries** section near the top of seo-geo.md: public-hosts-only SSRF guard, banned endpoints, log redaction rules, author-identifier non-injection, scope discipline. Seven non-negotiable rules.
+- Expanded Phase 17 banned endpoint list: user creation, settings mutations (siteurl/home/admin_email), plugin/theme management, token/JWT/API-key rotation.
+- Rewrote Phase 17 reference Python adapter: `_is_banned()` pre-check, SHA-256 body hash in audit log, no response body logged, no credential logging.
+- Phase 15 WP hardening snippet no longer prints `r.text` (WordPress error bodies often echo auth data).
+- Phase 15 AI crawler robots template now covers 14 bots (added Amazonbot, Meta-ExternalAgent, FacebookBot, OAI-SearchBot, DuckAssistBot).
+- Phase 16 bulk-media update snippet gained try/except, 429 retry-with-Retry-After, polite pacing, and fail-closed logging without bodies.
+- `tests/benchmark_sites.py` now validates every target URL against private/loopback/link-local/reserved IP ranges before sending a request.
+- PHP plugin (`examples/wordpress/yg-geo-fixes/yg-geo-fixes.php` bumped to 1.2.0):
+  - Removed `unserialize()` from three call sites; constants now use plain PHP 7+ array literals.
+  - Added `current_user_can('activate_plugins')` gate on admin_notices.
+  - URL validation via `filter_var(..., FILTER_VALIDATE_URL)` on sameAs inputs.
+  - UA strings sanitized before being written into robots.txt.
+  - `esc_url_raw()` on sitemap URL; `(int) $crawler_count` cast in output.
+  - Crawler list expanded to 14 bots.
+
 ## [1.5.2] - 2026-04-24
 
 Zero-identifier pass on the skill body. Previous versions baked author persona into schema examples and env var names, which installers would unknowingly copy into their own sites.
@@ -133,7 +173,7 @@ Initial release.
 - Phase 11: Programmatic SEO (template + data approach, quality gates)
 - Phase 12: Video SEO (VideoObject schema, YouTube optimization, video sitemap)
 - Phase 13: International SEO / Hreflang (hreflang tags, x-default, locale detection)
-- Phase 14: Debugging and Error Recovery (15-row error matrix, curl verification, cache clearing)
+- Phase 14: Debugging and Error Recovery (16-row error matrix, curl verification, cache clearing)
 - `--verify` self-test with pass/fail table
 - `--page <url>` single-page audit mode
 - SPA/JS-rendered site detection and fallback strategy
