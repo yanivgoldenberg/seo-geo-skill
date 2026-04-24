@@ -56,7 +56,7 @@ One command. Full audit. Ranked fix list. Works on any CMS.
 
 ### What the data shows
 
-- **53% of top SaaS sites have no llms.txt.** They are invisible to AI crawlers that respect the standard.
+- **53% of top SaaS sites have no llms.txt.** It is entity hygiene, not a guaranteed ranking lever - Google has stated no special file is required for AI Overviews. But the sites that publish it give AI crawlers a clean index of what to cite, and it consistently pairs with the strongest GEO scores.
 - **73% have no proper Person or Organization schema on their homepage.**
 - **Only 3 sites explicitly allow AI crawlers in robots.txt.** The rest rely on implicit allow, which security plugins often treat as deny.
 - **Anthropic.com - the company building Claude - scores 30/100.** Even the AI companies are blind to AI.
@@ -151,7 +151,7 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 
 **[Yaniv Goldenberg](https://yanivgoldenberg.com)** | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
 
-Former Head of Growth at a PLG SaaS with 20M+ users (100x ARR), a consumer SaaS (+337% MRR), an MLOps SaaS acquired by a Fortune 100. $100M+ in ad spend managed.
+Fractional Head of Growth. Scaled a PLG SaaS to 20M+ users (100x ARR), tripled MRR at a consumer SaaS (+337%), grew an MLOps SaaS acquired by a Fortune 100. $100M+ in ad spend managed. I help post-PMF SaaS and e-commerce brands dominate AI search results - so ChatGPT, Claude, and Perplexity cite you before your competitors.
 
 If this saved you an afternoon, star the repo.
 
@@ -180,4 +180,14 @@ I run a paid **AI Search Visibility Audit** for post-PMF SaaS, B2B, and e-commer
 
 [PolyForm Noncommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
 
-Free for personal use, internal business use, and client work. Commercial use - reselling, white-labeling, or packaging as a paid product - requires a commercial license: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact)
+| Use case | Allowed | License required |
+|---|---|---|
+| Run on your own site | Yes | No |
+| Run on client sites as part of your service | Yes | No |
+| Run inside your company for internal audits | Yes | No |
+| Fork and modify for personal/internal use | Yes | No |
+| Resell as a paid product or SaaS | No | Commercial license |
+| White-label or package under your brand | No | Commercial license |
+| Embed in a commercial tool you sell | No | Commercial license |
+
+Commercial license: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact)
