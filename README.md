@@ -1,70 +1,125 @@
 # seo-geo-skill
 
 <p align="center">
-  <img src="docs/assets/seo-geo-cover-1600x900.png" alt="seo-geo-skill — 19-phase SEO + GEO + AEO skill for Claude Code. Real case study: 61 to 94/100 in one session." width="100%" />
+  <img src="docs/assets/seo-geo-cover-1600x900.png" alt="seo-geo-skill - 19-phase SEO + GEO + AEO skill for Claude Code" width="100%" />
 </p>
 
 <div align="center">
 
-**Your site is invisible to AI. This fixes it.**
+**53% of top SaaS sites have no /llms.txt. 73% have broken Organization schema. This fixes both in one session.**
 
 *The only Claude Code skill that closes every SEO, GEO, and AEO gap in one session.*
 
-[![Version](https://img.shields.io/badge/version-1.3.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.4.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
-[![Score](https://img.shields.io/badge/audit_score-94%2F100-brightgreen?style=flat-square)](#real-world-results)
+[![Benchmark](https://img.shields.io/badge/15_sites_benchmarked-brightgreen?style=flat-square)](docs/benchmarks.md)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-orange?style=flat-square)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-purple?style=flat-square)](https://claude.ai/code)
-[![Platforms](https://img.shields.io/badge/platforms-WordPress%20%7C%20Shopify%20%7C%20Webflow%20%7C%20Next.js-green?style=flat-square)](#supported-platforms)
 
 </div>
 
 ---
 
-From `robots.txt` to `llms.txt` - every signal that affects whether humans and AI find you, scored and fixed in one Claude Code session. 19 phases. 16 schema types. 4 first-class CMS adapters. Any CMS.
+## Run it on your site in 10 seconds
 
-## Real-world results
+```bash
+curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/seo-geo.md \
+  -o ~/.claude/skills/seo-geo.md
 
-**yanivgoldenberg.com: 61 → 94/100 in one session.**
+# then in Claude Code:
+/seo-geo https://yoursite.com
+```
 
-| Dimension | Before | After | Delta |
-|---|---|---|---|
-| Technical SEO | 72 | 95 | +23 |
-| On-page SEO | 58 | 92 | +34 |
-| Schema | 40 | 98 | +58 |
-| GEO (LLM citation) | 55 | 96 | +41 |
-| AEO (answer engine) | 48 | 88 | +40 |
-| E-E-A-T | 68 | 92 | +24 |
-| **Composite** | **61** | **94** | **+33** |
+One command. Full audit. Ranked fix list. Works on any CMS.
 
-Before/after audit reports available in `docs/case-studies/yanivgoldenberg.com.md`.
+---
 
-**Who this is for:**
+## We benchmarked 15 top SaaS sites. Most are invisible to AI.
+
+| Rank | Site | Score | Why |
+|---:|---|---:|---|
+| 1 | **yanivgoldenberg.com** | **90** | Full stack: llms.txt, Organization + Person schema, AI-crawler allow |
+| 2 | stripe.com | 73 | No llms.txt |
+| 2 | resend.com | 73 | No AI-crawler allow in robots |
+| 4 | planetscale.com | 65 | No Person schema |
+| 5 | vercel.com | 63 | Thin Organization schema |
+| 5 | figma.com | 63 | No llms.txt |
+| 7 | elementor.com | 62 | Partial schema |
+| 8 | notion.so | 60 | No Organization schema on homepage |
+| 9 | mercury.com | 58 | No llms.txt |
+| 10 | supabase.com | 55 | No Organization schema |
+| 11 | linear.app | 53 | No schema on homepage at all |
+| 12 | riverside.fm | 50 | No llms.txt, thin meta |
+| 13 | **anthropic.com** | **30** | *The AI company itself: no llms.txt, no Organization schema* |
+| 14 | ramp.com | 25 | Minimal homepage markup |
+| 15 | fly.io | 10 | No robots.txt, no schema, no meta |
+
+**Full methodology + reproduce-yourself script:** [`docs/benchmarks.md`](docs/benchmarks.md)
+
+### What the data shows
+
+- **53% of top SaaS sites have no llms.txt.** They are invisible to AI crawlers that respect the standard.
+- **73% have no proper Person or Organization schema on their homepage.**
+- **Only 3 sites explicitly allow AI crawlers in robots.txt.** The rest rely on implicit allow, which security plugins often treat as deny.
+- **Anthropic.com - the company building Claude - scores 30/100.** Even the AI companies are blind to AI.
+
+If your site scores below 60 on this rubric, you're in the bottom third of well-funded SaaS brands. The three cheapest wins:
+
+1. Publish `/llms.txt` and `/llms-full.txt` → +25 points
+2. Add Organization + Person JSON-LD → +15 points
+3. Allow AI crawlers explicitly in robots.txt → +10 points
+
+This skill automates all three in one session.
+
+---
+
+## Who this is for
+
 - Marketers who want citations in ChatGPT, Perplexity, and Google AI Overviews
 - Developers adding SEO to a client site and need it done right the first time
-- Agencies who need schema + GEO at scale without a 10-tab checklist
+- Agencies running the same 20-point audit on 50+ client sites per year
+
+**Not a fit** if you want a 20-sub-skill toolbox. See [`docs/compare.md`](docs/compare.md) for honest comparisons to other Claude Code SEO skills.
+
+---
+
+## What it does (19 phases)
+
+Open `seo-geo.md` for the full skill. At a glance:
+
+**The audit** (non-destructive, always safe):
+- Phase 0 - 100-point scoring rubric across 6 dimensions
+- Phases 1-3 - Technical SEO, on-page, schema (16 types)
+- Phase 4 - LLM citation (llms.txt + entity anchoring)
+- Phase 5 - Answer engine optimization
+- Phase 6 - E-E-A-T trust signals
+- Phases 7-14 - Content, speed, hreflang, debugging
+
+**The writes** (opt-in via `--apply`):
+- Phase 15 - WordPress security hardening
+- Phase 16 - Field patterns from production
+- Phase 17 - Dry-run safety gates + banned endpoint list
+- Phase 18 - Multi-platform adapters (WordPress / Shopify / Webflow / Next.js)
+- Phase 19 - Competitor benchmarking
 
 ---
 
 ## Install
 
 ```bash
-# Global install (one command, works immediately)
+# Global install
 curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/seo-geo.md \
   -o ~/.claude/skills/seo-geo.md
 ```
 
 <details>
-<summary>Other install options</summary>
+<summary>Project-level install + plugin use</summary>
 
 ```bash
 # Project-level only
 curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/seo-geo.md \
   -o .claude/skills/seo-geo.md
-
-# Via plugin: add to your plugin's skills/ folder
 ```
-
 </details>
 
 ---
@@ -72,113 +127,22 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 ## Usage
 
 ```bash
-/seo-geo https://yoursite.com    # start here: audit → score → top fixes
-```
+# Start here
+/seo-geo https://yoursite.com
 
-```
-/seo-geo --verify                # first time? run this first
+# Variants
+/seo-geo --verify                # self-test: tools accessible?
 /seo-geo --audit-only            # score only, no writes
 /seo-geo --phase geo             # LLM citation only (fastest ROI)
 /seo-geo --phase technical       # technical SEO only
 /seo-geo --page <url>            # single page audit
-/seo-geo --schema Person         # generate one schema type
-/seo-geo --llms-txt              # create/update llms.txt only
-/seo-geo --score                 # current score breakdown
-```
-
-> **First time?** Run `/seo-geo --verify` before anything else. It checks tool access and credentials and tells you exactly what's missing before touching your site.
-
----
-
-## What the audit output looks like
-
-```
-Score: 34/100
-
-CRITICAL (fix now):
-  [ ] No schema markup on any page                    -20 pts
-  [ ] GPTBot, ClaudeBot blocked in robots.txt         -7 pts
-  [ ] Meta descriptions missing on 3/4 pages          -6 pts
-
-HIGH:
-  [ ] llms.txt missing                                -5 pts
-  [ ] No canonical tags                               -4 pts
-
-ALREADY DONE:
-  [x] HTTPS active
-  [x] Mobile viewport set
-  [x] Single H1 per page
-
-Run /seo-geo to fix all CRITICAL items automatically.
+/seo-geo --apply                 # writes enabled (opt-in, see Phase 17)
+/seo-geo --benchmark <competitor> # head-to-head score
 ```
 
 ---
 
-## 15 phases. Every gap covered.
-
-| Phase | What it does |
-|-------|-------------|
-| **0 - Audit** | Scores site 0-100. Prioritized gap list. No writes. |
-| **1 - Technical** | robots.txt, AI crawler access, canonical tags, sitemap |
-| **2 - On-Page** | Titles, meta descriptions, OG tags, H1 hierarchy |
-| **3 - Schema** | 16+ schema types injected per page type and business |
-| **4 - GEO** | llms.txt, entity signals, sameAs, LLM citation structure |
-| **5 - AEO** | Speakable schema, answer-first content, SERP features |
-| **6 - E-E-A-T** | Author schema, expertise signals, trust indicators |
-| **7 - Content Strategy** | Topical authority, skyscraper method, content briefs |
-| **8 - Core Web Vitals** | LCP, INP, CLS - measured and fixed per platform |
-| **9 - Internal Linking** | Hub-and-spoke architecture, PageRank flow, anchor audit |
-| **10 - Content Decay** | Refresh strategy, GSC impression tracking |
-| **11 - Programmatic SEO** | Template + data at scale, quality gates |
-| **12 - Video SEO** | VideoObject schema, YouTube SEO, video sitemap |
-| **13 - International SEO** | Hreflang, x-default, multilingual schema, locale signals |
-| **14 - Debugging** | 15-row error matrix, cache clearing, curl verification |
-
----
-
-## What it delivers
-
-| Metric | Before | After |
-|--------|--------|-------|
-| Schema types present | 0-1 | 12-16 |
-| AI crawlers explicitly allowed | 0 | 9 |
-| llms.txt present | No | Yes (+ llms-full.txt) |
-| Pages with complete OG tags | 0 of N | All pages |
-| Internal linking structure | Flat | Hub-and-spoke |
-
-One session closes all critical gaps. Ongoing work (content decay, programmatic SEO) runs on the built-in maintenance schedule.
-
----
-
-## Scoring rubric
-
-| Dimension | Points |
-|-----------|--------|
-| Technical SEO | /20 |
-| On-Page SEO | /20 |
-| Schema / Structured Data | /20 |
-| GEO / LLM Optimization | /20 |
-| E-E-A-T | /10 |
-| AEO / Answer Engine | /10 |
-| **Total** | **/100** |
-
----
-
-## Supported platforms
-
-| Platform | Meta | Schema | robots.txt |
-|----------|------|--------|-----------|
-| WordPress + Elementor | Rank Math REST API | HTML widget via WP REST API | Rank Math editor |
-| WordPress Classic | Rank Math / Yoast | Custom HTML block | Plugin editor |
-| Shopify | Metafields / theme liquid | theme.liquid + page templates | robots.txt.liquid |
-| Webflow | Page Settings | Site Settings Custom Code | Site Settings |
-| Next.js / React | `generateMetadata()` / next/head | next/head script tag | /app/robots.ts |
-| Static HTML | Direct `<head>` edit | Direct `<head>` edit | robots.txt file |
-| Ghost | Post meta tab | Code injection | routes.yaml |
-
----
-
-## Schema types included
+## Schemas supported
 
 `Person` `Organization` `SoftwareApplication` `LocalBusiness` `Product` `Service` `Article` `BlogPosting` `FAQPage` `HowTo` `BreadcrumbList` `WebSite` `ProfilePage` `DefinedTerm` `Review` `SpeakableSpecification` `VideoObject`
 
@@ -188,9 +152,9 @@ One session closes all critical gaps. Ongoing work (content decay, programmatic 
 
 **[Yaniv Goldenberg](https://yanivgoldenberg.com)** | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
 
-Former Head of Growth at Elementor (21M websites), Riverside.fm (337% MRR growth), cnvrg.io (acquired by Intel). $100M+ in ad spend managed. Now Fractional Head of Growth for B2B SaaS and ecommerce.
+Former Head of Growth at Elementor (21M websites, 100x ARR), Riverside.fm (+337% MRR), cnvrg.io (acquired by Intel). $100M+ in ad spend managed.
 
-If this saved you time - star the repo. If you want help applying it: [book a 15-min call](https://yanivgoldenberg.com/contact).
+If this saved you an afternoon - star the repo. If you want help applying it at scale: [book a 15-min call](https://yanivgoldenberg.com/contact).
 
 ---
 

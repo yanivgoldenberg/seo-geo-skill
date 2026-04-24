@@ -6,6 +6,23 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.4.0] - 2026-04-24
+
+Public benchmark release. Replace self-only case study with 15-site public leaderboard.
+
+### Added
+- docs/benchmarks.md: 15 top SaaS sites scored (anthropic.com, stripe.com, linear.app, vercel.com, figma.com, notion.so, supabase.com, mercury.com, elementor.com, riverside.fm, resend.com, ramp.com, fly.io, planetscale.com, yanivgoldenberg.com)
+- docs/benchmarks.json: raw scoring data
+- tests/benchmark_sites.py: reproducible scoring script (2 minutes to rerun)
+- docs/compare.md: honest comparison with AgriciDaniel/claude-seo, aaron-he-zhu/seo-geo-claude-skills, claude-seo.md
+- README rewritten: benchmark leaderboard above the fold, hard 10-second CTA at top
+- All files swept for em dashes (brand voice: no em dashes)
+
+### Changed
+- Version bumped 1.3.0 -> 1.4.0
+- README version badge + description updated
+- Hero narrative: 53% of top SaaS sites have no llms.txt, 73% have broken schema, anthropic.com itself scores 30/100
+
 ## [1.3.0] - 2026-04-24
 
 100/100 polish release. Four new phases, CI, case study, real-world score badge.

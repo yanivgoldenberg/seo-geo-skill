@@ -1,7 +1,7 @@
 ---
 name: seo-geo
-version: 1.3.0
-description: Complete SEO+GEO+AEO skill. 19 phases, 0→100/100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, PII audit, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, competitor benchmarking. Any CMS.
+version: 1.4.0
+description: Complete SEO+GEO+AEO skill. 19 phases, 0 to 100 of 100. Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, competitor benchmarking, public benchmark of 15 top SaaS sites. Any CMS.
 ---
 
 # /seo-geo - Universal SEO + GEO + AEO Optimization
@@ -15,15 +15,15 @@ The complete SEO skill for Claude Code. Covers every dimension of modern search:
 ## Table of Contents
 
 - [Quick start](#quick-start-2-minutes-to-value)
-- [Phase 0 - Audit](#phase-0---audit) — 100-pt scoring rubric, 6 dimensions
-- [Phase 1 - Technical SEO](#phase-1---technical-seo) — robots, canonical, sitemap, mobile
-- [Phase 2 - On-Page SEO](#phase-2---on-page-seo) — titles, meta, OG, H1
-- [Phase 3 - Schema](#phase-3---schema) — 16 types, JSON-LD, validation
-- [Phase 4 - GEO](#phase-4---geo-llm-generative-engine-optimization) — llms.txt, entity, AI crawler allow
-- [Phase 5 - AEO](#phase-5---aeo-answer-engine-optimization) — Speakable, direct-answer
-- [Phase 6 - E-E-A-T](#phase-6---e-e-a-t) — author, credentials, trust signals
+- [Phase 0 - Audit](#phase-0---audit) - 100-pt scoring rubric, 6 dimensions
+- [Phase 1 - Technical SEO](#phase-1---technical-seo) - robots, canonical, sitemap, mobile
+- [Phase 2 - On-Page SEO](#phase-2---on-page-seo) - titles, meta, OG, H1
+- [Phase 3 - Schema](#phase-3---schema) - 16 types, JSON-LD, validation
+- [Phase 4 - GEO](#phase-4---geo-llm-generative-engine-optimization) - llms.txt, entity, AI crawler allow
+- [Phase 5 - AEO](#phase-5---aeo-answer-engine-optimization) - Speakable, direct-answer
+- [Phase 6 - E-E-A-T](#phase-6---e-e-a-t) - author, credentials, trust signals
 - [Phase 7 - Content optimization](#phase-7---content-optimization)
-- [Phase 8 - Core Web Vitals](#phase-8---core-web-vitals) — LCP, INP, CLS
+- [Phase 8 - Core Web Vitals](#phase-8---core-web-vitals) - LCP, INP, CLS
 - [Phase 9 - Internal linking](#phase-9---internal-linking)
 - [Phase 10 - Content refresh](#phase-10---content-refresh-strategy)
 - [Phase 11 - Programmatic SEO](#phase-11---programmatic-seo)
@@ -2216,7 +2216,7 @@ Standard widgets (`heading`, `text-editor`, `html`, `image`, `posts`) save and r
 
 Inline `<h1>` tags in post body HTML are stripped during rendering (reserved for the theme template). Detection: `<h1` exists in `?context=edit` raw content but not in live HTML output.
 
-**Fix**: Put H1 in the Elementor template (via heading widget as above) — never in the post body.
+**Fix**: Put H1 in the Elementor template (via heading widget as above) - never in the post body.
 
 ### /llms.txt at root requires a plugin
 

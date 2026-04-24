@@ -1,13 +1,13 @@
 # Contributing to seo-geo-skill
 
-Thanks for considering a contribution. This skill is under PolyForm Noncommercial license — free for personal and client work, not for resale.
+Thanks for considering a contribution. This skill is under PolyForm Noncommercial license - free for personal and client work, not for resale.
 
 ## What's welcome
 
 - **Bug reports** on specific phases that produce incorrect scores or writes
 - **Platform adapter additions** (Ghost, Astro, Craft CMS, etc.) following the Phase 18 pattern
 - **Schema type additions** with validated JSON-LD fixtures in `examples/`
-- **Case studies** — before/after audit reports following `docs/case-studies/yanivgoldenberg.com.md` format
+- **Case studies** - before/after audit reports following `docs/case-studies/yanivgoldenberg.com.md` format
 - **Test additions** in `tests/` that catch regressions
 
 ## What to avoid
