@@ -1,0 +1,742 @@
+[
+  {
+    "site": "https://yanivgoldenberg.com",
+    "technical": 20,
+    "schema": 20,
+    "geo": 25,
+    "onpage": 15,
+    "aeo": 7,
+    "eeat": 10,
+    "notes": [
+      "has llms.txt",
+      "has llms-full.txt"
+    ],
+    "composite": 97
+  },
+  {
+    "site": "https://heroku.com",
+    "technical": 20,
+    "schema": 20,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 3,
+    "eeat": 6,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 80
+  },
+  {
+    "site": "https://amplitude.com",
+    "technical": 20,
+    "schema": 16,
+    "geo": 25,
+    "onpage": 13,
+    "aeo": 0,
+    "eeat": 3,
+    "notes": [
+      "has llms.txt",
+      "has llms-full.txt"
+    ],
+    "composite": 77
+  },
+  {
+    "site": "https://beehiiv.com",
+    "technical": 20,
+    "schema": 17,
+    "geo": 17,
+    "onpage": 15,
+    "aeo": 7,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 76
+  },
+  {
+    "site": "https://resend.com",
+    "technical": 20,
+    "schema": 17,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 2,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 70
+  },
+  {
+    "site": "https://monday.com",
+    "technical": 20,
+    "schema": 13,
+    "geo": 21,
+    "onpage": 12,
+    "aeo": 3,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 69
+  },
+  {
+    "site": "https://workos.com",
+    "technical": 20,
+    "schema": 12,
+    "geo": 21,
+    "onpage": 12,
+    "aeo": 3,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt",
+      "has llms-full.txt"
+    ],
+    "composite": 68
+  },
+  {
+    "site": "https://render.com",
+    "technical": 20,
+    "schema": 17,
+    "geo": 14,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 66
+  },
+  {
+    "site": "https://stripe.com",
+    "technical": 17,
+    "schema": 17,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 65
+  },
+  {
+    "site": "https://webflow.com",
+    "technical": 17,
+    "schema": 17,
+    "geo": 16,
+    "onpage": 12,
+    "aeo": 0,
+    "eeat": 3,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 65
+  },
+  {
+    "site": "https://asana.com",
+    "technical": 20,
+    "schema": 17,
+    "geo": 16,
+    "onpage": 12,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 65
+  },
+  {
+    "site": "https://auth0.com",
+    "technical": 20,
+    "schema": 13,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 64
+  },
+  {
+    "site": "https://planetscale.com",
+    "technical": 20,
+    "schema": 13,
+    "geo": 16,
+    "onpage": 13,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 62
+  },
+  {
+    "site": "https://figma.com",
+    "technical": 20,
+    "schema": 13,
+    "geo": 14,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 62
+  },
+  {
+    "site": "https://retool.com",
+    "technical": 20,
+    "schema": 13,
+    "geo": 14,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 62
+  },
+  {
+    "site": "https://mercury.com",
+    "technical": 20,
+    "schema": 17,
+    "geo": 9,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 61
+  },
+  {
+    "site": "https://cursor.com",
+    "technical": 17,
+    "schema": 13,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 61
+  },
+  {
+    "site": "https://framer.com",
+    "technical": 17,
+    "schema": 13,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 61
+  },
+  {
+    "site": "https://mongodb.com",
+    "technical": 17,
+    "schema": 13,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 61
+  },
+  {
+    "site": "https://algolia.com",
+    "technical": 17,
+    "schema": 13,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 61
+  },
+  {
+    "site": "https://gitlab.com",
+    "technical": 17,
+    "schema": 17,
+    "geo": 9,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 2,
+    "notes": [],
+    "composite": 60
+  },
+  {
+    "site": "https://calendly.com",
+    "technical": 17,
+    "schema": 13,
+    "geo": 17,
+    "onpage": 13,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 60
+  },
+  {
+    "site": "https://cohere.com",
+    "technical": 20,
+    "schema": 10,
+    "geo": 11,
+    "onpage": 15,
+    "aeo": 3,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 59
+  },
+  {
+    "site": "https://runwayml.com",
+    "technical": 16,
+    "schema": 17,
+    "geo": 9,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 57
+  },
+  {
+    "site": "https://sentry.io",
+    "technical": 20,
+    "schema": 13,
+    "geo": 9,
+    "onpage": 13,
+    "aeo": 0,
+    "eeat": 2,
+    "notes": [],
+    "composite": 57
+  },
+  {
+    "site": "https://clickup.com",
+    "technical": 17,
+    "schema": 13,
+    "geo": 21,
+    "onpage": 5,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt",
+      "has llms-full.txt"
+    ],
+    "composite": 56
+  },
+  {
+    "site": "https://zoom.us",
+    "technical": 20,
+    "schema": 12,
+    "geo": 9,
+    "onpage": 13,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 54
+  },
+  {
+    "site": "https://hubspot.com",
+    "technical": 17,
+    "schema": 13,
+    "geo": 9,
+    "onpage": 12,
+    "aeo": 3,
+    "eeat": 0,
+    "notes": [],
+    "composite": 54
+  },
+  {
+    "site": "https://vercel.com",
+    "technical": 17,
+    "schema": 10,
+    "geo": 11,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 53
+  },
+  {
+    "site": "https://airtable.com",
+    "technical": 20,
+    "schema": 13,
+    "geo": 9,
+    "onpage": 10,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 52
+  },
+  {
+    "site": "https://n8n.io",
+    "technical": 17,
+    "schema": 13,
+    "geo": 9,
+    "onpage": 13,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 52
+  },
+  {
+    "site": "https://loom.com",
+    "technical": 20,
+    "schema": 8,
+    "geo": 10,
+    "onpage": 12,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 50
+  },
+  {
+    "site": "https://slack.com",
+    "technical": 20,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 2,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 48
+  },
+  {
+    "site": "https://supabase.com",
+    "technical": 16,
+    "schema": 0,
+    "geo": 16,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt",
+      "has llms-full.txt"
+    ],
+    "composite": 47
+  },
+  {
+    "site": "https://notion.so",
+    "technical": 20,
+    "schema": 0,
+    "geo": 12,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 47
+  },
+  {
+    "site": "https://linear.app",
+    "technical": 20,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 46
+  },
+  {
+    "site": "https://mailchimp.com",
+    "technical": 17,
+    "schema": 5,
+    "geo": 11,
+    "onpage": 13,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 46
+  },
+  {
+    "site": "https://zapier.com",
+    "technical": 20,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 46
+  },
+  {
+    "site": "https://basecamp.com",
+    "technical": 20,
+    "schema": 5,
+    "geo": 4,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 44
+  },
+  {
+    "site": "https://posthog.com",
+    "technical": 17,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 12,
+    "aeo": 3,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 43
+  },
+  {
+    "site": "https://clerk.com",
+    "technical": 17,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 43
+  },
+  {
+    "site": "https://github.com",
+    "technical": 14,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 40
+  },
+  {
+    "site": "https://huggingface.co",
+    "technical": 20,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 39
+  },
+  {
+    "site": "https://netlify.com",
+    "technical": 13,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 39
+  },
+  {
+    "site": "https://coda.io",
+    "technical": 20,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 39
+  },
+  {
+    "site": "https://convertkit.com",
+    "technical": 20,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 12,
+    "aeo": 3,
+    "eeat": 0,
+    "notes": [],
+    "composite": 39
+  },
+  {
+    "site": "https://cloudflare.com",
+    "technical": 20,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 13,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 37
+  },
+  {
+    "site": "https://anthropic.com",
+    "technical": 20,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 12,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 36
+  },
+  {
+    "site": "https://digitalocean.com",
+    "technical": 20,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 12,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 36
+  },
+  {
+    "site": "https://mixpanel.com",
+    "technical": 17,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 36
+  },
+  {
+    "site": "https://segment.com",
+    "technical": 17,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 36
+  },
+  {
+    "site": "https://databricks.com",
+    "technical": 20,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 12,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 36
+  },
+  {
+    "site": "https://snowflake.com",
+    "technical": 17,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 15,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 36
+  },
+  {
+    "site": "https://datadog.com",
+    "technical": 13,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 10,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 34
+  },
+  {
+    "site": "https://replicate.com",
+    "technical": 20,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 8,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 32
+  },
+  {
+    "site": "https://fly.io",
+    "technical": 9,
+    "schema": 0,
+    "geo": 4,
+    "onpage": 9,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 22
+  },
+  {
+    "site": "https://ramp.com",
+    "technical": 10,
+    "schema": 0,
+    "geo": 11,
+    "onpage": 0,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "has llms.txt"
+    ],
+    "composite": 21
+  },
+  {
+    "site": "https://canva.com",
+    "technical": 7,
+    "schema": 0,
+    "geo": 5,
+    "onpage": 0,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 12
+  },
+  {
+    "site": "https://openai.com",
+    "technical": 7,
+    "schema": 0,
+    "geo": 0,
+    "onpage": 0,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 7
+  },
+  {
+    "site": "https://perplexity.ai",
+    "technical": 7,
+    "schema": 0,
+    "geo": 0,
+    "onpage": 0,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 7
+  },
+  {
+    "site": "https://railway.app",
+    "technical": 0,
+    "schema": 0,
+    "geo": 0,
+    "onpage": 0,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [],
+    "composite": 0
+  }
+]

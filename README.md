@@ -6,13 +6,15 @@
 
 <div align="center">
 
-**53% of top SaaS sites have no /llms.txt. 73% have broken Organization schema. This fixes both in one session.**
+**A single-file Claude Code skill that audits and fixes AI Search Readiness across SEO, GEO, AEO, schema, llms.txt, robots.txt, and E-E-A-T.**
 
-*A Phase 0 audit + 19-phase Claude Code workflow for AI Search Visibility. Scores your site, finds the gaps blocking AI citation, produces a safe ranked fix plan. Any CMS.*
+*Benchmarked on 61 SaaS and AI sites. 67% scored 60 or below. OpenAI and Perplexity score 7/100 each. Same 100-point rubric. Reproducible script. Safe by default.*
+
+*See the full [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) report.*
 
 [![Version](https://img.shields.io/badge/version-1.6.1-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
-[![Benchmark](https://img.shields.io/badge/13_sites_benchmarked-brightgreen?style=flat-square)](docs/benchmarks.md)
+[![Benchmark](https://img.shields.io/badge/61_sites_benchmarked-brightgreen?style=flat-square)](docs/state-of-ai-search-2026.md)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-orange?style=flat-square)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-purple?style=flat-square)](https://claude.ai/code)
 
@@ -34,7 +36,11 @@ One command. Full audit. Ranked fix list. Works on any CMS.
 
 ---
 
-## We benchmarked 13 top SaaS sites. Most are invisible to AI.
+## We benchmarked 61 top SaaS and AI sites. 67% fail AI Search Readiness.
+
+Two AI category leaders, OpenAI and Perplexity, score 7/100 each. Railway scores 0. Full leaderboard in [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md).
+
+Short public cohort (original 13, methodology baseline):
 
 | Rank | Site | Score | Why |
 |---:|---|---:|---|
@@ -161,14 +167,19 @@ If this saved you an afternoon, star the repo.
 
 I run a paid **AI Search Visibility Audit** for post-PMF SaaS, B2B, and e-commerce brands.
 
-**What you get:**
+For post-PMF SaaS and e-commerce brands with organic demand but no technical citation layer. Not keyword research. Not link building. The layer that helps AI systems understand, trust, and cite your brand.
+
+**You get:**
 - 0-100 AI Search Readiness score across 6 dimensions (Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10)
 - Head-to-head benchmark vs 3 competitors
 - Top 10 fixes ranked by impact, effort, and implementation risk
+- Schema, llms.txt, robots.txt, and entity-signal gap report
 - Implementation plan your dev team can ship
 - 30-minute walkthrough
 
-**Format:** application-only. Fee is quoted after the application based on scope and is credited in full if you continue into the Implementation Sprint ($7.5K-$15K, depending on scope).
+**Price anchor:** Audit starts at **$7.5K**. Larger sites and multi-brand benchmarks are scoped separately. If you continue into the Implementation Sprint, the audit fee is credited in full.
+
+**Format:** application-only. Post-PMF SaaS, B2B, and e-commerce brands.
 
 **Sample output:** [`docs/sample-paid-audit.md`](docs/sample-paid-audit.md) - see exactly what a finished audit looks like before applying.
 
@@ -180,10 +191,12 @@ I run a paid **AI Search Visibility Audit** for post-PMF SaaS, B2B, and e-commer
 
 [PolyForm Noncommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
 
+You may run this on your own sites and internal company sites. Paid agency resale, white-labeling, SaaS packaging, or using it as a billable client deliverable requires a commercial license. For client-service use cases, contact me for permission or a commercial license.
+
 | Use case | Allowed | License required |
 |---|---|---|
 | Run on your own site | Yes | No |
-| Run on client sites as part of your service | Yes | No |
+| Run on client sites as part of your service | Yes, with written permission | Contact for permission |
 | Run inside your company for internal audits | Yes | No |
 | Fork and modify for personal/internal use | Yes | No |
 | Resell as a paid product or SaaS | No | Commercial license |
