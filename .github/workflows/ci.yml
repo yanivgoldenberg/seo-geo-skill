@@ -1,0 +1,23 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Install
+        run: pip install pyyaml jsonschema requests markdown
+      - name: Frontmatter + TOC
+        run: python tests/test_skill_metadata.py
+      - name: Schema fixtures valid JSON-LD
+        run: python tests/test_schema_fixtures.py
+      - name: Live llms.txt endpoints reachable
+        run: python tests/test_live_endpoints.py
+        continue-on-error: true
+      - name: Link check
+        uses: lycheeverse/lychee-action@v1
+        with: { args: --no-progress --exclude-path 'docs/archive' seo-geo.md README.md }

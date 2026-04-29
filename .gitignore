@@ -1,0 +1,9 @@
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+node_modules/
+.fastembed_cache/
+__pycache__/
