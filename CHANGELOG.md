@@ -6,6 +6,28 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.9.0] - 2026-05-29
+
+Production deployment session on a WordPress + Elementor Pro site surfaced eight new gotchas not covered by v1.8.0. All added to the existing "Elementor Pro + REST API Gotchas" and "Common Issues and Fixes" sections. No new phases; additive only.
+
+### Added
+
+- **Kit global link color bleeds into anchor-styled buttons** - `link_normal_color` emits `.elementor-kit-N a` at specificity (0,1,1), outranking single-class button CSS. Fix: kit `custom_css` override at (0,2,1) including `:hover`.
+- **`-webkit-background-clip:text` + webfont FOUT = frozen glyphs** - clipped text does not re-raster when webfont swaps in; pure CSS cannot fix it. Fix: self-host font or `font-display:block`; fallback: `document.fonts.ready` JS re-raster in HTML widget.
+- **Elementor kit `custom_js` is stored but never output** - kit custom JS has no frontend render path; use HTML widget instead. Compound gotcha: `_elementor_page_settings` must be sent as a dict (not `json.dumps`), otherwise 400 `rest_invalid_type`. Verify live `post-N.css` / HTML after every kit write.
+- **`wpautop` mangles raw HTML cards in `post_content`** - WordPress `the_content` filter wraps lines in `<p>` and injects `<br>`, breaking hand-authored block markup. Fix: remove filter per page ID, author wpautop-safe HTML, or move content to Elementor HTML widget.
+- **`_elementor_data` bad write nulls the page** - malformed write leaves invalid JSON; Elementor renders a narrow fallback. Prevention: backup, write, immediately read back and `json.loads()` the stored value before claiming done.
+- **Full-bleed padding formula collides with theme-capped container** - `calc((100vw - 1200px)/2 + 32px)` assumes viewport-width ancestor; a theme `max-width` on `<main>` makes the formula go negative. Fix: walk ancestor width chain before applying; set container width in kit.
+- **Hidden text encodings evade grep** - WordPress and Elementor store URLs, emails, and non-ASCII text as HTML numeric entities (`&#NNNN;`) or JSON `\uXXXX` escapes. Plain-text grep misses them. Fix: search all three representations; use `html.unescape()` before regex matching.
+- **Kill default visited-link purple** - browser UA stylesheet wins without an explicit reset. Fix: kit global link color + `:where(a:visited){color:inherit}` at (0,0,0) specificity.
+
+### Changed
+
+- seo-geo.md version bumped 1.8.0 -> 1.9.0.
+- "Common Issues and Fixes" table: 7 new rows added for the above gotchas.
+
+---
+
 ## [1.6.1] - 2026-04-24
 
 Paid-offer + trust hardening pass following the external 78/100 audit. Scoring rubric, phase count, and benchmark count were already aligned in 1.6.0; this release adds the paid audit CTA, a sample audit artifact, and a banned-endpoint policy test so the policy cannot regress silently.

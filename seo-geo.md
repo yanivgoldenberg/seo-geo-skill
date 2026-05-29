@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-version: 1.8.0
+version: 1.9.0
 description: Phase 0 audit + 20 optimization phases for Claude Code. Canonical 100-pt rubric (Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10). Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, SSRF guard, competitor benchmarking, public benchmark of 61 top SaaS and AI sites. Any CMS.
 ---
 
@@ -1443,6 +1443,12 @@ curl -s {url} | grep -c "<div id=\"root\"\|<div id=\"app\"\|<div id=\"__next\""
 | OG image not rendering on social share | Image URL is relative, not absolute | Always use full absolute URL including https:// |
 | Shopify robots.txt not updating | Shopify auto-generates robots.txt | Create `templates/robots.txt.liquid` to override |
 | Schema present but not showing in Rich Results | Google takes 1-2 weeks to re-crawl | Request indexing in Google Search Console |
+| Button text invisible after kit save | Kit `link_normal_color` (.elementor-kit-N a, spec 0,1,1) outranks single-class button rule (0,1,0) | Add `.elementor-kit-N a.button-class` + `:hover` override in kit custom_css at (0,2,1) |
+| Gradient-clipped headline frozen on fallback font | `background-clip:text` paint freezes glyph metrics at FOUT; webfont swap does not re-fire paint | Self-host font or use `font-display:block`; fallback: `document.fonts.ready` JS re-raster in HTML widget |
+| Visited links render in browser default purple | No CSS resets `a:visited` color | Set kit global link color + add `:where(a:visited){color:inherit}` sitewide |
+| `_elementor_page_settings` write returns 400 rest_invalid_type | Value sent as a JSON-encoded string instead of a dict/object | Send a Python dict directly; never wrap in `json.dumps()` before assigning to the meta key |
+| Post content cards broken (extra `<p>`, `<br>`, nesting disrupted) | WordPress `wpautop()` filter wraps bare lines and breaks block HTML in `post_content` | Use an Elementor HTML widget (bypasses wpautop), or remove the filter for specific page IDs |
+| Page renders narrow one-column fallback after `_elementor_data` write | Write was malformed or truncated, leaving invalid JSON | Backup, write, then immediately read back and `json.loads()` the stored value before claiming done |
 
 ---
 
@@ -2453,4 +2459,146 @@ Inline `<h1>` tags in post body HTML are stripped during rendering (reserved for
 WordPress routes root-level file paths through `index.php` → 404 handler before redirection plugins can catch them. WP Media uploads + Rank Math Redirections do not work for `/llms.txt`.
 
 **Fix**: Use a purpose-built plugin that hooks `template_redirect` early and streams the content directly. Shipping the llms.txt via `/wp-content/uploads/` URL also works if you accept the non-root path.
+
+### Kit global "Link Color" bleeds into anchor-styled buttons
+
+**Symptom**: After saving the Elementor design-system / kit, all `.cta-button` or `.header-cta` anchor elements turn invisible (e.g. {accent-color}-on-{accent-color}).
+
+**Root cause**: Kit `link_normal_color` emits `.elementor-kit-N a { color: ... }` at specificity (0,1,1). Any single-class button rule like `.cta-button { color: ... }` has specificity (0,1,0) and loses. The kit ALSO emits `.elementor-kit-N a:hover { color: ... }` which bleeds the hover state.
+
+**Fix**: In the kit `custom_css` block, add scoped overrides at (0,2,1) - no `!important` needed:
+
+```css
+.elementor-kit-N a.cta-button { color: #000; }
+.elementor-kit-N a.cta-button:hover { color: #000; }
+/* repeat for every anchor-as-button class on the site */
+```
+
+Verify by checking the emitted `post-N.css` (served as a static CSS file) contains your override AFTER clearing Elementor cache.
+
+### `-webkit-background-clip:text` + webfont cold load = frozen glyphs
+
+**Symptom**: Gradient-clipped headline text renders on the condensed fallback font and never updates when the webfont arrives. Highlighting the text makes it render correctly.
+
+**Root cause**: `background-clip: text` + `-webkit-background-clip: text` paints the gradient fill at the moment the element is composited. If the webfont has not yet loaded (FOUT), the glyph metrics are frozen on the fallback. Normal text recovers when the webfont swaps in; clipped text does not because the paint step does not re-fire.
+
+**Primary fix**: Self-host the font or use `font-display: block` to eliminate FOUT entirely. Avoid loading webfonts via `@import` inside kit `custom_css` - this defers the font request until after the theme CSS file is parsed, which is too late for above-the-fold clipped text.
+
+**Secondary fix (if FOUT is unavoidable)**: Force a re-raster after font load in an HTML widget:
+
+```js
+document.fonts.ready.then(function() {
+  document.querySelectorAll('.clipped-headline').forEach(function(el) {
+    el.style.display = 'none';
+    el.getBoundingClientRect(); // force layout flush
+    el.style.display = '';
+  });
+});
+```
+
+Pure CSS workarounds (resetting to `solid` color fill, adding `backdrop-filter`, toggling `background-attachment`) do not fix it because the glyph shape is already committed at compositing time.
+
+### Elementor kit `custom_js` is stored but never output
+
+**Symptom**: JS written into the kit Global Settings > Custom JS field does nothing on the live page.
+
+**Root cause**: Elementor does not output `custom_js` from the kit settings on the frontend. The field is stored in `_elementor_kit_settings` but has no render path.
+
+**Fix**: Put all page JS in an HTML widget on the relevant page or template. Global JS belongs in a separate `wp_footer` hook snippet.
+
+**Compound gotcha - REST write confirms 200 but nothing changes**: Writing to `_elementor_page_settings` via the WP REST API requires the value to be a **dict/object** (not a JSON-encoded string). Sending `json.dumps({...})` as the meta value returns HTTP 400 `rest_invalid_type`. Send the dict directly:
+
+```python
+# WRONG
+r = httpx.post(url, headers=H, json={'meta': {'_elementor_page_settings': json.dumps(settings)}})
+
+# CORRECT
+r = httpx.post(url, headers=H, json={'meta': {'_elementor_page_settings': settings}})
+```
+
+After any kit or page-meta write: set `_elementor_css: ""` on the page, then `DELETE /wp-json/elementor/v1/cache`, then verify the live `post-N.css` and rendered HTML actually contain your rule before claiming the change is applied.
+
+### `wpautop` mangles hand-authored HTML in `post_content`
+
+**Symptom**: Hand-built card markup in `post_content` (e.g. `<a class="card">...</a>`) renders broken: text spills outside cards, extra `<p>` and `<br>` tags appear, `<a>` nesting is disrupted.
+
+**Root cause**: WordPress's `wpautop()` filter runs on `the_content` and wraps bare lines in `<p>`, injects `<br>` at newlines, and breaks block-level nesting rules. Any HTML you author assuming `raw` output gets transformed before display.
+
+**Fix options**:
+
+1. Remove `the_content` filter for specific pages: `remove_filter('the_content', 'wpautop')` scoped to the page IDs that use raw card markup.
+2. Author wpautop-safe HTML: keep all markup on single lines, no bare text nodes adjacent to block elements.
+3. Move card content into an Elementor HTML widget - Elementor bypasses `wpautop` for its own widget output.
+
+Note: `the_content` filter does not fire on Elementor archive templates (e.g. a WP posts archive using an Elementor full-width template). Use `wp_footer` or `wp_head` hooks scoped to the relevant conditional tag instead.
+
+### `_elementor_data` bad write nulls or invalidates the page
+
+**Symptom**: After writing `_elementor_data` via REST API, Elementor renders a narrow one-column fallback instead of the designed layout.
+
+**Root cause**: A malformed or truncated write sets `_elementor_data` to an invalid JSON string (empty, null, or incomplete). Elementor silently falls back to a default renderer.
+
+**Prevention protocol**:
+
+```python
+# 1. Back up BEFORE any write
+r_read = httpx.get(f'{SITE}/wp-json/wp/v2/pages/{pid}', headers=H, params={'context': 'edit'})
+backup = r_read.json()['meta']['_elementor_data']
+assert backup and json.loads(backup)  # must parse and be non-empty
+
+# 2. Write
+httpx.post(f'{SITE}/wp-json/wp/v2/pages/{pid}', headers=H,
+    json={'meta': {'_elementor_data': json.dumps(new_data)}})
+
+# 3. Verify immediately after write
+r_check = httpx.get(f'{SITE}/wp-json/wp/v2/pages/{pid}', headers=H, params={'context': 'edit'})
+stored = r_check.json()['meta']['_elementor_data']
+assert stored and json.loads(stored)  # non-empty and valid JSON
+assert stored != backup  # change actually persisted
+```
+
+Never claim a write is done until step 3 passes. Clear Elementor cache after the verified write.
+
+### Full-bleed padding formula collides with theme-capped container
+
+**Symptom**: A header or section using `padding: 0 calc((100vw - 1200px) / 2 + 32px)` to align with body content looks correct at full width but collapses content to roughly 836px on a site where the theme caps the main element at 1140px.
+
+**Root cause**: The padding formula assumes the nearest full-width ancestor is the viewport. If a theme wraps `<main>` (or `.site-content`) with `max-width: 1140px`, the effective inner width is `1140px - 2 * calc((100vw - 1200px) / 2 + 32px)` which goes negative at typical desktop widths.
+
+**Diagnostic**: Walk the ancestor chain from the section/header to `<body>` and inspect `max-width` and `width` on each. Do not assume `100vw` is available until you confirm no ancestor caps it.
+
+**Fix**: Either set the content container width in the Elementor kit (so the padding math knows the real container width), or scope full-viewport padding only to elements that are direct children of `<body>` (e.g. a sticky header rendered outside `<main>`).
+
+### Hidden text encodings evade raw-string search
+
+**Symptom**: A grep or raw-string search for a URL, email, or foreign-language string returns zero results even though it appears in curl output.
+
+**Root cause**: WordPress and Elementor store and emit content using HTML numeric entities (`&#NNNN;`) or JSON Unicode escapes (`\uXXXX`). A plain-text grep for `example@domain.com` misses it when stored as `&#101;&#120;&#97;...` or `exa...`. Similarly, a Hebrew word stored as `אל...` is invisible to a UTF-8 pattern search.
+
+**Rule**: When hunting or replacing any text in WP `post_content`, `_elementor_data`, or meta fields, search ALL three representations:
+
+```python
+import re, html
+needle = 'example@domain.com'
+encoded = ''.join(f'&#{ord(c)};' for c in needle)
+unicode_esc = needle.encode('unicode_escape').decode()
+# search for needle, encoded, and unicode_esc in the stored value
+```
+
+Use `html.unescape()` on content before regex matching when precision matters.
+
+### Kill default visited-link purple sitewide
+
+**Symptom**: Visited links across the site render in the browser's default purple (`#551A8B`), clashing with a dark-mode or branded color scheme.
+
+**Root cause**: No CSS resets visited-link color; browser UA stylesheet wins.
+
+**Fix**: Set the kit global link color (which covers `:visited` via inheritance) AND add a zero-specificity net so custom components do not accidentally skip it:
+
+```css
+/* In kit custom_css or a sitewide snippet */
+:where(a:visited) { color: inherit; }
+```
+
+`:where()` has specificity (0,0,0) so it does not fight any authored rule - components with explicit color values are unaffected. The kit `link_normal_color` sets the base; this catches any anchor that inherits from a container where no link color is set.
 
