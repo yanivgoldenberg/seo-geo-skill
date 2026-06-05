@@ -190,7 +190,7 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 
 ## Seen at / Running in production
 
-- **yanivgoldenberg.com** - canonical reference deployment. **94/100 on the latest live re-run (2026-06-05)**, rank 1 of 61 on the same rubric. Run it yourself and you get today's number. ([proof](docs/state-of-ai-search-2026.md))
+- **yanivgoldenberg.com** - canonical reference deployment. **94/100 single-page, 97/100 with the benchmark's 4-page sampling, both on live 2026-06-05 runs**, rank 1 of 61 on the same rubric. The monthly Action commits every fresh snapshot to [docs/state-of-ai-search-history/](docs/state-of-ai-search-history/). Run it yourself and you get today's number. ([proof](docs/state-of-ai-search-2026.md))
 - Used to generate the **[State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md)** benchmark (61 SaaS and AI sites, 67% fail).
 - Public benchmark methodology: `tests/benchmark_sites.py` - runnable and reproducible by anyone.
 
@@ -280,4 +280,4 @@ Then score mine and check my claim:
 /seo-geo https://yanivgoldenberg.com
 ```
 
-I claim yanivgoldenberg.com scores 94/100 on the latest live re-run (2026-06-05), rank 1 of 61 on this rubric. Run it yourself and you get today's number. If your run disagrees, open an issue with the output and I will fix the skill or the claim. Every number in this repo is reproducible with `tests/benchmark_sites.py`, so there is nowhere for a bad number to hide.
+I claim yanivgoldenberg.com scores 94/100 single-page (97/100 with the benchmark's 4-page sampling) on live 2026-06-05 runs, rank 1 of 61 on this rubric. The dated snapshots live in docs/state-of-ai-search-history/, committed by the monthly Action, not by me. Run it yourself and you get today's number. If your run disagrees, open an issue with the output and I will fix the skill or the claim. Every number in this repo is reproducible with `tests/benchmark_sites.py`, so there is nowhere for a bad number to hide.
