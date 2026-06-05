@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-version: 1.9.0
+version: 1.9.1
 description: Phase 0 audit + 20 optimization phases for Claude Code. Canonical 100-pt rubric (Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10). Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, SSRF guard, competitor benchmarking, public benchmark of 61 top SaaS and AI sites. Any CMS.
 ---
 
@@ -160,6 +160,8 @@ Score the site 0-100. Produce a prioritized gap list. No writes.
 **How to audit:** Fetch the live URL with WebFetch. Read robots.txt at `{domain}/robots.txt`. Check sitemap at `{domain}/sitemap.xml`. Analyze each relevant page.
 
 ### Scoring rubric (100 points)
+
+> The 100-point rubric below is the canonical scoring spec for this project, shared by this skill, the modular geo-* skills, and tests/benchmark_sites.py. Full spec: [docs/SCORING.md](docs/SCORING.md) (tests/test_scoring_parity.py fails the build if these weights drift).
 
 **Technical SEO (20 pts)**
 
@@ -797,7 +799,7 @@ led a team of {N} {roles}, and scaled paid acquisition from $0 to
 ${budget}/month. {Company X} became the #1 {category} in {market}
 with {N}M+ active users."
 (Replace every placeholder with your own specific numbers, names, and outcomes.
-The power is in the specificity — vague numbers score zero for LLM citation.)
+The power is in the specificity: vague numbers score zero for LLM citation.)
 ```
 
 **Decision: is your content LLM-citable?**

@@ -12,7 +12,8 @@
 
 *See the full [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) report.*
 
-[![Version](https://img.shields.io/badge/version-1.8.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.9.1-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![GitHub stars](https://img.shields.io/github/stars/yanivgoldenberg/seo-geo-skill?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/stargazers)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
 [![Benchmark](https://img.shields.io/badge/61_sites_benchmarked-brightgreen?style=flat-square)](docs/state-of-ai-search-2026.md)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-orange?style=flat-square)](LICENSE)
@@ -67,6 +68,46 @@ If your site scores below 60 on this rubric, you're in the bottom third of well-
 3. Allow AI crawlers explicitly in robots.txt → +10 points
 
 This skill automates all three in one session.
+
+---
+
+## Original 13-site cohort (the first public benchmark)
+
+Before the 61-site study, I scored a 13-site cohort and published it in [`docs/benchmarks.md`](docs/benchmarks.md). Different run, different rubric calibration (v1.6.0), so the scores here are not the same numbers as the 61-site study above. This is the original Top-13, reproduced here so the two documents always agree:
+
+| Rank | Site | Score |
+|---:|---|---:|
+| 1 | yanivgoldenberg.com | 90 |
+| 2 | stripe.com | 73 |
+| 2 | resend.com | 73 |
+| 4 | planetscale.com | 65 |
+| 5 | vercel.com | 63 |
+| 5 | figma.com | 63 |
+| 7 | notion.so | 60 |
+| 8 | mercury.com | 58 |
+| 9 | supabase.com | 55 |
+| 10 | linear.app | 53 |
+| 11 | anthropic.com | 30 |
+| 12 | ramp.com | 25 |
+| 13 | fly.io | 10 |
+
+Full per-dimension breakdown and methodology in [`docs/benchmarks.md`](docs/benchmarks.md).
+
+---
+
+## What Google actually says (and what this score is)
+
+I am not going to sell you a guarantee. Google has publicly stated that no special file is required to appear in AI Overviews, and there is no documented ranking signal called "llms.txt." So this is the honest framing:
+
+- **The score is AI Search Readiness: machine-legibility, not a ranking promise.** It measures how cleanly a machine (a crawler, an LLM, an answer engine) can parse your entity, your schema, and your stated facts. It does not predict your position.
+- **Citations and rankings are the outcome, not the deliverable.** I make your site easier to read and trust. Whether ChatGPT, Claude, Perplexity, or Google AI Overviews then cite you depends on their systems, your authority, and your content. I do not control those, and anyone who says they guarantee a #1 result is selling you something I will not.
+- **The evidence is correlation, stated as correlation.** Across the 61-site benchmark, the sites that publish `/llms.txt` consistently pair with the strongest GEO scores. That is a pattern in the data, not a causal lever I am promising.
+
+What I will stand behind: the score is reproducible. Run `tests/benchmark_sites.py` against any URL and you get the same number I do. No claim in this repo lacks a number or a named site behind it.
+
+<p align="center">
+  <img src="docs/assets/citation-grid.png" alt="AI Search Readiness citation grid - 61 benchmarked sites scored on the same 100-point rubric" width="100%" />
+</p>
 
 ---
 
@@ -143,7 +184,7 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 
 ## Seen at / Running in production
 
-- **yanivgoldenberg.com** - canonical reference deployment. Scored **97/100** on the same rubric. Top of the 61-site leaderboard. ([proof](docs/state-of-ai-search-2026.md))
+- **yanivgoldenberg.com** - canonical reference deployment. **94/100 on the latest live re-run (2026-06-05)**, rank 1 of 61 on the same rubric. Run it yourself and you get today's number. ([proof](docs/state-of-ai-search-2026.md))
 - Used to generate the **[State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md)** benchmark (61 SaaS and AI sites, 67% fail).
 - Public benchmark methodology: `tests/benchmark_sites.py` - runnable and reproducible by anyone.
 
@@ -206,3 +247,31 @@ You may run this on your own sites and internal company sites. Paid agency resal
 | Embed in a commercial tool you sell | No | Commercial license |
 
 Commercial license: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact)
+
+---
+
+## Suggested repo topics
+
+If you fork or star this, these are the GitHub topics that make it findable for the AI-search crowd. Add them under the repo "About" gear:
+
+```
+claude-code  claude-skill  seo  geo  aeo  llms-txt  schema-org  ai-search
+```
+
+---
+
+## Don't trust me. Run it.
+
+This whole repo is falsifiable in two commands. First, score your own site in 10 seconds (the install is at the top of this README):
+
+```bash
+/seo-geo https://yoursite.com
+```
+
+Then score mine and check my claim:
+
+```bash
+/seo-geo https://yanivgoldenberg.com
+```
+
+I claim yanivgoldenberg.com scores 94/100 on the latest live re-run (2026-06-05), rank 1 of 61 on this rubric. Run it yourself and you get today's number. If your run disagrees, open an issue with the output and I will fix the skill or the claim. Every number in this repo is reproducible with `tests/benchmark_sites.py`, so there is nowhere for a bad number to hide.

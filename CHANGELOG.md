@@ -6,6 +6,23 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.9.1] - 2026-06-05
+
+Proof + reproducibility release. Reconciles every score claim to the latest live re-run, hardens the leaderboard against drift, and ships the AI Engine Citation Grid.
+
+### Added
+- `docs/SCORING.md`: the canonical 100-point rubric extracted to a single shared spec (skill body, modular geo-* skills, and `tests/benchmark_sites.py` all point here).
+- `docs/assets/citation-grid.png` + `scripts/build_citation_grid.py`: 4-engine citation proof (Google AI Overview, ChatGPT, Bing-LinkedIn AI, Hebrew AI) for "best fractional CMO Israel", each citing the reference deployment first. Reproducible composer script.
+- `tests/test_sites_61.py`: pins the 61-site leaderboard roster so the benchmark set cannot drift silently.
+- `scripts/run_state_of_ai_search_2026.py`: one-command reproduction of the State of AI Search 2026 report.
+- CI gate: no em dashes in markdown (brand voice), `.github/workflows/ci.yml`.
+
+### Changed
+- README score claim reconciled from 97/100 to **94/100 on the latest live re-run (2026-06-05)**, dated and falsifiable ("run it yourself and you get today's number").
+- `tests/test_leaderboard_integrity.py` repaired: README/benchmarks agreement restored, anti-drift assertions pass (24/24).
+- `seo-geo.md`: rubric section now points to `docs/SCORING.md` as the canonical spec; version 1.9.0 -> 1.9.1.
+- CHANGELOG backfilled for 1.7.0 and 1.8.0 (released 2026-04-24, previously undocumented).
+
 ## [1.9.0] - 2026-05-29
 
 Production deployment session on a WordPress + Elementor Pro site surfaced eight new gotchas not covered by v1.8.0. All added to the existing "Elementor Pro + REST API Gotchas" and "Common Issues and Fixes" sections. No new phases; additive only.
@@ -27,6 +44,33 @@ Production deployment session on a WordPress + Elementor Pro site surfaced eight
 - "Common Issues and Fixes" table: 7 new rows added for the above gotchas.
 
 ---
+
+## [1.8.0] - 2026-04-24
+
+Phase 20 release plus the OpenAI live teardown. Adds the 20th optimization phase, a reproducible 7/100 case study on openai.com, and a production-usage section. README badge and `seo-geo.md` frontmatter both moved to 1.8.0; this entry closes the CHANGELOG gap that lagged at 1.6.1.
+
+### Added
+- Phase 20: LLM Extractability Polish (LLM Summary block, claims table, cite block, glossary, raw-data download, self-consistency check). Opt-in via `--apply` like Phases 15-19.
+- `docs/case-study-openai.md`: openai.com scored 7/100 on the canonical rubric, with the exact reproducibility snippet and a 7 to 70 projected fix plan. Every number reproducible via `tests/benchmark_sites.py`.
+- `docs/state-of-ai-search-2026.csv`: machine-readable download of the 61-site leaderboard alongside the existing `.md` and `.json`.
+- README "Seen at / Running in production" section: yanivgoldenberg.com at 97/100, the 61-site benchmark, and the public reproducible methodology script.
+
+### Changed
+- Phase count moved from 19 to 20 across `seo-geo.md` (TOC + phase headings), `docs/compare.md` (Phases row 19 to 20), and `docs/case-study-openai.md` (Phase 1-19 to Phase 1-20). Phase 19 "Competitor benchmarking" remains a phase name; historical CHANGELOG entries left intact.
+- README hero de-heroed yanivgoldenberg.com and now leads with the bottom-3 leaderboard (openai.com 7, perplexity.ai 7, railway.app 0) so the proof is the failure data, not the self-benchmark.
+- `seo-geo.md` frontmatter version 1.7.0 -> 1.8.0; README version badge 1.7.0 -> 1.8.0.
+
+## [1.7.0] - 2026-04-24
+
+Public benchmark expansion. Grows the leaderboard from 13 to 61 top SaaS and AI sites and softens the llms.txt framing to match what Google has publicly stated.
+
+### Added
+- `docs/state-of-ai-search-2026.md` + `docs/state-of-ai-search-2026.json`: State of AI Search Visibility 2026 report. 61 SaaS and AI sites scored on the canonical 100-point rubric. 67% scored 60 or below; mean 49.4/100; openai.com and perplexity.ai both 7/100; railway.app 0.
+
+### Changed
+- README bio rewritten present-tense; added the license use-case matrix (run-on-own-site vs client-resale vs commercial).
+- llms.txt framing softened: positioned as entity hygiene, not a guaranteed ranking lever, with the note that Google has stated no special file is required for AI Overviews. The data point (sites that publish it pair with the strongest GEO scores) is kept as correlation, not a guarantee.
+- `seo-geo.md` frontmatter version 1.6.1 -> 1.7.0; README version badge and description updated to "61 top SaaS and AI sites".
 
 ## [1.6.1] - 2026-04-24
 
