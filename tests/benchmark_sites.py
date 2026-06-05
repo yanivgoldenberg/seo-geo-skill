@@ -125,6 +125,74 @@ def fetch(url, timeout=10):
     except Exception:
         return None
 
+PREFERRED_DEEP = ("/docs", "/blog", "/product", "/about", "/guide", "/help", "/pricing", "/features")
+
+
+def discover_deep_links(base_url, html, limit=3):
+    base = urlparse(base_url)
+    base_host = (base.hostname or "").lower()
+    home_path = (base.path or "/").rstrip("/") or "/"
+    preferred: list[str] = []
+    other: list[str] = []
+    seen: set[str] = set()
+    for href in re.findall(r'<a[^>]+href=["\']([^"\'#]+)["\']', html, re.I):
+        absolute = urljoin(base_url, href.strip())
+        p = urlparse(absolute)
+        if p.scheme not in ("http", "https"):
+            continue
+        if (p.hostname or "").lower() != base_host:
+            continue
+        norm = absolute.split("#")[0]
+        path = (p.path or "/").rstrip("/") or "/"
+        if path == home_path:
+            continue
+        if norm in seen:
+            continue
+        seen.add(norm)
+        low = path.lower()
+        if any(low.startswith(pref) for pref in PREFERRED_DEEP):
+            preferred.append(norm)
+        else:
+            other.append(norm)
+    return (preferred + other)[:limit]
+
+
+def _score_page_signals(html, all_schema_text):
+    sig = {"onpage": 0, "schema": 0, "aeo": 0}
+
+    if re.search(r'<title>[^<]{10,}</title>', html, re.I):
+        sig["onpage"] += 3
+    if re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'][^"\']{50,}', html, re.I):
+        sig["onpage"] += 3
+    if re.search(r'<meta[^>]+property=["\']og:image["\']', html, re.I):
+        sig["onpage"] += 3
+    if re.search(r'<meta[^>]+property=["\']og:title["\']', html, re.I):
+        sig["onpage"] += 2
+    if re.search(r'<meta[^>]+name=["\']twitter:card["\']', html, re.I):
+        sig["onpage"] += 2
+    if re.search(r'<h1[^>]*>', html, re.I):
+        sig["onpage"] += 2
+
+    if re.search(r'<script[^>]*type=["\']application/ld\+json["\']', html, re.I):
+        sig["schema"] += 5
+    if '"organization"' in all_schema_text:
+        sig["schema"] += 5
+    if '"person"' in all_schema_text:
+        sig["schema"] += 4
+    if 'sameas' in all_schema_text:
+        sig["schema"] += 3
+    if '"datemodified"' in all_schema_text:
+        sig["schema"] += 3
+
+    if '"faqpage"' in all_schema_text:
+        sig["aeo"] += 4
+    if '"speakable"' in all_schema_text:
+        sig["aeo"] += 3
+    if re.search(r'<h2[^>]*>[^<]*\?', html, re.I):
+        sig["aeo"] += 3
+
+    return sig
+
 # Canonical scoring rubric (seo-geo v1.6.0):
 #   Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10 = 100
 # Phase 0 in seo-geo.md and this script MUST use the same weights.
@@ -132,7 +200,7 @@ MAX_POINTS = {"technical": 20, "onpage": 15, "schema": 20, "geo": 25, "aeo": 10,
 assert sum(MAX_POINTS.values()) == 100, "rubric must sum to 100"
 
 
-def score(site):
+def score(site, pages=1):
     s = {"site": site, "technical": 0, "schema": 0, "geo": 0, "onpage": 0, "aeo": 0, "eeat": 0, "notes": []}
     schemas: list[str] = []
 
@@ -155,41 +223,24 @@ def score(site):
         if len(re.findall(r'<h1[^>]*>', html, re.I)) == 1:
             s["technical"] += 3
 
-        # Schema (20 pts)
         schemas = re.findall(r'<script[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', html, re.S)
         all_schema_text = " ".join(schemas).lower() if schemas else ""
-        if schemas:
-            s["schema"] += 5
-        if '"organization"' in all_schema_text:
-            s["schema"] += 5
-        if '"person"' in all_schema_text:
-            s["schema"] += 4
-        if 'sameas' in all_schema_text:
-            s["schema"] += 3
-        if '"datemodified"' in all_schema_text:
-            s["schema"] += 3
 
-        # On-Page (15 pts)
-        if re.search(r'<title>[^<]{10,}</title>', html, re.I):
-            s["onpage"] += 3
-        if re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'][^"\']{50,}', html, re.I):
-            s["onpage"] += 3
-        if re.search(r'<meta[^>]+property=["\']og:image["\']', html, re.I):
-            s["onpage"] += 3
-        if re.search(r'<meta[^>]+property=["\']og:title["\']', html, re.I):
-            s["onpage"] += 2
-        if re.search(r'<meta[^>]+name=["\']twitter:card["\']', html, re.I):
-            s["onpage"] += 2
-        if re.search(r'<h1[^>]*>', html, re.I):
-            s["onpage"] += 2
-
-        # AEO (10 pts)
-        if '"faqpage"' in all_schema_text:
-            s["aeo"] += 4
-        if '"speakable"' in all_schema_text:
-            s["aeo"] += 3
-        if re.search(r'<h2[^>]*>[^<]*\?', html, re.I):
-            s["aeo"] += 3
+        # On-Page (15), Schema (20), AEO (10): best-of across homepage + deep pages
+        best = _score_page_signals(html, all_schema_text)
+        if pages > 1:
+            for url in discover_deep_links(site, html, limit=min(3, pages - 1)):
+                deep = fetch(url)
+                if not (deep and deep.status_code == 200):
+                    continue
+                dschemas = re.findall(r'<script[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', deep.text, re.S)
+                dtext = " ".join(dschemas).lower() if dschemas else ""
+                dsig = _score_page_signals(deep.text, dtext)
+                for k in best:
+                    best[k] = max(best[k], dsig[k])
+        s["onpage"] = best["onpage"]
+        s["schema"] = best["schema"]
+        s["aeo"] = best["aeo"]
 
         # E-E-A-T (10 pts)
         if '"author"' in all_schema_text:
@@ -240,7 +291,7 @@ def main():
     results = []
     for url in SITES:
         print(f"scoring {url}...")
-        r = score(url)
+        r = score(url, pages=4)
         results.append(r)
         time.sleep(0.5)
 

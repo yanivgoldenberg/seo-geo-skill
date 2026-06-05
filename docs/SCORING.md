@@ -48,6 +48,10 @@ remains the authoritative copy and the parity test pins both to the same numbers
 
 **E-E-A-T (10 pts)** -- Author bio with credentials on page (3), author schema with knowsAbout + hasOccupation (2), specific proof points: numbers, named companies, dates (3), external links to authoritative sources (2).
 
+### Multi-page sampling
+
+The scorer can sample up to 3 deep pages discovered from the homepage (same-host links, preferring docs/blog/product/about) so a headline survives a re-crawl. On-Page, Schema, and AEO use best-of (max per dimension) across homepage plus those pages; Technical, GEO, and E-E-A-T stay homepage-derived. Budget is 4 page fetches per site, and every URL (including discovered links) passes the same SSRF public-host guard. Sampling is opt-in: pages=1 (default) keeps homepage-only scores; the benchmark runner uses pages=4.
+
 ## Score interpretation
 
 | Score | Rating | Interpretation |

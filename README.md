@@ -4,6 +4,12 @@
   <img src="docs/assets/seo-geo-cover-1600x900.png" alt="seo-geo-skill - 20-phase SEO + GEO + AEO skill for Claude Code" width="100%" />
 </p>
 
+<p align="center">
+  <img src="docs/assets/benchmark-terminal.png" alt="Terminal capture: python scripts/benchmark_demo.py scoring yanivgoldenberg.com 94/100 and openai.com 7/100 across Tech, Schema, GEO, On-Page, AEO, E-E-A-T" width="100%" />
+</p>
+
+<p align="center"><sub>Real output. Reproduce it: <code>python scripts/benchmark_demo.py</code></sub></p>
+
 <div align="center">
 
 **A single-file Claude Code skill that audits and fixes AI Search Readiness across SEO, GEO, AEO, schema, llms.txt, robots.txt, and E-E-A-T.**
@@ -12,7 +18,7 @@
 
 *See the full [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) report.*
 
-[![Version](https://img.shields.io/badge/version-1.9.1-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.10.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/yanivgoldenberg/seo-geo-skill?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/stargazers)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
 [![Benchmark](https://img.shields.io/badge/61_sites_benchmarked-brightgreen?style=flat-square)](docs/state-of-ai-search-2026.md)

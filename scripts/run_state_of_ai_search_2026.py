@@ -46,7 +46,7 @@ def _live_score(site: str) -> dict | None:
     home = benchmark_sites.fetch(site)
     if home is None or home.status_code != 200:
         return None
-    return score(site)
+    return score(site, pages=4)
 
 
 def _row(baseline_index: int, scored: dict, source: str, scored_at: str) -> dict:

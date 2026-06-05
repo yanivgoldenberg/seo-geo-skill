@@ -6,6 +6,23 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.10.0] - 2026-06-05
+
+The heavy-lifting release. The skill now generates deployable fixes (not just reports), the benchmark re-scores itself monthly, the scorer samples deep pages so headline claims survive re-crawls, and the README proves the output with a real reproducible terminal capture.
+
+### Added
+- **Generate fixes as files** (seo-geo.md, Phase 4): the skill now emits ready-to-deploy `llms.txt`, `llms-full.txt`, and JSON-LD schema files built from the audited site's real data into `./seo-geo-output/{domain}/`, with output templates and a placeholder-regex validation gate.
+- **Research-backed citation findings** (Phase 4): Princeton/Georgia Tech/IIT Delhi 2024 GEO findings as an actionable table (+40% statistics, up to +115% authority quotes, +30% fluency, 2.1x definition openings, 134-167 word extraction window).
+- **Per-platform selection intelligence** (Phases 4-5): which optimizations move Google AI Overviews vs ChatGPT vs Perplexity vs Gemini vs Bing Copilot (only ~11% of domains are cited by both ChatGPT and AIO; 92% of AIO citations come from top-10 organic pages).
+- `.github/workflows/benchmark.yml`: monthly self-refreshing benchmark. Re-scores the 61 sites on the 1st of each month and commits a dated CSV to `docs/state-of-ai-search-history/`. The leaderboard is now a moving, self-auditing proof engine.
+- `docs/assets/benchmark-terminal.png` + `scripts/benchmark_demo.py` + `scripts/build_terminal_capture.py`: real captured terminal output (yanivgoldenberg.com 94/100, openai.com 7/100, six-dimension breakdown) embedded in the README; one command reproduces it.
+- `tests/test_deep_link_discovery.py`: tests for deep-page link discovery.
+
+### Changed
+- `tests/benchmark_sites.py`: multi-page sampling. `score(site, pages=4)` discovers up to 3 same-host deep pages (docs/blog/product/about preferred) and scores On-Page, Schema, and AEO best-of across them; Technical, GEO, and E-E-A-T stay homepage-derived. `pages=1` default preserves single-page behavior byte-for-byte; every discovered URL passes the same SSRF public-host guard.
+- `scripts/run_state_of_ai_search_2026.py`: gained `--out` for dated history snapshots; the benchmark now runs with `pages=4`.
+- `docs/SCORING.md`: documented the multi-page sampling rule.
+
 ## [1.9.1] - 2026-06-05
 
 Proof + reproducibility release. Reconciles every score claim to the latest live re-run, hardens the leaderboard against drift, and ships the AI Engine Citation Grid.

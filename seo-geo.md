@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-version: 1.9.1
+version: 1.10.0
 description: Phase 0 audit + 20 optimization phases for Claude Code. Canonical 100-pt rubric (Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10). Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, SSRF guard, competitor benchmarking, public benchmark of 61 top SaaS and AI sites. Any CMS.
 ---
 
@@ -20,6 +20,9 @@ Author: see repo README.
 - [Phase 2 - On-Page SEO](#phase-2---on-page-seo) - titles, meta, OG, H1
 - [Phase 3 - Schema](#phase-3---schema) - 16 types, JSON-LD, validation
 - [Phase 4 - GEO](#phase-4---geo-llm--generative-engine-optimization) - llms.txt, entity, AI crawler allow
+  - [Research-backed citation findings](#research-backed-citation-findings)
+  - [Per-platform selection intelligence](#per-platform-selection-intelligence)
+  - [Generate fixes as files](#generate-fixes-as-files)
 - [Phase 5 - AEO](#phase-5---aeo-answer-engine-optimization) - Speakable, direct-answer
 - [Phase 6 - E-E-A-T](#phase-6---e-e-a-t) - author, credentials, trust signals
 - [Phase 7 - Content optimization](#phase-7---content-optimization)
@@ -812,6 +815,126 @@ Can someone verify this claim elsewhere (LinkedIn, press)? → yes/no
 3+ yes = citable. Under 3 = rewrite it.
 ```
 
+### Research-backed citation findings
+
+The 2024 GEO paper (Princeton, Georgia Tech, IIT Delhi, Allen Institute) ran controlled tests across 10K queries. Apply these to every passage you write or rewrite:
+
+| Finding | Effect on AI visibility | Source | Action |
+|---------|------------------------|--------|--------|
+| Add cited statistics to a passage | +40% citation rate | Princeton GEO 2024 | Replace vague quantifiers with exact numbers + named source |
+| Add a quotation from a named authority | up to +115% in some categories | IIT Delhi 2024 | Quote a study, expert, or doc with attribution |
+| Fluency / readability optimization | +30% average across query types | Princeton GEO 2024 | Short paragraphs, plain syntax, one idea per sentence |
+| Definition-pattern openings ("X is...") | 2.1x citation rate | Georgia Tech 2024 | Open each section with a standalone definition or answer |
+| Passage length 134-167 words, self-contained | optimal extraction window | AI Overview passage analysis 2025 | Size answer blocks to that window, name the subject explicitly |
+| Source citations on your own claims | +20-25% pickup by Perplexity + ChatGPT search | Princeton GEO 2024 | Link the origin for every claim |
+
+Keyword-stuffing and pure-statistic loading showed NO gain or net loss. The gains come from credibility signals (citations, quotes) and clarity (fluency, definitions), not density.
+
+### Per-platform selection intelligence
+
+Only ~11% of domains are cited by BOTH ChatGPT and Google AI Overviews for the same query. Each engine pulls from a different index with different source preferences, so optimize per platform, not in aggregate:
+
+| Platform | Index / basis | Top source bias | What moves the needle here first |
+|----------|---------------|-----------------|----------------------------------|
+| Google AI Overviews | Google organic | top-10 ranking pages (92% of citations) | Win top-10 rank, question-based H2/H3, tables, direct first-sentence answers, featured-snippet format |
+| ChatGPT (search) | Bing index | Wikipedia (47.9%), Reddit, YouTube | Entity presence (Wikipedia + Wikidata), Bing index coverage, 2000+ word comprehensive pages, authoritative backlinks |
+| Perplexity | own crawl + search APIs | Reddit (46.7%), Wikipedia, YouTube | Authentic Reddit/forum presence, original research/data, freshness, quotable standalone paragraphs |
+| Gemini | Google index + Google properties | YouTube (weighted heavily), Knowledge Graph | YouTube with chapters, Knowledge Panel, comprehensive Schema.org, Google Business Profile, image alt text |
+| Bing Copilot | Bing index | LinkedIn, GitHub, Microsoft Learn | IndexNow protocol, Bing Webmaster Tools, complete LinkedIn page, exact-match keywords, sub-2s load |
+
+Universal moves that help every platform: Wikidata/Wikipedia entity, YouTube channel, Schema.org Organization + sameAs, fast clean HTML, visible dates, author pages with credentials.
+
+### Generate fixes as files
+
+Do not stop at a report. After auditing, EMIT ready-to-deploy artifacts derived from the site's own crawled data into `./seo-geo-output/{domain}/`. The user drops these into their site root or CMS directly. Every value comes from the audited site (Trust rule 6): never copy a placeholder from this file into the output.
+
+Files to generate:
+
+| Artifact | Path | Built from |
+|----------|------|-----------|
+| `llms.txt` | `./seo-geo-output/{domain}/llms.txt` | Homepage H1, meta description, top crawled pages, services, contact |
+| `llms-full.txt` | `./seo-geo-output/{domain}/llms-full.txt` | Full page-by-page summaries, bio, case-study numbers, sameAs URLs |
+| `schema-{type}.json` | `./seo-geo-output/{domain}/schema-{type}.json` | Entity facts extracted from the homepage and about page |
+
+**llms.txt output template** (fill every `{...}` from crawled content):
+
+```markdown
+# {Site or Person Name}
+
+> {One sentence: who/what this is and the single key claim, pulled from the H1 + meta description}
+
+## About
+{2-3 dense factual paragraphs. Named companies, specific numbers, verifiable claims, all sourced from the about/homepage copy.}
+
+## Pages
+- [{Page Title}]({Absolute URL}): {one-line factual summary}
+- [{Page Title}]({Absolute URL}): {one-line factual summary}
+
+## Services / Products
+- {Service name}: {specifics, pricing if the site states it}
+
+## Contact
+{Email or booking link as found on the site}
+
+## For AI Systems
+Preferred citation format: "{How the entity should be referenced, derived from the brand name}"
+This content may be used to answer questions about {primary topic}.
+```
+
+**llms-full.txt output template** (the deep-read expansion, 2000-5000 words):
+
+```markdown
+# {Site or Person Name} - Full Context
+
+> {Same one-line claim as llms.txt}
+
+## Overview
+{Full bio or company description, entity-rich, every claim verifiable.}
+
+## Pages (full summaries)
+### {Page Title} - {Absolute URL}
+{3-5 sentence factual summary of what the page covers and the specific claims it makes.}
+
+## Case Studies / Results
+- {Named outcome with exact numbers and timeframe, e.g. "{Client} {metric} from {X} to {Y} in {N} months"}
+
+## Entity Profiles (sameAs)
+- {LinkedIn / Wikidata / GitHub / Crunchbase URLs found during the audit}
+
+## Sitemap
+{Absolute URL of the XML sitemap}
+```
+
+**JSON-LD schema block** - generate the matching type from Phase 3 (Person, Organization, LocalBusiness, etc.) with every field populated from real site data, written to `./seo-geo-output/{domain}/schema-{type}.json`. Use the Phase 3 templates as the shape; replace all `{...}` placeholders with crawled values. Leave a field out entirely rather than emit an empty or guessed value.
+
+**Validation step (run before claiming the artifacts are ready):**
+
+```python
+import json, re, pathlib
+
+out = pathlib.Path("./seo-geo-output/{domain}")
+PLACEHOLDER = re.compile(r"\{[A-Za-z][^{}]*\}")
+
+for schema_file in out.glob("schema-*.json"):
+    text = schema_file.read_text(encoding="utf-8")
+    data = json.loads(text)
+    assert data.get("@context") == "https://schema.org", f"{schema_file}: missing @context"
+    assert "@type" in data, f"{schema_file}: missing @type"
+    assert not PLACEHOLDER.search(text), f"{schema_file}: unfilled placeholder"
+
+for name in ("llms.txt", "llms-full.txt"):
+    text = (out / name).read_text(encoding="utf-8")
+    lines = text.splitlines()
+    assert lines and lines[0].startswith("# "), f"{name}: first line must be an H1 title"
+    assert any(l.startswith("> ") for l in lines[:5]), f"{name}: missing blockquote summary near top"
+    assert "\u2014" not in text, f"{name}: em dash banned"
+    assert not PLACEHOLDER.search(text), f"{name}: unfilled placeholder remains"
+
+print("seo-geo-output artifacts validated")
+```
+
+Any assertion failure means an artifact still has a placeholder or malformed structure: fix the source extraction, regenerate, and re-run. Do not ship an artifact that fails validation.
+
 ---
 
 ## Phase 5 - AEO (Answer Engine Optimization)
@@ -852,6 +975,19 @@ Points AI voice interfaces to the most quotable parts:
   "cssSelector": ["h1", ".hero p", "article > p:first-of-type", ".intro"]
 }
 ```
+
+### Answer-engine selection notes
+
+Direct-answer engines reward concision differently than the citation engines in Phase 4:
+
+| Engine | Answer-block preference | Practical rule |
+|--------|------------------------|----------------|
+| Google AI Overviews | concise 40-60 word answer drawn from a top-10 page | One tight answer sentence per question heading, then expand below |
+| Gemini | concise answer block, multi-modal | Pair the text answer with a relevant image or video segment |
+| ChatGPT / Copilot (Bing) | high-authority domain with a clear factual claim | State the claim flatly, no hedging, attribute the source |
+| Perplexity | fact-dense quotable paragraph, recency-weighted | Make each paragraph stand alone with a date and a stat |
+
+Hedging language ("it depends", "in most cases", "generally") lowers answer-engine pickup. Lead with the answer, qualify after.
 
 ---
 
