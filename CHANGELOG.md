@@ -6,6 +6,18 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [1.11.0] - 2026-06-16
+
+Headless content-model release. Adds the two highest-leverage patterns for scaling SEO + GEO on dynamic, JS-rendered sites: a rendering contract that keeps dynamic blocks citable by AI engines, and a content-model archetype map for programmatic SEO at scale.
+
+### Added
+- **Rendering contract for JS-built feeds and cards** (seo-geo.md, Phase 4 GEO): SSR-plus-hydrate over client-only fetch, a pinned crawlable seed that doubles as the live-fetch fallback, `ItemList` JSON-LD only for SSR-visible items (anti-cloaking), thin/empty-state gating, real `<a href>` links with sponsored disclosure, and locale parity. Includes the one-line curl test for whether an AI crawler can see a dynamic block.
+- **Content-model archetypes** (Phase 11 Programmatic SEO): an 8-archetype map (comparison, alternative, integration, listicle, use-case, glossary, guide, customer story) with URL patterns and primary schema types; the headless CMS-as-structure / front-end-as-design pattern with a composable section builder and per-type block gating; and a global singleton for publisher (Organization/WebSite) identity referenced by every page `@graph`.
+- **Deploy discipline for generated artifacts** (Phase 11): data-source-as-truth, stage-validate-atomic-rename, OPcache invalidation, and build-time key-uniqueness assertions.
+
+### Changed
+- seo-geo.md version bumped 1.10.0 -> 1.11.0.
+
 ## [1.10.0] - 2026-06-05
 
 The heavy-lifting release. The skill now generates deployable fixes (not just reports), the benchmark re-scores itself monthly, the scorer samples deep pages so headline claims survive re-crawls, and the README proves the output with a real reproducible terminal capture.

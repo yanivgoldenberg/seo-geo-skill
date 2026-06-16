@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-version: 1.10.0
+version: 1.11.0
 description: Phase 0 audit + 20 optimization phases for Claude Code. Canonical 100-pt rubric (Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10). Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, SSRF guard, competitor benchmarking, public benchmark of 61 top SaaS and AI sites. Any CMS.
 ---
 
@@ -731,6 +731,19 @@ LLMs retrieve and cite, they don't rank. They prefer:
 - **Corroborated facts**: same claim appearing on multiple authoritative sources
 - **Fresh content**: recent `dateModified` in schemas
 
+### Rendering contract for JS-built feeds and cards (SSR + crawlable seed)
+
+The fastest way to lose AI citations is to serve an AI crawler an empty JavaScript shell. GPTBot, PerplexityBot, ClaudeBot, and Bing's crawler do not reliably execute client-side JS, so any block that fetches its content in the browser (a product feed, a results grid, a "related items" carousel, a live pricing table) is invisible and un-citable unless you render it server-side. If you build dynamic blocks, hold them to this contract:
+
+- **Server-render the real content, then hydrate.** Default any citable block to SSR (server-rendered HTML) plus client hydration, not client-only fetch. Client-only is acceptable only for utility widgets that have no citation or ranking value (a search box, a filter control).
+- **Ship a crawlable seed that doubles as the fallback.** Pin a small, hand-curated set of items (name + one-line description + real URL) that renders server-side even when the live fetch is JS-gated, rate-limited, or down. The seed keeps the cards in the link graph and quotable at all times. It is also your cache key and your empty-state guard.
+- **Emit `ItemList` JSON-LD only for items that are actually visible in the SSR HTML.** Listing items in schema that a user/crawler cannot see in the rendered body is cloaking and gets discounted. Schema must mirror the SSR seed, not the full live set.
+- **Gate thin/empty states.** Set a minimum item count below which the block (and its schema) does not render, so JS-empty pages do not bloat the index with thin content. Give the empty state distinct copy from the error state.
+- **Real links, real disclosure.** Cards must use actual `<a href>` (not JS-only click handlers) so link equity flows. Affiliate or sponsored destinations get `rel="sponsored"` plus a visible disclosure.
+- **Locale parity.** If the block ships in multiple languages, the SSR seed and its schema must exist in each locale, not only the default one.
+
+Quick test for any dynamic block: `curl -s {url} | grep -i "{expected item text}"`. If the item text is not in the raw HTML, an AI crawler cannot cite it. Fix the render strategy before optimizing anything else on the page.
+
 ### llms.txt
 
 Create a plain-text file at `/llms.txt` (or `/llms-txt/` if CMS blocks dots in slugs):
@@ -1304,15 +1317,38 @@ Every programmatic page needs:
 
 Thin content (identical pages with one word swapped) gets penalized. Each page must earn its existence.
 
+### Content-model archetypes (pick a page type, not a one-off)
+
+Programmatic SEO scales when each page maps to a repeatable *archetype* with its own URL pattern, required fields, and schema type. Decide the archetype set up front instead of inventing each page. The common high-intent archetypes:
+
+| Archetype | URL pattern | Captures | Primary schema |
+|---|---|---|---|
+| Comparison | `/vs/{a}-vs-{b}` | "X vs Y" decision queries | Article + comparison table |
+| Alternative | `/alternatives/{competitor}` | "alternative to X" switchers | Article / ItemList |
+| Integration | `/integrations/{tool}` | "{product} + {tool}" | SoftwareApplication / HowTo |
+| Listicle | `/best/{category}` | "best {category}" roundups | ItemList |
+| Use case | `/for/{audience}` (hierarchical: `/{vertical}`) | audience / industry intent | Article |
+| Glossary | `/glossary/{term}` | "what is X" definitions | DefinedTerm |
+| Guide | `/guides/{slug}` | how-to / tutorial intent | HowTo / Article |
+| Customer story | `/customers/{slug}` | proof / case-study intent | Article + Review |
+
+**Headless content-model pattern (CMS as structure, front-end as design).** For sites at this scale, separate the *content layer* from the *rendering layer*: author structured fields in the CMS (the answer summary, FAQs, comparison rows, CTAs, author/reviewer, published/reviewed dates), expose them over a read API, and let the front-end own all design. A composable section builder (an ordered list of stackable section blocks per page) lets editors assemble any archetype without touching layout. Keep one shared "core" field set on every type (the GEO/E-E-A-T fields above) plus a per-archetype field set that feeds that type's JSON-LD. Gate type-specific interactive blocks to the page types they belong to so editors cannot place a hosting-pricing block on a glossary page.
+
+**Global singleton for publisher identity.** Store Organization and WebSite identity (name, logo, `sameAs` profiles, contact point, search action) **once** in a site-global record that every page's `@graph` references, rather than re-declaring it per page. One source of truth for the publisher entity is what AI engines resolve for E-E-A-T and attribution.
+
 ### Implementation by platform
 
-**WordPress:** Custom Post Type + template + WP REST API to bulk-create from CSV/API.
+**WordPress:** Custom Post Type + template + WP REST API to bulk-create from CSV/API. For headless, add structured fields (e.g. ACF) and expose the section builder read-only over REST; the front-end renders.
 
 **Shopify:** Collection pages + metafields for location/category data.
 
 **Next.js:** `generateStaticParams()` + dynamic routes + data source (JSON, database, CMS API).
 
 **Static HTML:** Build script that takes a template + data CSV and outputs N HTML files.
+
+### Deploy discipline (generated artifacts)
+
+When you generate the model or pages from a data source, treat the source data as the single source of truth and the deployed files as build output. Deploy large generated files safely: stage to a temp path, validate (parse/lint) before activating, then atomically rename into place; never overwrite a live file in place. On PHP hosts with OPcache, invalidate the cache after writing or the change will not take effect. A build-time uniqueness assertion on field/section keys catches collisions before they reach production.
 
 ### Quality gate
 
