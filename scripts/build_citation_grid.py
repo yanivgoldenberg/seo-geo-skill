@@ -6,14 +6,14 @@ ASSETS = Path(__file__).resolve().parent.parent / "docs" / "assets"
 OUT = ASSETS / "citation-grid.png"
 
 CELLS = [
-    ("Google AI Overview", "crop-google-ai-overview.png",
-     "Scaled Elementor $200K to $20M ARR, growth at Riverside.fm"),
     ("ChatGPT", "crop-chatgpt.png",
-     "Cited \"via Yaniv Goldenberg\" as the operator-first pick: Elementor, Riverside.fm, cnvrg.io"),
-    ("Bing-LinkedIn AI", "crop-bing-linkedin-clean.png",
-     "Listed first: ties marketing directly to MRR for B2B SaaS"),
-    ("Hebrew AI", "crop-hebrew-ai.png",
-     "#1 in Israel: scaled SaaS $200K to $20M ARR"),
+     "Cited first for \"best fractional CMO Israel\": scaled Elementor, Riverside.fm, cnvrg.io"),
+    ("Perplexity", "crop-perplexity.png",
+     "Names Yaniv Goldenberg as the operator-first fractional CMO pick for B2B SaaS"),
+    ("Google AI Overview", "crop-google-ai-overview.png",
+     "Top-cited expert: ties marketing to revenue, $200K to $20M ARR at Elementor"),
+    ("Microsoft Copilot", "crop-copilot.png",
+     "Leads the shortlist: best-for aggressive, revenue-owned growth"),
 ]
 
 W, PAD, GAP = 1600, 40, 24
@@ -64,7 +64,7 @@ d = ImageDraw.Draw(im)
 d.rectangle([PAD, PAD, W - PAD, PAD + 3], fill=CYAN)
 d.text((PAD, PAD + 18), "AI Engine Citation Grid", font=font(34, True), fill=INK)
 d.text((PAD, PAD + 62),
-       "What four engines recite when asked who scales growth in Israel. One name, four receipts.",
+       "What four AI engines answer for \"best fractional CMO in Israel.\" One name, four receipts.",
        font=font(19), fill=MUTED)
 
 for i, (label, fname, caption) in enumerate(CELLS):
