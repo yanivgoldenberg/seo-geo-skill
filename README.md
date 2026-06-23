@@ -191,7 +191,7 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 ## Seen at / Running in production
 
 - **yanivgoldenberg.com** - canonical reference deployment. **94/100 single-page, 97/100 with the benchmark's 4-page sampling, both on live 2026-06-05 runs**, rank 1 of 61 on the same rubric. The monthly Action commits every fresh snapshot to [docs/state-of-ai-search-history/](docs/state-of-ai-search-history/). Run it yourself and you get today's number. ([proof](docs/state-of-ai-search-2026.md))
-- Used to generate the **[State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md)** benchmark (61 SaaS and AI sites, 67% fail).
+- Used to generate the **[State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md)** benchmark (61 SaaS and AI sites, 67% fail). [Read the live report.](https://yanivgoldenberg.com/state-of-ai-search-visibility-2026/)
 - Public benchmark methodology: `tests/benchmark_sites.py` - runnable and reproducible by anyone.
 
 ---
@@ -204,7 +204,7 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 
 ## Author
 
-**[Yaniv Goldenberg](https://yanivgoldenberg.com)** | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
+**[Yaniv Goldenberg](https://yanivgoldenberg.com)** | [The skill, hosted](https://yanivgoldenberg.com/ai-search-readiness/) | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
 
 Fractional Head of Growth. Scaled a PLG SaaS to 20M+ users (100x ARR), tripled MRR at a consumer SaaS (+337%), grew an MLOps SaaS acquired by a Fortune 100. $100M+ in ad spend managed. I help post-PMF SaaS and e-commerce brands dominate AI search results - so ChatGPT, Claude, and Perplexity cite you before your competitors.
 
@@ -232,7 +232,7 @@ For post-PMF SaaS and e-commerce brands with organic demand but no technical cit
 
 **Sample output:** [`docs/sample-paid-audit.md`](docs/sample-paid-audit.md) - see exactly what a finished audit looks like before applying.
 
-[**Apply for the AI Search Visibility Audit →**](https://yanivgoldenberg.com/contact)
+[**Apply for the AI Search Visibility Audit →**](https://yanivgoldenberg.com/contact/)
 
 ---
 
@@ -252,7 +252,7 @@ You may run this on your own sites and internal company sites. Paid agency resal
 | White-label or package under your brand | No | Commercial license |
 | Embed in a commercial tool you sell | No | Commercial license |
 
-Commercial license: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact)
+Commercial license: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact/)
 
 ---
 

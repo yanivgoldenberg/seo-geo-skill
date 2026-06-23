@@ -84,4 +84,4 @@ Swap the `SITES` list to benchmark any cohort.
 
 If your score came in under 60, you have the same pattern of gaps as 67% of the sites above. I run a paid **AI Search Visibility Audit** for post-PMF SaaS and e-commerce brands. Application-only, starts at $7.5K, credited into the Implementation Sprint if you continue.
 
-[Apply for the audit](https://yanivgoldenberg.com/contact)
+[Apply for the audit](https://yanivgoldenberg.com/contact/)
