@@ -116,14 +116,22 @@ BASELINE_DATE = "2026-04-24"
 
 UA = {"User-Agent": "seo-geo-skill/1.6.0 benchmark (+https://github.com/yanivgoldenberg/seo-geo-skill)"}
 
-def fetch(url, timeout=10):
-    if not _is_public_url(url):
-        return None
-    try:
-        r = requests.get(url, headers=UA, timeout=timeout, allow_redirects=True)
+def fetch(url, timeout=10, max_redirects=5):
+    for _ in range(max_redirects + 1):
+        if not _is_public_url(url):
+            return None
+        try:
+            r = requests.get(url, headers=UA, timeout=timeout, allow_redirects=False)
+        except Exception:
+            return None
+        if r.status_code in (301, 302, 303, 307, 308):
+            loc = r.headers.get("location")
+            if not loc:
+                return r
+            url = urljoin(url, loc)
+            continue
         return r
-    except Exception:
-        return None
+    return None
 
 PREFERRED_DEEP = ("/docs", "/blog", "/product", "/about", "/guide", "/help", "/pricing", "/features")
 
@@ -276,7 +284,7 @@ def score(site, pages=1):
         # generic citation magnets heuristic
         if re.search(r'\$\d+[km]?\b|\d+%|\d+x\b|\d+\+\s+(?:clients|users|customers)', html_lower):
             s["geo"] += 4
-        if re.search(r'rel=["\']describedby["\'][^>]+href=["\'][^"\']*llms\.txt', home.text, re.I):
+        if re.search(r'rel=["\'](?:llms-txt|describedby)["\'][^>]+href=["\'][^"\']*llms\.txt', home.text, re.I):
             s["geo"] += 2
         if re.search(r'link:[\s\S]{0,200}llms\.txt', " ".join(str(v) for v in (home.headers or {}).items()), re.I):
             s["geo"] += 2

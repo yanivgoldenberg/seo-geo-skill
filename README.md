@@ -18,7 +18,7 @@
 
 *See the full [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) report.*
 
-[![Version](https://img.shields.io/badge/version-1.11.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.12.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/yanivgoldenberg/seo-geo-skill?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/stargazers)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
 [![Benchmark](https://img.shields.io/badge/61_sites_benchmarked-brightgreen?style=flat-square)](docs/state-of-ai-search-2026.md)
@@ -134,7 +134,7 @@ Open `seo-geo.md` for the full skill. At a glance:
 **The audit** (Phase 0, non-destructive, always safe):
 - 100-point rubric across 6 dimensions: Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10
 - Same rubric is used by `tests/benchmark_sites.py`; no methodology drift between docs and code
-- Phases 1-3 - Technical SEO, on-page, schema (16 types)
+- Phases 1-3 - Technical SEO, on-page, schema (18 types)
 - Phase 4 - LLM citation (llms.txt + entity anchoring)
 - Phase 5 - Answer engine optimization
 - Phase 6 - E-E-A-T trust signals
@@ -198,7 +198,7 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 
 ## Schemas supported
 
-`Person` `Organization` `SoftwareApplication` `LocalBusiness` `Product` `Service` `Article` `BlogPosting` `FAQPage` `HowTo` `BreadcrumbList` `WebSite` `ProfilePage` `DefinedTerm` `Review` `SpeakableSpecification` `VideoObject`
+`Person` `Organization` `SoftwareApplication` `LocalBusiness` `Product` `Service` `Article` `BlogPosting` `FAQPage` `HowTo` `BreadcrumbList` `WebSite` `ProfilePage` `DefinedTerm` `Review` `SpeakableSpecification` `VideoObject` `ItemList`
 
 ---
 

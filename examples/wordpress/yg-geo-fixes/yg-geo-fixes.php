@@ -17,7 +17,6 @@ define('AUTO_GEO_VERSION', '1.2.0');
 define('AUTO_GEO_SITEMAP_URL', 'https://YOUR_DOMAIN/sitemap_index.xml');
 define('AUTO_GEO_SERVICES_SLUG', 'services');
 define('AUTO_GEO_DESC_SUFFIX', ' - YOUR_BRAND_TAGLINE.');
-define('AUTO_GEO_CONTACT_URL', 'https://YOUR_DOMAIN/contact/');
 
 // sameAs URLs to append to Person entity in Rank Math JSON-LD.
 // Example: ['https://www.youtube.com/@YOUR_HANDLE', 'https://medium.com/@YOUR_HANDLE']
@@ -118,37 +117,37 @@ add_filter('rank_math/json_ld', function ($data) {
 function auto_geo_synthesize_description($post) {
     $excerpt = trim((string) $post->post_excerpt);
     $source = $excerpt;
-    if (strlen($source) < 60) {
+    if (mb_strlen($source, 'UTF-8') < 60) {
         $content = (string) $post->post_content;
         $content = preg_replace('/\[[^\]]+\]/', ' ', $content);
         $content = wp_strip_all_tags($content);
         $content = preg_replace('/\s+/', ' ', $content);
         $content = trim($content);
-        if (strlen($content) >= 60) {
+        if (mb_strlen($content, 'UTF-8') >= 60) {
             $sentences = preg_split('/(?<=[.!?])\s+/', $content, 3);
             $source = trim(implode(' ', array_slice($sentences, 0, 2)));
         }
     }
-    if (strlen($source) < 60) {
+    if (mb_strlen($source, 'UTF-8') < 60) {
         $source = trim((string) $post->post_title);
     }
     $suffix = AUTO_GEO_DESC_SUFFIX;
     $target_max = 160;
-    $room_for_suffix = $target_max - strlen($suffix);
-    if (strlen($source) > $room_for_suffix) {
-        $source = substr($source, 0, $room_for_suffix);
-        $last_space = strrpos($source, ' ');
+    $room_for_suffix = $target_max - mb_strlen($suffix, 'UTF-8');
+    if (mb_strlen($source, 'UTF-8') > $room_for_suffix) {
+        $source = mb_substr($source, 0, $room_for_suffix, 'UTF-8');
+        $last_space = mb_strrpos($source, ' ', 0, 'UTF-8');
         if ($last_space !== false && $last_space > 80) {
-            $source = substr($source, 0, $last_space);
+            $source = mb_substr($source, 0, $last_space, 'UTF-8');
         }
         $source = rtrim($source, " ,.-;:");
     }
     $desc = $source;
-    if (strlen($desc) + strlen($suffix) <= $target_max) {
+    if (mb_strlen($desc, 'UTF-8') + mb_strlen($suffix, 'UTF-8') <= $target_max) {
         $desc = $desc . $suffix;
     }
-    if (strlen($desc) < 80) {
-        error_log('[auto-geo] thin synthesized description for post ' . $post->ID . ' (len=' . strlen($desc) . ')');
+    if (mb_strlen($desc, 'UTF-8') < 80) {
+        error_log('[auto-geo] thin synthesized description for post ' . $post->ID . ' (len=' . mb_strlen($desc, 'UTF-8') . ')');
     }
     return $desc;
 }
@@ -214,41 +213,10 @@ add_filter('rank_math/json_ld', function ($data) {
         }
     }
 
-    $title = get_the_title($post);
-    $url = get_permalink($post);
-    $contact = AUTO_GEO_CONTACT_URL;
-    $default_qa = [
-        [
-            '@type' => 'Question',
-            'name' => "What does {$title} include?",
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => "See the full scope and deliverables at {$url}.",
-            ],
-        ],
-        [
-            '@type' => 'Question',
-            'name' => 'How long is a typical engagement?',
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => 'Replace this default answer via the _yg_faq_json post meta key (JSON array of Question nodes).',
-            ],
-        ],
-        [
-            '@type' => 'Question',
-            'name' => 'How do we start?',
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => "Book an intro call at {$contact}.",
-            ],
-        ],
-    ];
-
-    $data['auto_geo_faq'] = [
-        '@context' => 'https://schema.org',
-        '@type' => 'FAQPage',
-        'mainEntity' => $default_qa,
-    ];
+    // No real Q&A content: do NOT inject placeholder FAQ schema. Google's
+    // FAQ structured-data policy requires Q&A that is visible on the page;
+    // invented or boilerplate FAQPage markup risks a manual action. Provide
+    // real Q&A via the _yg_faq_json post meta (handled above) to emit FAQPage.
     return $data;
 }, 100);
 

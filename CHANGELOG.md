@@ -6,20 +6,34 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
-## [Unreleased]
+## [1.12.0] - 2026-06-23
 
-Repo hygiene and CI hardening. No change to the installed skill (`seo-geo.md` stays 1.11.0).
+Correctness, safety, and freshness release. First update that improves the installed skill itself (not just the repo), driven by a four-dimension audit (freshness, dogfood, coverage, accuracy).
 
-### Fixed
-- README version badge corrected 1.10.0 -> 1.11.0 (matched the skill frontmatter).
+### Fixed (correctness + safety)
+- **SSRF guard was bypassable** (`tests/benchmark_sites.py`): `fetch()` followed redirects without re-validating each hop, so a public URL could 302 to cloud-metadata or localhost. Now validates every hop and stops at the first private/loopback/link-local target.
+- **`_is_banned()` only blocked POST/DELETE** (`seo-geo.md` Phase 17): `PUT`/`PATCH /wp/v2/users/{id}` bypassed the safety guard. PUT/PATCH are now treated as writes.
+- **Malformed JSON-LD**: `mainEntityOfPage` used `"id"` instead of `"@id"` (dropped on every Article).
+- **Invalid schema advice**: "add `dateModified`/`datePublished` to every schema block" is invalid on non-CreativeWork types (Person, Organization, Product, FAQPage, ...); now scoped to CreativeWork.
+- **Plugin corrupted Hebrew/UTF-8 meta descriptions** (`examples/wordpress/yg-geo-fixes`): byte-based `substr()`/`strlen()` truncated mid-character; switched to `mb_*`.
+- **Plugin injected invented FAQPage schema** with placeholder Q&A not visible on the page (Google manual-action risk); now only emits FAQPage when real Q&A content is provided.
+- **`rel` mismatch**: the scorer credited `rel="describedby"` but the skill taught `rel="llms-txt"`/`"llms"`, so sites that followed the skill scored 0. Standardized on `rel="llms-txt"`; scorer accepts both.
 
-### Added
-- Brand banners refreshed to a dark/cyan/Inter system (cover, OG, GitHub social), with reproducible HTML sources in `docs/assets/src/` and `scripts/build_brand_banners.py`.
+### Added / Changed (freshness + coverage)
+- Refreshed stale GEO stats with dated, sourced 2026 figures: top-10 dependency for AI Overviews (now ~38-54%, down from ~76-92%), and fixed the mis-attributed "11% overlap" stat (ChatGPT vs Perplexity, not vs AI Overviews).
+- Added **Google AI Mode + query fan-out** to per-platform intelligence (a 2025 citation surface the skill omitted).
+- Split robots.txt AI crawlers into **search/answer vs training** classes and added the 2025 search bots (`OAI-SearchBot`, `ChatGPT-User`, `Claude-SearchBot`, `Perplexity-User`, ...). Flagged the #1 mistake: allowing GPTBot but not OAI-SearchBot.
+- Re-dated the GEO paper (Aggarwal et al., Nov 2023 / KDD 2024), corrected +40% to +41%, flagged the unverified "2.1x" definition-opening stat.
+- Added the missing **`ItemList`** schema template (listicle / "best X" / alternatives - the most AI-cited format the skill routes pages to).
+- Added **shippingDetails + hasMerchantReturnPolicy** to the Product schema (Google merchant-listing requirements).
+- Added a runnable **`examples/nextjs/`** App Router adapter (robots, sitemap, llms.txt route, JsonLd component) backing the multi-platform claim.
+- Reconciled the schema count (now 18 types), cross-listed `ItemList`/`VideoObject`, and softened the "same patterns, four CMS targets" claim to reflect WordPress as the reference adapter.
 
-### Changed
-- CI now runs the full test suite via `pytest` (persona-hygiene, banned-endpoint, scoring-parity, leaderboard-integrity, deep-link-discovery, schema, and frontmatter checks) instead of only two scripts. A persona or client-name regression in the skill body now fails CI.
-- Case study and auto-geo pattern doc: scrubbed operational specifics (internal plugin name/version, exact media count, exact session date) and genericized the page-builder reference. Brand, site, and score deltas retained as social proof.
-- Test suite is now ruff-clean (import ordering, context-managed file reads, explicit `zip(strict=True)`).
+### Known / deferred (see `docs/proposals/scoring-reliability.md`)
+- The scoring rubric documented in `seo-geo.md` and `docs/SCORING.md` diverges from the heuristics in `tests/benchmark_sites.py` (the parity test only checks dimension totals, not sub-checks), and `llms.txt` is weighted 7/25 GEO points despite no AI search engine consuming it as of 2026. Fixing either re-scores the published 94/100 and the 61-site leaderboard, so it is deferred to a dedicated release.
+
+### Repo hygiene (also in this release)
+- README version badge corrected; CI runs the full `pytest` suite (persona-hygiene + banned-endpoint guards now block regressions); case study/pattern docs scrubbed of operational specifics; brand banners refreshed (dark/cyan/Inter, reproducible via `scripts/build_brand_banners.py`); test suite ruff-clean.
 
 ## [1.11.0] - 2026-06-16
 

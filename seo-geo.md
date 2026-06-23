@@ -1,7 +1,7 @@
 ---
 name: seo-geo
-version: 1.11.0
-description: Phase 0 audit + 20 optimization phases for Claude Code. Canonical 100-pt rubric (Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10). Technical SEO, schema (16 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, SSRF guard, competitor benchmarking, public benchmark of 61 top SaaS and AI sites. Any CMS.
+version: 1.12.0
+description: Phase 0 audit + 20 optimization phases for Claude Code. Canonical 100-pt rubric (Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10). Technical SEO, schema (18 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, SSRF guard, competitor benchmarking, public benchmark of 61 top SaaS and AI sites. Any CMS.
 ---
 
 # /seo-geo - Universal SEO + GEO + AEO Optimization
@@ -282,9 +282,43 @@ ALREADY DONE:
 
 ### robots.txt - AI crawler access
 
-Add explicit Allow rules for all major AI crawlers. A blanket `Disallow: /` blocks them silently:
+Add explicit Allow rules for all major AI crawlers. A blanket `Disallow: /` blocks them silently. Two distinct classes exist, and they are NOT interchangeable:
+
+- **Training crawlers** scrape content to train models. Blocking these does not affect whether you appear in AI answers.
+- **Search/answer crawlers** fetch pages at answer time to cite them. These are what drive AI-search visibility.
+
+The #1 real mistake: allowing `GPTBot` (training) but forgetting `OAI-SearchBot` and `ChatGPT-User` (search) = invisible in ChatGPT search even though you "allowed OpenAI."
 
 ```
+# --- Search / answer crawlers (allow these to be cited in AI answers) ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-CloudVertexBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+# --- Training crawlers (allow only if you want your content used for training) ---
 User-agent: GPTBot
 Allow: /
 
@@ -292,9 +326,6 @@ User-agent: ClaudeBot
 Allow: /
 
 User-agent: Google-Extended
-Allow: /
-
-User-agent: PerplexityBot
 Allow: /
 
 User-agent: Applebot-Extended
@@ -307,6 +338,12 @@ User-agent: cohere-ai
 Allow: /
 
 User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: CCBot
 Allow: /
 
 User-agent: Bytespider
@@ -504,7 +541,20 @@ Inject as `<script type="application/ld+json">` blocks. Can go in `<head>` or `<
     "url": "{product-url}",
     "priceCurrency": "USD",
     "price": "{price}",
-    "availability": "https://schema.org/InStock"
+    "availability": "https://schema.org/InStock",
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {"@type": "MonetaryAmount", "value": "{shipping-cost}", "currency": "USD"},
+      "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "US"}
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "US",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 30,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    }
   },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -513,6 +563,8 @@ Inject as `<script type="application/ld+json">` blocks. Can go in `<head>` or `<
   }
 }
 ```
+
+Google's merchant-listing rich results expect `shippingDetails` and `hasMerchantReturnPolicy`; omitting them yields only a partial listing. Drop them only if the product is not a physical good.
 
 **Service (consulting, agency)**
 ```json
@@ -549,7 +601,7 @@ Inject as `<script type="application/ld+json">` blocks. Can go in `<head>` or `<
     "name": "{site-name}",
     "logo": {"@type": "ImageObject", "url": "{logo-url}"}
   },
-  "mainEntityOfPage": {"@type": "WebPage", "id": "{url}"}
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "{url}"}
 }
 ```
 
@@ -662,14 +714,31 @@ Inject as `<script type="application/ld+json">` blocks. Can go in `<head>` or `<
 }
 ```
 
-### Always add to every schema block
+**ItemList (listicle, "best X", and alternatives/comparison pages - the most AI-cited format)**
+
+Only mark up items that are visible on the page (SSR-rendered), in the same order. Anti-cloaking: never list items in schema that a user cannot see.
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListOrder": "https://schema.org/ItemListOrderAscending",
+  "numberOfItems": 3,
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "{Item 1}", "url": "{item-1-url}"},
+    {"@type": "ListItem", "position": 2, "name": "{Item 2}", "url": "{item-2-url}"},
+    {"@type": "ListItem", "position": 3, "name": "{Item 3}", "url": "{item-3-url}"}
+  ]
+}
+```
+
+### Add date properties to CreativeWork types only
 
 ```json
 "dateModified": "{YYYY-MM-DD}",
 "datePublished": "{YYYY-MM-DD}"
 ```
 
-Update `dateModified` monthly. Freshness is a significant LLM citation signal.
+Add these to `Article`, `BlogPosting`, `VideoObject`, and other `CreativeWork` subtypes only. They are NOT valid on `Person`, `Organization`, `LocalBusiness`, `Service`, `Product`, `FAQPage`, `BreadcrumbList`, or `WebSite`, and emitting them there produces invalid structured data. Update `dateModified` when the content actually changes. Freshness is a citation signal for content pages.
 
 ### Validation
 
@@ -830,28 +899,29 @@ Can someone verify this claim elsewhere (LinkedIn, press)? → yes/no
 
 ### Research-backed citation findings
 
-The 2024 GEO paper (Princeton, Georgia Tech, IIT Delhi, Allen Institute) ran controlled tests across 10K queries. Apply these to every passage you write or rewrite:
+The GEO paper (Aggarwal et al., Princeton / Georgia Tech / IIT Delhi / Allen Institute, Nov 2023, in KDD 2024) ran controlled tests across 10K queries. It is one study, not four; effects are category-dependent and were measured on 2023-era engines (magnitudes may differ on current models). Apply these to every passage you write or rewrite:
 
 | Finding | Effect on AI visibility | Source | Action |
 |---------|------------------------|--------|--------|
-| Add cited statistics to a passage | +40% citation rate | Princeton GEO 2024 | Replace vague quantifiers with exact numbers + named source |
-| Add a quotation from a named authority | up to +115% in some categories | IIT Delhi 2024 | Quote a study, expert, or doc with attribution |
-| Fluency / readability optimization | +30% average across query types | Princeton GEO 2024 | Short paragraphs, plain syntax, one idea per sentence |
-| Definition-pattern openings ("X is...") | 2.1x citation rate | Georgia Tech 2024 | Open each section with a standalone definition or answer |
-| Passage length 134-167 words, self-contained | optimal extraction window | AI Overview passage analysis 2025 | Size answer blocks to that window, name the subject explicitly |
-| Source citations on your own claims | +20-25% pickup by Perplexity + ChatGPT search | Princeton GEO 2024 | Link the origin for every claim |
+| Add cited statistics to a passage | +41% citation rate | Aggarwal et al. 2023 (GEO) | Replace vague quantifiers with exact numbers + named source |
+| Add a quotation from a named authority | up to +115% in some categories | Aggarwal et al. 2023 (GEO) | Quote a study, expert, or doc with attribution |
+| Fluency / readability optimization | +30% average across query types | Aggarwal et al. 2023 (GEO) | Short paragraphs, plain syntax, one idea per sentence |
+| Definition-pattern openings ("X is...") | ~2x citation rate (unverified vs primary source) | commonly cited from GEO | Open each section with a standalone definition or answer |
+| Lead with a self-contained answer, then expand | better extraction | reconcile with the 40-60 word answer-block guidance in Phase 5 | Put a 40-60 word direct answer first, name the subject, then add context |
+| Source citations on your own claims | +20-25% pickup by Perplexity + ChatGPT search | Aggarwal et al. 2023 (GEO) | Link the origin for every claim |
 
 Keyword-stuffing and pure-statistic loading showed NO gain or net loss. The gains come from credibility signals (citations, quotes) and clarity (fluency, definitions), not density.
 
 ### Per-platform selection intelligence
 
-Only ~11% of domains are cited by BOTH ChatGPT and Google AI Overviews for the same query. Each engine pulls from a different index with different source preferences, so optimize per platform, not in aggregate:
+Citation overlap across engines is low: only ~11% of domains are cited by both ChatGPT and Perplexity for the same query, and ~71% of sources appear on a single platform (Profound, ~30M citations, 2024-2025). Even Google's own AI Overviews and AI Mode share only ~14% of cited URLs (Ahrefs). So optimize per platform, not in aggregate:
 
 | Platform | Index / basis | Top source bias | What moves the needle here first |
 |----------|---------------|-----------------|----------------------------------|
-| Google AI Overviews | Google organic | top-10 ranking pages (92% of citations) | Win top-10 rank, question-based H2/H3, tables, direct first-sentence answers, featured-snippet format |
-| ChatGPT (search) | Bing index | Wikipedia (47.9%), Reddit, YouTube | Entity presence (Wikipedia + Wikidata), Bing index coverage, 2000+ word comprehensive pages, authoritative backlinks |
-| Perplexity | own crawl + search APIs | Reddit (46.7%), Wikipedia, YouTube | Authentic Reddit/forum presence, original research/data, freshness, quotable standalone paragraphs |
+| Google AI Overviews | Google organic | ~38-54% of citations from top-10 pages (down from ~76-92% in mid-2025) | Topical relevance + quotable passages now win independent of rank; still: question-based H2/H3, tables, direct first-sentence answers |
+| Google AI Mode | Google index + query fan-out | broader, lower-authority pool than AIO | Cover subtopic angles (fan-out splits one query into 8-12 sub-queries); breadth of coverage over raw rank; optimize for both AIO and AI Mode (only ~14% URL overlap) |
+| ChatGPT (search) | Bing index | Wikipedia-heavy (~48% of top citations, Profound 2024-2025; trending down), Reddit, YouTube | Entity presence (Wikipedia + Wikidata), Bing index coverage, 2000+ word comprehensive pages, authoritative backlinks |
+| Perplexity | own crawl + search APIs | Reddit-heavy, Wikipedia, YouTube | Authentic Reddit/forum presence, original research/data, freshness, quotable standalone paragraphs |
 | Gemini | Google index + Google properties | YouTube (weighted heavily), Knowledge Graph | YouTube with chapters, Knowledge Panel, comprehensive Schema.org, Google Business Profile, image alt text |
 | Bing Copilot | Bing index | LinkedIn, GitHub, Microsoft Learn | IndexNow protocol, Bing Webmaster Tools, complete LinkedIn page, exact-match keywords, sub-2s load |
 
@@ -2187,6 +2257,7 @@ SENSITIVE_SETTINGS_KEYS = {'siteurl', 'home', 'admin_email'}
 
 
 def _is_banned(method: str, url: str, body: dict) -> bool:
+    method = {'PUT': 'POST', 'PATCH': 'POST'}.get(method.upper(), method.upper())
     path = urlparse(url).path
     for banned_method, banned_path in BANNED_ENDPOINTS:
         if method == banned_method and banned_path in path:
@@ -2228,7 +2299,7 @@ The snippet above is the canonical template for every write the skill performs. 
 
 ## Phase 18 - Multi-platform adapters
 
-Same patterns, four CMS targets. Copy the snippet that matches the site.
+Four CMS targets. WordPress is the reference adapter (full hardening in Phase 15, a Python REST helper, and a shipped plugin in `examples/wordpress/`); Shopify, Webflow, and Next.js are lighter adapters covering robots, sitemap, llms.txt, and schema. A runnable Next.js example lives in `examples/nextjs/`. Copy the snippet that matches the site.
 
 ### Adapter: WordPress + Rank Math
 
@@ -2292,7 +2363,7 @@ Schema via Site Settings > Custom Code > Head:
 Page-level schema via Page Settings > Custom Code > Head Code.
 
 llms.txt: Webflow doesn't serve arbitrary `.txt` at root. Two paths:
-1. Host llms.txt on a subdomain (`files.yoursite.com/llms.txt`) and add `<link rel="llms" href="...">` in head.
+1. Host llms.txt on a subdomain (`files.yoursite.com/llms.txt`) and add `<link rel="llms-txt" href="...">` in head.
 2. Cloudflare Worker in front of Webflow to serve `/llms.txt` from a Worker KV store.
 
 Robots: Site Settings > SEO > Indexing only supports simple Disallow. For AI-crawler Allow rules, use the Cloudflare Worker approach.
