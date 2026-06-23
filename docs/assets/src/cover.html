@@ -13,26 +13,40 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:#0a0a0a;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',system-ui,sans-serif}
-  .frame{
-    position:relative;width:1600px;height:900px;background:var(--bg);overflow:hidden;
-    color:var(--ink);
-  }
+  .frame{position:relative;width:1600px;height:900px;background:var(--bg);overflow:hidden;color:var(--ink)}
   .grid{position:absolute;inset:0;
     background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-    background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 60% at 50% 45%,#000 30%,transparent 80%)}
-  .glow{position:absolute;width:1100px;height:1100px;left:50%;top:42%;transform:translate(-50%,-50%);
+    background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 60% at 50% 42%,#000 30%,transparent 80%)}
+  .glow{position:absolute;width:1100px;height:1100px;left:50%;top:40%;transform:translate(-50%,-50%);
     background:radial-gradient(circle,rgba(0,247,210,.16) 0%,rgba(0,247,210,.05) 35%,transparent 65%);filter:blur(8px)}
-  .eyebrow{position:absolute;top:64px;left:80px;font-family:'JetBrains Mono',monospace;font-size:20px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+  .eyebrow{position:absolute;top:60px;left:80px;font-family:'JetBrains Mono',monospace;font-size:19px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
   .eyebrow b{color:var(--cyan);font-weight:500}
-  .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 120px}
-  h1{font-size:104px;font-weight:800;letter-spacing:-.035em;line-height:1.02}
+
+  .center{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 120px}
+  h1{font-size:100px;font-weight:800;letter-spacing:-.035em;line-height:1.02}
   h1 .c{color:var(--cyan)}
-  .sub{margin-top:30px;font-size:30px;font-weight:400;color:var(--muted);max-width:1050px;line-height:1.4}
-  .chip{margin-top:48px;display:inline-flex;align-items:center;gap:14px;padding:16px 28px;border-radius:999px;
-    background:var(--glass);border:1px solid var(--glass-bd);backdrop-filter:blur(12px);font-size:24px;font-weight:500;color:#E5E7EB}
+  .sub{margin-top:28px;font-size:29px;font-weight:400;color:var(--muted);max-width:1040px;line-height:1.4}
+  .chip{margin-top:44px;display:inline-flex;align-items:center;gap:14px;padding:15px 28px;border-radius:999px;
+    background:var(--glass);border:1px solid var(--glass-bd);backdrop-filter:blur(12px);font-size:23px;font-weight:500;color:#E5E7EB}
   .chip .dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
   .chip b{color:var(--cyan);font-weight:700}
-  .tag{position:absolute;bottom:60px;right:80px;font-family:'JetBrains Mono',monospace;font-size:24px;color:rgba(255,255,255,.28)}
+
+  /* brand footer */
+  .footer{position:absolute;left:80px;right:80px;bottom:54px;display:flex;align-items:center;justify-content:space-between;
+    padding-top:30px;border-top:1px solid rgba(255,255,255,.08)}
+  .brand{display:flex;align-items:center;gap:16px}
+  .mark{display:flex;align-items:center;gap:4px}
+  .mark i{display:block;width:6px;border-radius:2px;background:var(--cyan)}
+  .mark i:nth-child(1){height:18px;opacity:.55}
+  .mark i:nth-child(2){height:28px;opacity:.8}
+  .mark .chev{width:0;height:0;margin-left:3px;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:15px solid var(--cyan)}
+  .who{display:flex;flex-direction:column;line-height:1.2}
+  .who .name{font-size:25px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+  .who .role{font-size:18px;font-weight:500;color:var(--cyan)}
+  .links{display:flex;align-items:center;gap:26px;font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--muted)}
+  .links .site{color:#E5E7EB}
+  .links .skill{color:rgba(255,255,255,.30)}
 </style>
 </head>
 <body>
@@ -40,12 +54,23 @@
     <div class="grid"></div>
     <div class="glow"></div>
     <div class="eyebrow">Claude Code <b>skill</b></div>
+
     <div class="center">
       <h1>SEO + GEO + AEO,<br>in one <span class="c">skill</span></h1>
       <p class="sub">Audit and fix AI Search Readiness across schema, llms.txt, robots.txt, and E-E-A-T. Any CMS.</p>
       <div class="chip"><span class="dot"></span>61 SaaS + AI sites benchmarked &middot; <b>67% fail</b></div>
     </div>
-    <div class="tag">/seo-geo</div>
+
+    <div class="footer">
+      <div class="brand">
+        <div class="mark"><i></i><i></i><span class="chev"></span></div>
+        <div class="who">
+          <span class="name">Yaniv Goldenberg</span>
+          <span class="role">Fractional CMO</span>
+        </div>
+      </div>
+      <div class="links"><span class="site">yanivgoldenberg.com</span><span class="skill">/seo-geo</span></div>
+    </div>
   </div>
 </body>
 </html>
