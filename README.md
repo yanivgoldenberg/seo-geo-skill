@@ -133,7 +133,7 @@ Open `seo-geo.md` for the full skill. At a glance:
 
 **The audit** (Phase 0, non-destructive, always safe):
 - 100-point rubric across 6 dimensions: Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10
-- Same rubric is used by `tests/benchmark_sites.py`; no methodology drift between docs and code
+- Same six buckets and 100-pt scale as the automated benchmark (`tests/benchmark_sites.py`); the benchmark scores the crawl-observable subset (see [SCORING.md](docs/SCORING.md))
 - Phases 1-3 - Technical SEO, on-page, schema (18 types)
 - Phase 4 - LLM citation (llms.txt + entity anchoring)
 - Phase 5 - Answer engine optimization
