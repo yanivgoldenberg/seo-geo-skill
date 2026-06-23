@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>seo-geo-skill GitHub 1280x640</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#000;--cyan:#00F7D2;--ink:#fff;--muted:#9CA3AF;--glass:rgba(255,255,255,.04);--glass-bd:rgba(255,255,255,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0a0a;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',system-ui,sans-serif}
+  .frame{position:relative;width:1280px;height:640px;background:var(--bg);overflow:hidden;color:var(--ink);display:flex}
+  .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 90% 80% at 30% 50%,#000 35%,transparent 82%)}
+  .glow{position:absolute;width:820px;height:820px;left:62%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,247,210,.13) 0%,rgba(0,247,210,.04) 38%,transparent 66%);filter:blur(8px)}
+  .left{position:relative;width:62%;padding:84px 0 84px 88px;display:flex;flex-direction:column;justify-content:center}
+  .repo{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--muted);margin-bottom:26px}
+  .repo b{color:#E5E7EB;font-weight:500}
+  h1{font-size:60px;font-weight:800;letter-spacing:-.03em;line-height:1.06;max-width:620px}
+  .code{margin-top:34px;align-self:flex-start;padding:18px 26px;border-radius:14px;background:var(--glass);border:1px solid var(--glass-bd);backdrop-filter:blur(12px);font-family:'JetBrains Mono',monospace;font-size:24px}
+  .code .p{color:var(--cyan)}
+  .code .u{color:var(--muted)}
+  .right{position:relative;width:38%;display:flex;flex-direction:column;justify-content:center;gap:26px;padding-right:80px}
+  .row{display:flex;flex-direction:column;gap:9px}
+  .row .lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:22px}
+  .row .site{color:#E5E7EB;font-weight:500}
+  .row .num{font-weight:800;font-size:30px}
+  .bar{height:14px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}
+  .bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--cyan),rgba(0,247,210,.25))}
+  .win .num{color:var(--cyan)}
+  .lose .num{color:#6B7280}
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="left">
+      <div class="repo">yanivgoldenberg <b>/ seo-geo-skill</b></div>
+      <h1>One command.<br>Full AI Search audit.<br>Ranked fixes.</h1>
+      <div class="code"><span class="p">/seo-geo</span> <span class="u">https://yoursite.com</span></div>
+    </div>
+    <div class="right">
+      <div class="row win">
+        <div class="lbl"><span class="site">yanivgoldenberg.com</span><span class="num">94</span></div>
+        <div class="bar"><span style="width:94%"></span></div>
+      </div>
+      <div class="row lose">
+        <div class="lbl"><span class="site">openai.com</span><span class="num">7</span></div>
+        <div class="bar"><span style="width:7%"></span></div>
+      </div>
+      <div class="row lose">
+        <div class="lbl"><span class="site">railway.app</span><span class="num">0</span></div>
+        <div class="bar"><span style="width:1.5%"></span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
