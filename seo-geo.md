@@ -204,12 +204,11 @@ Score the site 0-100. Produce a prioritized gap list. No writes.
 
 | Check | Points |
 |-------|--------|
-| llms.txt + llms-full.txt exist and are comprehensive | 7 |
-| AI crawlers explicitly allowed in robots.txt (all 14+ known bots) | 5 |
-| sameAs array with 4+ verified profiles including Wikidata | 5 |
-| Content uses specific claims, numbers, named entities (LLM citation magnets) | 4 |
-| Link header pointing to llms.txt present | 2 |
-| Entity disambiguation: same name+credentials appear on 3+ external sources | 2 |
+| sameAs array with 4+ verified profiles including Wikidata | 7 |
+| Content uses specific claims, numbers, named entities (LLM citation magnets) | 6 |
+| AI search crawlers explicitly allowed in robots.txt (OAI-SearchBot, Perplexity-User, etc.) | 6 |
+| llms.txt + llms-full.txt exist (de-weighted: no AI search engine consumes it as of 2026) | 3 |
+| Entity disambiguation across 3+ external sources + Link header to llms.txt | 3 |
 
 **E-E-A-T (10 pts)**
 

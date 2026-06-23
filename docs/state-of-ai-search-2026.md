@@ -3,61 +3,61 @@
 **Benchmark:** 61 top SaaS and AI sites scored against a 100-point AI Search Readiness rubric.
 **Method:** Reproducible Python script. Same rubric every site. Audit-only, no writes. Public-host checks enforced.
 **Rubric:** Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10 = 100
-**Date:** 2026-04-24
+**Date:** 2026-06-23 (re-scored under the v1.12.0 rubric, which de-weights llms.txt from 12 to 3 GEO points)
 
 ## Headline findings
 
-- **67% of top SaaS sites scored 60 or lower.** Failing AI Search Readiness is the norm, not the exception.
-- **Mean score: 49.4 / 100. Median: 52 / 100.**
-- **OpenAI and Perplexity - the two biggest AI search companies - score 7/100 each.** The category leaders are almost invisible to their own category of search.
-- **Railway scores 0.** Blocked AI crawlers, no schema, no llms.txt.
-- **yanivgoldenberg.com tops the leaderboard at 97/100** - full stack: llms.txt, Organization + Person schema, AI-crawler allow, speakable markup.
+- **56% of top SaaS sites scored 60 or lower.** Failing AI Search Readiness is still the norm.
+- **Mean score: 54.3 / 100. Median: 59 / 100.**
+- **OpenAI and Perplexity - the two biggest AI search companies - score 7/100 each**, the lowest on the board. The category leaders are almost invisible to their own category of search.
+- **44% still lack full Person + Organization schema on their homepage** - the single biggest score gap in the bottom half.
+- **yanivgoldenberg.com tops the leaderboard at 92/100** - full stack: Organization + Person schema with Wikidata sameAs, AI-crawler allow, citation-magnet content, speakable markup.
 
 ## Top 20 (best AI Search Readiness)
 
 | Rank | Site | Score | Notable |
 |---:|---|---:|---|
-| 1 | yanivgoldenberg.com | **97** | Full stack |
-| 2 | heroku.com | 80 | |
-| 3 | amplitude.com | 77 | |
-| 4 | beehiiv.com | 76 | |
-| 5 | resend.com | 70 | |
-| 6 | monday.com | 69 | |
-| 7 | workos.com | 68 | |
-| 8 | render.com | 66 | |
-| 9 | stripe.com | 65 | |
-| 10 | webflow.com | 65 | |
-| 11 | asana.com | 65 | |
-| 12 | auth0.com | 64 | |
-| 13 | planetscale.com | 62 | |
-| 14 | figma.com | 62 | |
-| 15 | retool.com | 62 | |
-| 16 | mercury.com | 61 | |
-| 17 | cursor.com | 61 | |
-| 18 | framer.com | 61 | |
-| 19 | mongodb.com | 61 | |
-| 20 | algolia.com | 61 | |
+| 1 | yanivgoldenberg.com | **92** | Full stack |
+| 2 | heroku.com | 86 | |
+| 3 | retool.com | 82 | |
+| 4 | amplitude.com | 80 | |
+| 5 | beehiiv.com | 79 | |
+| 5 | zapier.com | 79 | |
+| 7 | resend.com | 75 | |
+| 8 | render.com | 73 | |
+| 9 | auth0.com | 70 | |
+| 9 | cloudflare.com | 70 | |
+| 9 | webflow.com | 70 | |
+| 12 | mercury.com | 68 | |
+| 12 | stripe.com | 68 | |
+| 12 | supabase.com | 68 | |
+| 15 | figma.com | 67 | |
+| 15 | railway.app | 67 | Was 0 in April; added llms.txt + content since |
+| 17 | asana.com | 65 | |
+| 17 | calendly.com | 65 | |
+| 17 | clerk.com | 65 | |
+| 17 | monday.com | 65 | |
 
 ## Bottom 10 (worst AI Search Readiness)
 
 | Rank | Site | Score | Main failure |
 |---:|---|---:|---|
-| 52 | databricks.com | 36 | Schema gaps |
-| 53 | snowflake.com | 36 | Schema gaps |
-| 54 | datadog.com | 34 | Schema + GEO |
-| 55 | replicate.com | 32 | Schema + GEO |
-| 56 | fly.io | 22 | Blocked crawlers |
-| 57 | ramp.com | 21 | Blocked crawlers |
-| 58 | canva.com | 12 | Almost nothing |
-| 59 | openai.com | 7 | No llms.txt, no schema, minimal AI-allow |
+| 51 | convertkit.com | 38 | Schema + GEO gaps |
+| 51 | mixpanel.com | 38 | Schema + GEO gaps |
+| 51 | segment.com | 38 | Schema + GEO gaps |
+| 55 | fly.io | 36 | Schema + GEO gaps |
+| 55 | netlify.com | 36 | Schema + GEO gaps |
+| 57 | datadog.com | 31 | Schema + GEO gaps |
+| 58 | ramp.com | 18 | Blocked crawlers |
+| 59 | canva.com | 13 | Almost nothing |
+| 60 | openai.com | 7 | No schema, minimal AI-allow |
 | 60 | perplexity.ai | 7 | Same profile as OpenAI |
-| 61 | railway.app | 0 | Blocked everything |
 
-## The 3 cheapest wins (replicable in under an hour)
+## The 3 highest-leverage wins
 
-1. **Publish `/llms.txt` and `/llms-full.txt`** - entity hygiene; most winners have it, most losers do not.
-2. **Add Organization + Person JSON-LD** - schema deficiency is the single biggest score gap in the bottom half.
-3. **Allow GPTBot, ClaudeBot, PerplexityBot in robots.txt** - many sites silently block the crawlers they most want to be cited by.
+1. **Add Organization + Person JSON-LD with sameAs** - schema deficiency is the single biggest score gap in the bottom half.
+2. **sameAs with Wikidata + allow AI search crawlers** (OAI-SearchBot, Perplexity-User, ClaudeBot) - many sites silently block or omit the crawlers they most want to be cited by.
+3. **Publish `/llms.txt` and `/llms-full.txt`** - cheap entity hygiene, but no AI search engine consumes it as of 2026, so it is a small part of the score (3 of 25 GEO points).
 
 Full rubric, script, and reproducible methodology: [seo-geo-skill on GitHub](https://github.com/yanivgoldenberg/seo-geo-skill).
 
@@ -82,6 +82,6 @@ Swap the `SITES` list to benchmark any cohort.
 
 ## Want this applied to your site?
 
-If your score came in under 60, you have the same pattern of gaps as 67% of the sites above. I run a paid **AI Search Visibility Audit** for post-PMF SaaS and e-commerce brands. Application-only, starts at $7.5K, credited into the Implementation Sprint if you continue.
+If your score came in under 60, you have the same pattern of gaps as 56% of the sites above. I run a paid **AI Search Visibility Audit** for post-PMF SaaS and e-commerce brands. Application-only, starts at $7.5K, credited into the Implementation Sprint if you continue.
 
 [Apply for the audit](https://yanivgoldenberg.com/contact/)

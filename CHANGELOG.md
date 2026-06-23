@@ -8,6 +8,11 @@ Format: [version] - YYYY-MM-DD
 
 ## [Unreleased]
 
+### Changed (llms.txt re-weighting + leaderboard re-run - Bucket C2)
+- **Re-weighted GEO scoring**: llms.txt dropped from 12 to 3 of 25 GEO points (no AI search engine consumes it as of 2026); the freed points moved to entity presence/sameAs (7), citation-magnet content (6), and AI search-crawler access (6). GEO now sums to exactly 25 (was over-subscribed at 30). Updated in `benchmark_sites.py`, `BENCHMARK_CHECKS`, Phase 0 rubric, and `docs/SCORING.md`.
+- Also fixed two scorer bugs surfaced in the audit: the `sameAs` GEO check used a fragile operator-precedence expression, and the Link-header check was dead code (never matched).
+- **Re-ran the full 61-site leaderboard under the new rubric, dated 2026-06-23.** Regenerated `state-of-ai-search-2026.{json,csv,md}`, the history snapshot, `CARRIED_BASELINE`, the README leaderboard/prose, the case study, and the brand banners. Headline shifts (mostly 2 months of web drift, not the reweight): 67% fail -> 56%; mean 49.4 -> 54.3; yanivgoldenberg.com 97 -> 92 (still rank 1); Railway 0 -> 67 (they added llms.txt + content since April). OpenAI and Perplexity still 7/100 each.
+
 ### Changed (scoring integrity - Bucket C1, no published score moves)
 - `docs/SCORING.md` now honestly separates the **manual-audit rubric** from the **automated benchmark**. Removed the false "identical / no methodology drift" claims; documented exactly what `benchmark_sites.py` scores (crawl-observable proxies) and which criteria are manual-audit-only (Core Web Vitals, broken-link crawl, GSC submission, keyword placement, validation errors, Wikidata verification, proof points, external links, ...). Stated plainly that the GEO checks are over-subscribed (sum 30, clamped to 25), over-weighting llms.txt.
 - Added a `BENCHMARK_CHECKS` table to `benchmark_sites.py` documenting every observable check and its points; `test_scoring_parity.py` now pins it against `docs/SCORING.md` so documented scoring cannot silently drift from the scorer (previously only the six bucket totals were checked).

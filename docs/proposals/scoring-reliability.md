@@ -1,6 +1,6 @@
-# Proposal: scoring-reliability and llms.txt re-weighting (deferred)
+# Proposal: scoring-reliability and llms.txt re-weighting
 
-Status: deferred. Flagged in the v1.12.0 audit. Touching either item below re-scores the published 94/100 reference number and the 61-site leaderboard, so it needs a deliberate, separately-versioned release with the leaderboard re-run.
+Status: **IMPLEMENTED 2026-06-23.** C1 (integrity: honest rubric-vs-benchmark docs + sub-check parity test) shipped first with no score changes. C2 (llms.txt re-weighted 12 -> 3 GEO points, scorer bugs fixed, 61-site leaderboard re-run and all artifacts re-published dated 2026-06-23) shipped after sign-off. yanivgoldenberg.com moved 97 -> 92, still rank 1. This document is retained as the rationale record.
 
 ## C1 - The rubric and the scorer disagree
 

@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/benchmark-terminal.png" alt="Terminal capture: python scripts/benchmark_demo.py scoring yanivgoldenberg.com 94/100 and openai.com 7/100 across Tech, Schema, GEO, On-Page, AEO, E-E-A-T" width="100%" />
+  <img src="docs/assets/benchmark-terminal.png" alt="Terminal capture: python scripts/benchmark_demo.py scoring yanivgoldenberg.com 92/100 and openai.com 7/100 across Tech, Schema, GEO, On-Page, AEO, E-E-A-T" width="100%" />
 </p>
 
 <p align="center"><sub>Real output. Reproduce it: <code>python scripts/benchmark_demo.py</code></sub></p>
@@ -14,7 +14,7 @@
 
 **A single-file Claude Code skill that audits and fixes AI Search Readiness across SEO, GEO, AEO, schema, llms.txt, robots.txt, and E-E-A-T.**
 
-*Benchmarked on 61 SaaS and AI sites. 67% scored 60 or below. OpenAI and Perplexity score 7/100 each. Same 100-point rubric. Reproducible script. Safe by default.*
+*Benchmarked on 61 SaaS and AI sites (re-scored 2026-06-23). 56% scored 60 or below. OpenAI and Perplexity score 7/100 each. Same 100-point rubric. Reproducible script. Safe by default.*
 
 *See the full [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) report.*
 
@@ -43,17 +43,17 @@ One command. Full audit. Ranked fix list. Works on any CMS.
 
 ---
 
-## We benchmarked 61 top SaaS and AI sites. 67% fail AI Search Readiness.
+## We benchmarked 61 top SaaS and AI sites. 56% fail AI Search Readiness.
 
-Two AI category leaders, OpenAI and Perplexity, score 7/100 each. Railway scores 0. Full leaderboard in [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md).
+The two AI category leaders, OpenAI and Perplexity, score 7/100 each, the lowest on the board. Full leaderboard in [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) (re-scored 2026-06-23).
 
 The bottom of the 61-site leaderboard tells the story:
 
 | Rank | Site | Score | Notable |
 |---:|---|---:|---|
-| 59 | **openai.com** | **7** | *ChatGPT's parent. Zero JSON-LD schema on homepage. No llms.txt.* |
+| 59 | **canva.com** | **13** | *No JSON-LD schema, no AI-crawler allow.* |
+| 60 | **openai.com** | **7** | *ChatGPT's parent. Zero JSON-LD schema on homepage.* |
 | 60 | **perplexity.ai** | **7** | *Same profile as OpenAI.* |
-| 61 | **railway.app** | **0** | *Blocks everything.* |
 
 The AI category leaders score near zero on AI Search Readiness.
 
@@ -61,17 +61,17 @@ The AI category leaders score near zero on AI Search Readiness.
 
 ### What the data shows
 
-- **67% of 61 top SaaS and AI sites scored 60 or below.** Failing AI Search Readiness is the norm.
-- **Mean score: 49.4 / 100.** Most sites leave the majority of rubric points on the table.
-- **llms.txt is entity hygiene, not a guaranteed ranking lever** - Google has stated no special file is required for AI Overviews. But the sites that publish it consistently pair with the strongest GEO scores.
-- **73% have no proper Person or Organization schema on their homepage.**
+- **56% of 61 top SaaS and AI sites scored 60 or below.** Failing AI Search Readiness is still the norm.
+- **Mean score: 54.3 / 100. Median: 59.** Most sites leave a third or more of rubric points on the table.
+- **llms.txt is entity hygiene, not a ranking lever** - no major AI search engine consumes it as of 2026 (Google publicly declined it). The rubric weights it accordingly (3 of 25 GEO points); entity presence and citation-worthy content carry the GEO score.
+- **44% still lack full Person + Organization schema on their homepage.**
 - **OpenAI and Perplexity score 7/100 each.** The category leaders are almost invisible to their own category of search.
 
-If your site scores below 60 on this rubric, you're in the bottom third of well-funded SaaS brands. The three cheapest wins:
+If your site scores below 60 on this rubric, you're in the bottom half of well-funded SaaS brands. The three highest-leverage wins:
 
-1. Publish `/llms.txt` and `/llms-full.txt` → +25 points
-2. Add Organization + Person JSON-LD → +15 points
-3. Allow AI crawlers explicitly in robots.txt → +10 points
+1. Add Organization + Person JSON-LD with sameAs → +~14 points
+2. sameAs with Wikidata + allow AI search crawlers (OAI-SearchBot, Perplexity-User) → +13 points
+3. Publish `/llms.txt` + `/llms-full.txt` → +3 points (cheap hygiene)
 
 This skill automates all three in one session.
 
@@ -190,8 +190,8 @@ curl -fsSL https://raw.githubusercontent.com/yanivgoldenberg/seo-geo-skill/main/
 
 ## Seen at / Running in production
 
-- **yanivgoldenberg.com** - canonical reference deployment. **94/100 single-page, 97/100 with the benchmark's 4-page sampling, both on live 2026-06-05 runs**, rank 1 of 61 on the same rubric. The monthly Action commits every fresh snapshot to [docs/state-of-ai-search-history/](docs/state-of-ai-search-history/). Run it yourself and you get today's number. ([proof](docs/state-of-ai-search-2026.md))
-- Used to generate the **[State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md)** benchmark (61 SaaS and AI sites, 67% fail). [Read the live report.](https://yanivgoldenberg.com/state-of-ai-search-visibility-2026/)
+- **yanivgoldenberg.com** - canonical reference deployment. **92/100, rank 1 of 61** on the re-scored 2026-06-23 leaderboard (down from 97 after llms.txt was de-weighted; the GEO points moved to entity presence and citation content, which the site already wins). The monthly Action commits every fresh snapshot to [docs/state-of-ai-search-history/](docs/state-of-ai-search-history/). Run it yourself and you get today's number. ([proof](docs/state-of-ai-search-2026.md))
+- Used to generate the **[State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md)** benchmark (61 SaaS and AI sites, 56% fail). [Read the live report.](https://yanivgoldenberg.com/state-of-ai-search-visibility-2026/)
 - Public benchmark methodology: `tests/benchmark_sites.py` - runnable and reproducible by anyone.
 
 ---
@@ -280,4 +280,4 @@ Then score mine and check my claim:
 /seo-geo https://yanivgoldenberg.com
 ```
 
-I claim yanivgoldenberg.com scores 94/100 single-page (97/100 with the benchmark's 4-page sampling) on live 2026-06-05 runs, rank 1 of 61 on this rubric. The dated snapshots live in docs/state-of-ai-search-history/, committed by the monthly Action, not by me. Run it yourself and you get today's number. If your run disagrees, open an issue with the output and I will fix the skill or the claim. Every number in this repo is reproducible with `tests/benchmark_sites.py`, so there is nowhere for a bad number to hide.
+I claim yanivgoldenberg.com scores 92/100, rank 1 of 61 on the re-scored 2026-06-23 leaderboard. The dated snapshots live in docs/state-of-ai-search-history/, committed by the monthly Action, not by me. Run it yourself and you get today's number. If your run disagrees, open an issue with the output and I will fix the skill or the claim. Every number in this repo is reproducible with `tests/benchmark_sites.py`, so there is nowhere for a bad number to hide.
