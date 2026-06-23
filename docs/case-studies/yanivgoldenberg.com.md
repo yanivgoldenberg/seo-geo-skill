@@ -17,7 +17,9 @@ One-session optimization using the seo-geo skill v1.3.0.
 | GEO (LLM citation) | 55 | 96 | +41 |
 | AEO (answer engine) | 48 | 88 | +40 |
 | E-E-A-T | 68 | 92 | +24 |
-| **Composite** | **61** | **94** | **+33** |
+| **Composite** | **61** | **92** | **+31** |
+
+> Composite re-scored to 92/100 under the v1.12.0 rubric (2026-06-23), which de-weights llms.txt from 12 to 3 GEO points. Still rank 1 of 61.
 
 ## What moved the score
 

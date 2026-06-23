@@ -22,8 +22,8 @@ from benchmark_sites import BENCHMARK_CHECKS, MAX_POINTS  # noqa: E402
 
 CANONICAL = {"technical": 20, "onpage": 15, "schema": 20, "geo": 25, "aeo": 10, "eeat": 10}
 
-# Documented per-bucket benchmark maxima. GEO checks sum to 30 (clamped to 25).
-BENCHMARK_MAXIMA = {"technical": 20, "onpage": 15, "schema": 20, "geo": 30, "aeo": 10, "eeat": 10}
+# Documented per-bucket benchmark maxima. Each bucket's checks sum to its cap.
+BENCHMARK_MAXIMA = {"technical": 20, "onpage": 15, "schema": 20, "geo": 25, "aeo": 10, "eeat": 10}
 
 
 def _phase0_weights() -> dict[str, int]:

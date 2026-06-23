@@ -1,6 +1,6 @@
 # Public Benchmark - 13 SaaS sites scored (original cohort)
 
-> **The expanded 61-site benchmark is here:** [State of AI Search Visibility 2026](state-of-ai-search-2026.md). 67% fail. OpenAI and Perplexity both score 7/100. Railway scores 0.
+> **The expanded 61-site benchmark is here:** [State of AI Search Visibility 2026](state-of-ai-search-2026.md). 56% fail (re-scored 2026-06-23). OpenAI and Perplexity both score 7/100, the lowest on the board.
 
 Run date: 2026-04-24 (rescored against canonical rubric in v1.6.0).
 

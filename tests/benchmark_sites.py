@@ -42,77 +42,77 @@ SITES = [
 ]
 
 # The published "State of AI Search Visibility 2026" leaderboard: 61 sites,
-# scored 2026-04-24 against the canonical rubric below. SITES_61 preserves the
+# scored 2026-06-23 against the canonical rubric below. SITES_61 preserves the
 # exact published rank order. CARRIED_BASELINE holds the published per-dimension
 # scores so the 61-site runner can carry any row it cannot freshly re-fetch and
 # clearly mark fresh vs carried. Both are derived from
 # docs/state-of-ai-search-2026.json (the leaderboard's machine-readable form).
 CARRIED_BASELINE = [
-    {"site": "https://yanivgoldenberg.com", "technical": 20, "onpage": 15, "schema": 20, "geo": 25, "aeo": 7, "eeat": 10, "composite": 97, "notes": ["has llms.txt", "has llms-full.txt"]},
-    {"site": "https://heroku.com", "technical": 20, "onpage": 15, "schema": 20, "geo": 16, "aeo": 3, "eeat": 6, "composite": 80, "notes": ["has llms.txt"]},
-    {"site": "https://amplitude.com", "technical": 20, "onpage": 13, "schema": 16, "geo": 25, "aeo": 0, "eeat": 3, "composite": 77, "notes": ["has llms.txt", "has llms-full.txt"]},
-    {"site": "https://beehiiv.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 17, "aeo": 7, "eeat": 0, "composite": 76, "notes": ["has llms.txt"]},
-    {"site": "https://resend.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 16, "aeo": 0, "eeat": 2, "composite": 70, "notes": ["has llms.txt"]},
-    {"site": "https://monday.com", "technical": 20, "onpage": 12, "schema": 13, "geo": 21, "aeo": 3, "eeat": 0, "composite": 69, "notes": ["has llms.txt"]},
-    {"site": "https://workos.com", "technical": 20, "onpage": 12, "schema": 12, "geo": 21, "aeo": 3, "eeat": 0, "composite": 68, "notes": ["has llms.txt", "has llms-full.txt"]},
-    {"site": "https://render.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 14, "aeo": 0, "eeat": 0, "composite": 66, "notes": []},
-    {"site": "https://stripe.com", "technical": 17, "onpage": 15, "schema": 17, "geo": 16, "aeo": 0, "eeat": 0, "composite": 65, "notes": ["has llms.txt"]},
-    {"site": "https://webflow.com", "technical": 17, "onpage": 12, "schema": 17, "geo": 16, "aeo": 0, "eeat": 3, "composite": 65, "notes": ["has llms.txt"]},
-    {"site": "https://asana.com", "technical": 20, "onpage": 12, "schema": 17, "geo": 16, "aeo": 0, "eeat": 0, "composite": 65, "notes": ["has llms.txt"]},
-    {"site": "https://auth0.com", "technical": 20, "onpage": 15, "schema": 13, "geo": 16, "aeo": 0, "eeat": 0, "composite": 64, "notes": ["has llms.txt"]},
-    {"site": "https://planetscale.com", "technical": 20, "onpage": 13, "schema": 13, "geo": 16, "aeo": 0, "eeat": 0, "composite": 62, "notes": ["has llms.txt"]},
-    {"site": "https://figma.com", "technical": 20, "onpage": 15, "schema": 13, "geo": 14, "aeo": 0, "eeat": 0, "composite": 62, "notes": []},
-    {"site": "https://retool.com", "technical": 20, "onpage": 15, "schema": 13, "geo": 14, "aeo": 0, "eeat": 0, "composite": 62, "notes": []},
-    {"site": "https://mercury.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 9, "aeo": 0, "eeat": 0, "composite": 61, "notes": []},
-    {"site": "https://cursor.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 16, "aeo": 0, "eeat": 0, "composite": 61, "notes": ["has llms.txt"]},
-    {"site": "https://framer.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 16, "aeo": 0, "eeat": 0, "composite": 61, "notes": ["has llms.txt"]},
-    {"site": "https://mongodb.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 16, "aeo": 0, "eeat": 0, "composite": 61, "notes": ["has llms.txt"]},
-    {"site": "https://algolia.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 16, "aeo": 0, "eeat": 0, "composite": 61, "notes": ["has llms.txt"]},
-    {"site": "https://gitlab.com", "technical": 17, "onpage": 15, "schema": 17, "geo": 9, "aeo": 0, "eeat": 2, "composite": 60, "notes": []},
-    {"site": "https://calendly.com", "technical": 17, "onpage": 13, "schema": 13, "geo": 17, "aeo": 0, "eeat": 0, "composite": 60, "notes": ["has llms.txt"]},
-    {"site": "https://cohere.com", "technical": 20, "onpage": 15, "schema": 10, "geo": 11, "aeo": 3, "eeat": 0, "composite": 59, "notes": ["has llms.txt"]},
-    {"site": "https://runwayml.com", "technical": 16, "onpage": 15, "schema": 17, "geo": 9, "aeo": 0, "eeat": 0, "composite": 57, "notes": []},
-    {"site": "https://sentry.io", "technical": 20, "onpage": 13, "schema": 13, "geo": 9, "aeo": 0, "eeat": 2, "composite": 57, "notes": []},
-    {"site": "https://clickup.com", "technical": 17, "onpage": 5, "schema": 13, "geo": 21, "aeo": 0, "eeat": 0, "composite": 56, "notes": ["has llms.txt", "has llms-full.txt"]},
-    {"site": "https://zoom.us", "technical": 20, "onpage": 13, "schema": 12, "geo": 9, "aeo": 0, "eeat": 0, "composite": 54, "notes": []},
-    {"site": "https://hubspot.com", "technical": 17, "onpage": 12, "schema": 13, "geo": 9, "aeo": 3, "eeat": 0, "composite": 54, "notes": []},
-    {"site": "https://vercel.com", "technical": 17, "onpage": 15, "schema": 10, "geo": 11, "aeo": 0, "eeat": 0, "composite": 53, "notes": ["has llms.txt"]},
-    {"site": "https://airtable.com", "technical": 20, "onpage": 10, "schema": 13, "geo": 9, "aeo": 0, "eeat": 0, "composite": 52, "notes": []},
-    {"site": "https://n8n.io", "technical": 17, "onpage": 13, "schema": 13, "geo": 9, "aeo": 0, "eeat": 0, "composite": 52, "notes": []},
-    {"site": "https://loom.com", "technical": 20, "onpage": 12, "schema": 8, "geo": 10, "aeo": 0, "eeat": 0, "composite": 50, "notes": []},
-    {"site": "https://slack.com", "technical": 20, "onpage": 15, "schema": 0, "geo": 11, "aeo": 0, "eeat": 2, "composite": 48, "notes": ["has llms.txt"]},
-    {"site": "https://supabase.com", "technical": 16, "onpage": 15, "schema": 0, "geo": 16, "aeo": 0, "eeat": 0, "composite": 47, "notes": ["has llms.txt", "has llms-full.txt"]},
-    {"site": "https://notion.so", "technical": 20, "onpage": 15, "schema": 0, "geo": 12, "aeo": 0, "eeat": 0, "composite": 47, "notes": ["has llms.txt"]},
-    {"site": "https://linear.app", "technical": 20, "onpage": 15, "schema": 0, "geo": 11, "aeo": 0, "eeat": 0, "composite": 46, "notes": ["has llms.txt"]},
-    {"site": "https://mailchimp.com", "technical": 17, "onpage": 13, "schema": 5, "geo": 11, "aeo": 0, "eeat": 0, "composite": 46, "notes": ["has llms.txt"]},
-    {"site": "https://zapier.com", "technical": 20, "onpage": 15, "schema": 0, "geo": 11, "aeo": 0, "eeat": 0, "composite": 46, "notes": ["has llms.txt"]},
-    {"site": "https://basecamp.com", "technical": 20, "onpage": 15, "schema": 5, "geo": 4, "aeo": 0, "eeat": 0, "composite": 44, "notes": []},
-    {"site": "https://posthog.com", "technical": 17, "onpage": 12, "schema": 0, "geo": 11, "aeo": 3, "eeat": 0, "composite": 43, "notes": ["has llms.txt"]},
-    {"site": "https://clerk.com", "technical": 17, "onpage": 15, "schema": 0, "geo": 11, "aeo": 0, "eeat": 0, "composite": 43, "notes": ["has llms.txt"]},
-    {"site": "https://github.com", "technical": 14, "onpage": 15, "schema": 0, "geo": 11, "aeo": 0, "eeat": 0, "composite": 40, "notes": ["has llms.txt"]},
-    {"site": "https://huggingface.co", "technical": 20, "onpage": 15, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 39, "notes": []},
-    {"site": "https://netlify.com", "technical": 13, "onpage": 15, "schema": 0, "geo": 11, "aeo": 0, "eeat": 0, "composite": 39, "notes": ["has llms.txt"]},
-    {"site": "https://coda.io", "technical": 20, "onpage": 15, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 39, "notes": []},
-    {"site": "https://convertkit.com", "technical": 20, "onpage": 12, "schema": 0, "geo": 4, "aeo": 3, "eeat": 0, "composite": 39, "notes": []},
-    {"site": "https://cloudflare.com", "technical": 20, "onpage": 13, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 37, "notes": []},
-    {"site": "https://anthropic.com", "technical": 20, "onpage": 12, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 36, "notes": []},
-    {"site": "https://digitalocean.com", "technical": 20, "onpage": 12, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 36, "notes": []},
-    {"site": "https://mixpanel.com", "technical": 17, "onpage": 15, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 36, "notes": []},
-    {"site": "https://segment.com", "technical": 17, "onpage": 15, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 36, "notes": []},
-    {"site": "https://databricks.com", "technical": 20, "onpage": 12, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 36, "notes": []},
-    {"site": "https://snowflake.com", "technical": 17, "onpage": 15, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 36, "notes": []},
-    {"site": "https://datadog.com", "technical": 13, "onpage": 10, "schema": 0, "geo": 11, "aeo": 0, "eeat": 0, "composite": 34, "notes": ["has llms.txt"]},
-    {"site": "https://replicate.com", "technical": 20, "onpage": 8, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 32, "notes": []},
-    {"site": "https://fly.io", "technical": 9, "onpage": 9, "schema": 0, "geo": 4, "aeo": 0, "eeat": 0, "composite": 22, "notes": []},
-    {"site": "https://ramp.com", "technical": 10, "onpage": 0, "schema": 0, "geo": 11, "aeo": 0, "eeat": 0, "composite": 21, "notes": ["has llms.txt"]},
-    {"site": "https://canva.com", "technical": 7, "onpage": 0, "schema": 0, "geo": 5, "aeo": 0, "eeat": 0, "composite": 12, "notes": []},
+    {"site": "https://yanivgoldenberg.com", "technical": 20, "onpage": 15, "schema": 20, "geo": 22, "aeo": 7, "eeat": 8, "composite": 92, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://heroku.com", "technical": 20, "onpage": 15, "schema": 20, "geo": 15, "aeo": 10, "eeat": 6, "composite": 86, "notes": ["has llms.txt"]},
+    {"site": "https://retool.com", "technical": 20, "onpage": 15, "schema": 20, "geo": 23, "aeo": 4, "eeat": 0, "composite": 82, "notes": ["has llms.txt"]},
+    {"site": "https://amplitude.com", "technical": 20, "onpage": 15, "schema": 16, "geo": 22, "aeo": 4, "eeat": 3, "composite": 80, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://beehiiv.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 17, "aeo": 10, "eeat": 0, "composite": 79, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://zapier.com", "technical": 20, "onpage": 15, "schema": 20, "geo": 24, "aeo": 0, "eeat": 0, "composite": 79, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://resend.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 17, "aeo": 4, "eeat": 2, "composite": 75, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://render.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 21, "aeo": 0, "eeat": 0, "composite": 73, "notes": []},
+    {"site": "https://auth0.com", "technical": 20, "onpage": 15, "schema": 13, "geo": 16, "aeo": 3, "eeat": 3, "composite": 70, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://cloudflare.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 25, "aeo": 0, "eeat": 0, "composite": 70, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://webflow.com", "technical": 17, "onpage": 12, "schema": 20, "geo": 15, "aeo": 3, "eeat": 3, "composite": 70, "notes": ["has llms.txt"]},
+    {"site": "https://mercury.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 13, "aeo": 3, "eeat": 0, "composite": 68, "notes": []},
+    {"site": "https://stripe.com", "technical": 17, "onpage": 15, "schema": 17, "geo": 15, "aeo": 4, "eeat": 0, "composite": 68, "notes": ["has llms.txt"]},
+    {"site": "https://supabase.com", "technical": 20, "onpage": 15, "schema": 13, "geo": 20, "aeo": 0, "eeat": 0, "composite": 68, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://figma.com", "technical": 20, "onpage": 15, "schema": 13, "geo": 19, "aeo": 0, "eeat": 0, "composite": 67, "notes": []},
+    {"site": "https://railway.app", "technical": 20, "onpage": 15, "schema": 13, "geo": 15, "aeo": 4, "eeat": 0, "composite": 67, "notes": ["has llms.txt"]},
+    {"site": "https://asana.com", "technical": 17, "onpage": 12, "schema": 17, "geo": 15, "aeo": 4, "eeat": 0, "composite": 65, "notes": ["has llms.txt"]},
+    {"site": "https://calendly.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 16, "aeo": 4, "eeat": 0, "composite": 65, "notes": ["has llms.txt"]},
+    {"site": "https://clerk.com", "technical": 17, "onpage": 15, "schema": 17, "geo": 12, "aeo": 4, "eeat": 0, "composite": 65, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://monday.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 20, "aeo": 0, "eeat": 0, "composite": 65, "notes": ["has llms.txt"]},
+    {"site": "https://planetscale.com", "technical": 20, "onpage": 15, "schema": 13, "geo": 17, "aeo": 0, "eeat": 0, "composite": 65, "notes": ["has llms.txt"]},
+    {"site": "https://runwayml.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 13, "aeo": 0, "eeat": 0, "composite": 65, "notes": []},
+    {"site": "https://cursor.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 15, "aeo": 4, "eeat": 0, "composite": 64, "notes": ["has llms.txt"]},
+    {"site": "https://mongodb.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 15, "aeo": 4, "eeat": 0, "composite": 64, "notes": ["has llms.txt"]},
+    {"site": "https://workos.com", "technical": 20, "onpage": 12, "schema": 12, "geo": 17, "aeo": 3, "eeat": 0, "composite": 64, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://cohere.com", "technical": 20, "onpage": 15, "schema": 17, "geo": 8, "aeo": 3, "eeat": 0, "composite": 63, "notes": ["has llms.txt"]},
+    {"site": "https://sentry.io", "technical": 20, "onpage": 13, "schema": 13, "geo": 13, "aeo": 0, "eeat": 2, "composite": 61, "notes": []},
+    {"site": "https://algolia.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 15, "aeo": 0, "eeat": 0, "composite": 60, "notes": ["has llms.txt"]},
+    {"site": "https://framer.com", "technical": 17, "onpage": 15, "schema": 13, "geo": 15, "aeo": 0, "eeat": 0, "composite": 60, "notes": ["has llms.txt"]},
+    {"site": "https://gitlab.com", "technical": 17, "onpage": 15, "schema": 12, "geo": 13, "aeo": 0, "eeat": 2, "composite": 59, "notes": []},
+    {"site": "https://vercel.com", "technical": 20, "onpage": 15, "schema": 16, "geo": 8, "aeo": 0, "eeat": 0, "composite": 59, "notes": ["has llms.txt"]},
+    {"site": "https://hubspot.com", "technical": 17, "onpage": 12, "schema": 13, "geo": 13, "aeo": 3, "eeat": 0, "composite": 58, "notes": []},
+    {"site": "https://zoom.us", "technical": 20, "onpage": 13, "schema": 12, "geo": 13, "aeo": 0, "eeat": 0, "composite": 58, "notes": []},
+    {"site": "https://loom.com", "technical": 20, "onpage": 12, "schema": 8, "geo": 14, "aeo": 0, "eeat": 0, "composite": 54, "notes": []},
+    {"site": "https://clickup.com", "technical": 17, "onpage": 5, "schema": 13, "geo": 16, "aeo": 0, "eeat": 0, "composite": 51, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://basecamp.com", "technical": 20, "onpage": 15, "schema": 5, "geo": 6, "aeo": 3, "eeat": 0, "composite": 49, "notes": []},
+    {"site": "https://github.com", "technical": 14, "onpage": 15, "schema": 5, "geo": 8, "aeo": 4, "eeat": 0, "composite": 46, "notes": ["has llms.txt"]},
+    {"site": "https://mailchimp.com", "technical": 17, "onpage": 13, "schema": 5, "geo": 8, "aeo": 3, "eeat": 0, "composite": 46, "notes": ["has llms.txt"]},
+    {"site": "https://slack.com", "technical": 20, "onpage": 15, "schema": 0, "geo": 8, "aeo": 0, "eeat": 2, "composite": 45, "notes": ["has llms.txt"]},
+    {"site": "https://airtable.com", "technical": 20, "onpage": 15, "schema": 0, "geo": 6, "aeo": 3, "eeat": 0, "composite": 44, "notes": []},
+    {"site": "https://coda.io", "technical": 20, "onpage": 15, "schema": 0, "geo": 6, "aeo": 3, "eeat": 0, "composite": 44, "notes": []},
+    {"site": "https://databricks.com", "technical": 20, "onpage": 12, "schema": 0, "geo": 9, "aeo": 3, "eeat": 0, "composite": 44, "notes": ["has llms.txt", "has llms-full.txt"]},
+    {"site": "https://digitalocean.com", "technical": 20, "onpage": 15, "schema": 0, "geo": 6, "aeo": 3, "eeat": 0, "composite": 44, "notes": []},
+    {"site": "https://huggingface.co", "technical": 20, "onpage": 15, "schema": 0, "geo": 6, "aeo": 3, "eeat": 0, "composite": 44, "notes": []},
+    {"site": "https://linear.app", "technical": 20, "onpage": 15, "schema": 0, "geo": 8, "aeo": 0, "eeat": 0, "composite": 43, "notes": ["has llms.txt"]},
+    {"site": "https://n8n.io", "technical": 17, "onpage": 15, "schema": 5, "geo": 6, "aeo": 0, "eeat": 0, "composite": 43, "notes": []},
+    {"site": "https://notion.so", "technical": 20, "onpage": 12, "schema": 0, "geo": 9, "aeo": 0, "eeat": 0, "composite": 41, "notes": ["has llms.txt"]},
+    {"site": "https://replicate.com", "technical": 20, "onpage": 10, "schema": 0, "geo": 8, "aeo": 3, "eeat": 0, "composite": 41, "notes": []},
+    {"site": "https://snowflake.com", "technical": 20, "onpage": 15, "schema": 0, "geo": 6, "aeo": 0, "eeat": 0, "composite": 41, "notes": []},
+    {"site": "https://posthog.com", "technical": 17, "onpage": 12, "schema": 0, "geo": 8, "aeo": 3, "eeat": 0, "composite": 40, "notes": ["has llms.txt"]},
+    {"site": "https://anthropic.com", "technical": 20, "onpage": 12, "schema": 0, "geo": 6, "aeo": 0, "eeat": 0, "composite": 38, "notes": []},
+    {"site": "https://convertkit.com", "technical": 20, "onpage": 12, "schema": 0, "geo": 6, "aeo": 0, "eeat": 0, "composite": 38, "notes": []},
+    {"site": "https://mixpanel.com", "technical": 17, "onpage": 15, "schema": 0, "geo": 6, "aeo": 0, "eeat": 0, "composite": 38, "notes": []},
+    {"site": "https://segment.com", "technical": 17, "onpage": 15, "schema": 0, "geo": 6, "aeo": 0, "eeat": 0, "composite": 38, "notes": []},
+    {"site": "https://fly.io", "technical": 13, "onpage": 12, "schema": 0, "geo": 8, "aeo": 3, "eeat": 0, "composite": 36, "notes": ["has llms.txt"]},
+    {"site": "https://netlify.com", "technical": 13, "onpage": 15, "schema": 0, "geo": 8, "aeo": 0, "eeat": 0, "composite": 36, "notes": ["has llms.txt"]},
+    {"site": "https://datadog.com", "technical": 13, "onpage": 10, "schema": 0, "geo": 8, "aeo": 0, "eeat": 0, "composite": 31, "notes": ["has llms.txt"]},
+    {"site": "https://ramp.com", "technical": 10, "onpage": 0, "schema": 0, "geo": 8, "aeo": 0, "eeat": 0, "composite": 18, "notes": ["has llms.txt"]},
+    {"site": "https://canva.com", "technical": 7, "onpage": 0, "schema": 0, "geo": 6, "aeo": 0, "eeat": 0, "composite": 13, "notes": []},
     {"site": "https://openai.com", "technical": 7, "onpage": 0, "schema": 0, "geo": 0, "aeo": 0, "eeat": 0, "composite": 7, "notes": []},
     {"site": "https://perplexity.ai", "technical": 7, "onpage": 0, "schema": 0, "geo": 0, "aeo": 0, "eeat": 0, "composite": 7, "notes": []},
-    {"site": "https://railway.app", "technical": 0, "onpage": 0, "schema": 0, "geo": 0, "aeo": 0, "eeat": 0, "composite": 0, "notes": []},
 ]
 
 SITES_61 = [row["site"] for row in CARRIED_BASELINE]
-BASELINE_DATE = "2026-04-24"
+BASELINE_DATE = "2026-06-23"
 
 UA = {"User-Agent": "seo-geo-skill/1.6.0 benchmark (+https://github.com/yanivgoldenberg/seo-geo-skill)"}
 
@@ -210,7 +210,7 @@ assert sum(MAX_POINTS.values()) == 100, "rubric must sum to 100"
 # Exact crawl-observable checks this scorer awards, per bucket. This table is the
 # documented contract for the automated benchmark; it mirrors docs/SCORING.md
 # ("What the automated benchmark scores") and is pinned by test_scoring_parity.py.
-# GEO is intentionally over-subscribed (sum 30) and clamped to its 25-pt cap.
+# Each bucket's checks sum to its MAX_POINTS cap (no over-subscription).
 BENCHMARK_CHECKS = {
     "technical": [("robots.txt 200", 4), ("Sitemap: directive", 3), ("canonical link", 4),
                   ("viewport meta", 3), ("HTTPS", 3), ("single H1", 3)],
@@ -218,9 +218,9 @@ BENCHMARK_CHECKS = {
                ("og:title", 2), ("twitter:card", 2), ("H1 present", 2)],
     "schema": [("any JSON-LD", 5), ("Organization", 5), ("Person", 4), ("sameAs", 3),
                ("dateModified", 3)],
-    "geo": [("llms.txt text/plain", 7), ("llms-full.txt text/plain", 5),
-            ("AI crawler allows min(5,n)", 5), ("homepage sameAs", 5), ("citation-magnet regex", 4),
-            ("rel=llms-txt link", 2), ("Link header", 2)],
+    "geo": [("homepage sameAs / entity", 7), ("citation-magnet regex", 6),
+            ("AI search-crawler allows min(6,n)", 6), ("llms.txt text/plain", 2),
+            ("llms-full.txt text/plain", 1), ("rel=llms-txt link", 1), ("Link header", 2)],
     "aeo": [("FAQPage", 4), ("Speakable", 3), ("question-style H2", 3)],
     "eeat": [("author in schema", 3), ("date in schema", 3), ("meta author", 2),
              ("knowsAbout/hasOccupation", 2)],
@@ -230,6 +230,7 @@ BENCHMARK_CHECKS = {
 def score(site, pages=1):
     s = {"site": site, "technical": 0, "schema": 0, "geo": 0, "onpage": 0, "aeo": 0, "eeat": 0, "notes": []}
     schemas: list[str] = []
+    all_schema_text = ""
 
     # Technical SEO (20 pts)
     rob = fetch(urljoin(site, "/robots.txt"))
@@ -279,14 +280,16 @@ def score(site, pages=1):
         if 'knowsabout' in all_schema_text or 'hasoccupation' in all_schema_text:
             s["eeat"] += 2
 
-    # GEO (25 pts)
+    # GEO (25 pts) - llms.txt down-weighted (no AI search engine consumes it as
+    # of 2026); points redistributed to entity presence, citation-worthy content,
+    # and AI search-crawler access. See docs/proposals/scoring-reliability.md.
     llms = fetch(urljoin(site, "/llms.txt"), timeout=10)
     if llms and llms.status_code == 200 and 'text/plain' in (llms.headers.get('content-type', '').lower()):
-        s["geo"] += 7
+        s["geo"] += 2
         s["notes"].append("has llms.txt")
     llmsfull = fetch(urljoin(site, "/llms-full.txt"), timeout=10)
     if llmsfull and llmsfull.status_code == 200 and 'text/plain' in (llmsfull.headers.get('content-type', '').lower()):
-        s["geo"] += 5
+        s["geo"] += 1
         s["notes"].append("has llms-full.txt")
     if rob and rob.status_code == 200:
         body = rob.text.lower()
@@ -295,17 +298,17 @@ def score(site, pages=1):
                    "meta-externalagent", "duckassistbot", "facebookbot", "applebot-extended", "ccbot"]
         explicit_allows = sum(1 for b in ai_bots
                               if re.search(rf'user-agent:\s*{re.escape(b)}\b[\s\S]{{0,300}}?allow:\s*/', body, re.I))
-        s["geo"] += min(5, explicit_allows)
+        s["geo"] += min(6, explicit_allows)
     if home and home.status_code == 200:
         html_lower = home.text.lower()
-        if '"sameas"' in " ".join(schemas).lower() if schemas else False:
-            s["geo"] += 5
+        if 'sameas' in all_schema_text:
+            s["geo"] += 7
         # generic citation magnets heuristic
         if re.search(r'\$\d+[km]?\b|\d+%|\d+x\b|\d+\+\s+(?:clients|users|customers)', html_lower):
-            s["geo"] += 4
+            s["geo"] += 6
         if re.search(r'rel=["\'](?:llms-txt|describedby)["\'][^>]+href=["\'][^"\']*llms\.txt', home.text, re.I):
-            s["geo"] += 2
-        if re.search(r'link:[\s\S]{0,200}llms\.txt', " ".join(str(v) for v in (home.headers or {}).items()), re.I):
+            s["geo"] += 1
+        if 'llms.txt' in (home.headers.get('link', '') or '').lower():
             s["geo"] += 2
 
     # Clamp each dimension to its max

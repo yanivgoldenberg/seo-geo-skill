@@ -35,7 +35,7 @@ are shared by `seo-geo.md` Phase 0, `tests/benchmark_sites.py` MAX_POINTS, and
 | Technical SEO | 20 | HTTPS, robots.txt + AI crawler access, sitemap, canonical, single H1, mobile viewport, Core Web Vitals, no broken links |
 | On-Page SEO | 15 | Title, meta description, OG tags, Twitter card, primary keyword placement, internal links with descriptive anchors |
 | Schema / Structured Data | 20 | Page-type schema, FAQPage, BreadcrumbList, dateModified freshness, zero validation errors |
-| GEO / LLM Optimization | 25 | llms.txt + llms-full.txt, AI crawler explicit-allow, sameAs with Wikidata, citation-magnet content, Link header, entity disambiguation |
+| GEO / LLM Optimization | 25 | sameAs with Wikidata, citation-magnet content, AI search-crawler explicit-allow, entity disambiguation, llms.txt + llms-full.txt (de-weighted), Link header |
 | AEO / Answer Engine | 10 | Speakable schema, HowTo schema, question-style H2s for direct-answer extraction, featured-snippet target structure |
 | E-E-A-T | 10 | Author bio + credentials, author schema, specific proof points, external links to authoritative sources |
 
@@ -54,7 +54,7 @@ every sub-check) across Phase 0, `benchmark_sites.py`, and this file.
 
 **Schema / Structured Data (20 pts)** -- Schema type matches page type (5), FAQPage where Q&A exists (4), BreadcrumbList on all non-home pages (3), dateModified present and under 90 days (3), no validation errors (5).
 
-**GEO / LLM Optimization (25 pts)** -- llms.txt + llms-full.txt comprehensive (7), all 14+ AI crawlers explicitly allowed (5), sameAs with 4+ verified profiles incl. Wikidata (5), specific claims/numbers/named entities (4), Link header to llms.txt (2), entity disambiguation across 3+ external sources (2).
+**GEO / LLM Optimization (25 pts)** -- sameAs with 4+ verified profiles incl. Wikidata (7), specific claims/numbers/named entities (6), all major AI search crawlers explicitly allowed (6), llms.txt + llms-full.txt (3), entity disambiguation across 3+ external sources + Link header to llms.txt (3).
 
 **AEO / Answer Engine (10 pts)** -- Speakable schema on citable paragraphs (3), HowTo schema for process content (2), question-style H2s for direct-answer extraction (3), featured-snippet target structure (2).
 
@@ -73,7 +73,7 @@ the exact benchmark scoring; it is pinned by `test_scoring_parity.py` against th
 | Technical | robots.txt 200 (4), `Sitemap:` directive (3), canonical link (4), viewport meta (3), HTTPS (3), single H1 (3) | 20 |
 | On-Page | title >=10 chars (3), meta description >=50 chars (3), og:image (3), og:title (2), twitter:card (2), H1 present (2) | 15 |
 | Schema | any JSON-LD (5), Organization (5), Person (4), sameAs (3), dateModified (3) | 20 |
-| GEO | llms.txt as text/plain (7), llms-full.txt as text/plain (5), AI crawler explicit-allows min(5,n) (5), homepage sameAs (5), citation-magnet regex (4), rel=llms-txt link (2), Link header (2) | 25 (checks sum to 30, clamped) |
+| GEO | homepage sameAs / entity (7), citation-magnet regex (6), AI search-crawler explicit-allows min(6,n) (6), llms.txt as text/plain (2), llms-full.txt as text/plain (1), rel=llms-txt link (1), Link header (2) | 25 |
 | AEO | FAQPage (4), Speakable (3), question-style H2 (3) | 10 |
 | E-E-A-T | author in schema (3), date in schema (3), meta author (2), knowsAbout/hasOccupation (2) | 10 |
 
@@ -85,12 +85,12 @@ validation-error count, Wikidata-specific verification and cross-source entity
 disambiguation, "comprehensive" judgment of llms.txt content, HowTo schema,
 featured-snippet structure, proof-point density, and external authoritative links.
 
-Two honest consequences: (1) the benchmark can reach a bucket's cap through
-different routes than the manual rubric, so a benchmark score approximates rather
-than reproduces a manual audit; (2) the GEO checks are over-subscribed (they sum
-to 30 and clamp at 25), which over-weights llms.txt relative to its real-world
-citation value. See `docs/proposals/scoring-reliability.md` for the planned
-re-weighting.
+Honest consequence: the benchmark can reach a bucket's cap through different
+routes than the manual rubric, so a benchmark score approximates rather than
+reproduces a manual audit. As of the 2026-06-23 re-weighting, llms.txt is worth
+3 of 25 GEO points (down from 12), with the freed points moved to entity presence,
+citation-worthy content, and AI search-crawler access (no AI search engine
+consumes llms.txt as of 2026).
 
 ### Multi-page sampling
 
