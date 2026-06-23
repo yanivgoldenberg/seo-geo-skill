@@ -18,7 +18,7 @@
 
 *See the full [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) report.*
 
-[![Version](https://img.shields.io/badge/version-1.12.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
+[![Version](https://img.shields.io/badge/version-1.13.0-blue?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/yanivgoldenberg/seo-geo-skill?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/stargazers)
 [![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
 [![Benchmark](https://img.shields.io/badge/61_sites_benchmarked-brightgreen?style=flat-square)](docs/state-of-ai-search-2026.md)

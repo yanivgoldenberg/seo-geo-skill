@@ -1,6 +1,6 @@
 ---
 name: seo-geo
-version: 1.12.0
+version: 1.13.0
 description: Phase 0 audit + 20 optimization phases for Claude Code. Canonical 100-pt rubric (Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10). Technical SEO, schema (18 types), LLM citation, Core Web Vitals, E-E-A-T, hreflang, WordPress hardening, entity anchoring, LLM-grade image metadata, plugin-as-SEO-filter, multi-platform adapters (WordPress/Shopify/Webflow/Next.js), dry-run safety gates, SSRF guard, competitor benchmarking, public benchmark of 61 top SaaS and AI sites. Any CMS.
 ---
 

@@ -6,7 +6,7 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
-## [Unreleased]
+## [1.13.0] - 2026-06-23
 
 ### Changed (llms.txt re-weighting + leaderboard re-run - Bucket C2)
 - **Re-weighted GEO scoring**: llms.txt dropped from 12 to 3 of 25 GEO points (no AI search engine consumes it as of 2026); the freed points moved to entity presence/sameAs (7), citation-magnet content (6), and AI search-crawler access (6). GEO now sums to exactly 25 (was over-subscribed at 30). Updated in `benchmark_sites.py`, `BENCHMARK_CHECKS`, Phase 0 rubric, and `docs/SCORING.md`.
@@ -274,17 +274,13 @@ Public benchmark release. Replace self-only case study with 15-site public leade
 - `tests/` directory with 3 Python test scripts
 - `docs/case-studies/yanivgoldenberg.com.md` (61 to 94 score delta with breakdown)
 - README: CI + score badges, Real-world results table
+- `examples/wordpress/yg-geo-fixes/` - reference WordPress plugin implementing the site-wide + per-page GEO pattern (serves `/llms.txt`, patches robots.txt with 5 AI UAs + Sitemap, enriches Person.sameAs, auto-fills Rank Math meta descriptions on publish, injects FAQPage schema on `/services/*` children)
+- `docs/patterns/auto-geo-on-publish.md` - architectural pattern doc: 10 fixes that moved composite GEO 61 -> 69 on a real WordPress + page-builder + Rank Math site, split into one-shot vs auto-hook; YGM integration pattern; Next.js / Astro / Ghost adaptation guide
 
 ### Changed
 - Skill frontmatter description updated to reflect 19 phases
 - Version bumped 1.2.0 -> 1.3.0
 - README version badge 1.0.0 -> 1.3.0
-
-## [Unreleased]
-
-### Added
-- `examples/wordpress/yg-geo-fixes/` - reference WordPress plugin implementing the site-wide + per-page GEO pattern (serves `/llms.txt`, patches robots.txt with 5 AI UAs + Sitemap, enriches Person.sameAs, auto-fills Rank Math meta descriptions on publish, injects FAQPage schema on `/services/*` children)
-- `docs/patterns/auto-geo-on-publish.md` - architectural pattern doc: 10 fixes that moved composite GEO 61 -> 69 on a real WordPress + a B2B SaaS + Rank Math site, split into one-shot vs auto-hook; YGM integration pattern; Next.js / Astro / Ghost adaptation guide
 
 ## [1.2.0] - 2026-04-24
 
