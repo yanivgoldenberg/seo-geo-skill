@@ -123,4 +123,4 @@ Target end-state score: **82-86 / 100**. Target citation lift: measurable presen
 
 ## 7. How to apply
 
-Apply for an AI Search Visibility Audit at [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact). Post-PMF SaaS, B2B, and e-commerce brands only. Fee is quoted after application and is credited in full if you continue into the Implementation Sprint.
+Apply for an AI Search Visibility Audit at [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact/). Post-PMF SaaS, B2B, and e-commerce brands only. Fee is quoted after application and is credited in full if you continue into the Implementation Sprint.
