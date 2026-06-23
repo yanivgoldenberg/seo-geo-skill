@@ -13,6 +13,9 @@ Repo hygiene and CI hardening. No change to the installed skill (`seo-geo.md` st
 ### Fixed
 - README version badge corrected 1.10.0 -> 1.11.0 (matched the skill frontmatter).
 
+### Added
+- Brand banners refreshed to a dark/cyan/Inter system (cover, OG, GitHub social), with reproducible HTML sources in `docs/assets/src/` and `scripts/build_brand_banners.py`.
+
 ### Changed
 - CI now runs the full test suite via `pytest` (persona-hygiene, banned-endpoint, scoring-parity, leaderboard-integrity, deep-link-discovery, schema, and frontmatter checks) instead of only two scripts. A persona or client-name regression in the skill body now fails CI.
 - Case study and auto-geo pattern doc: scrubbed operational specifics (internal plugin name/version, exact media count, exact session date) and genericized the page-builder reference. Brand, site, and score deltas retained as social proof.
