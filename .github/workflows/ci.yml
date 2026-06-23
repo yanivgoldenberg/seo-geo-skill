@@ -10,11 +10,9 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - name: Install
-        run: pip install pyyaml jsonschema requests markdown
-      - name: Frontmatter + TOC
-        run: python tests/test_skill_metadata.py
-      - name: Schema fixtures valid JSON-LD
-        run: python tests/test_schema_fixtures.py
+        run: pip install pyyaml jsonschema requests markdown pytest
+      - name: Test suite (frontmatter, schema, persona hygiene, banned endpoints, scoring parity, leaderboard integrity, deep-link discovery)
+        run: pytest -q --ignore=tests/test_live_endpoints.py
       - name: Live llms.txt endpoints reachable
         run: python tests/test_live_endpoints.py
         continue-on-error: true

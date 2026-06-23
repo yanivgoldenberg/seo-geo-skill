@@ -1,5 +1,7 @@
-import re, sys
-src = open('seo-geo.md').read()
+import re
+
+with open('seo-geo.md') as fh:
+    src = fh.read()
 assert src.startswith('---\n'), 'missing YAML frontmatter'
 m = re.search(r'^---\n(.*?)\n---', src, re.S)
 assert m, 'frontmatter parse'

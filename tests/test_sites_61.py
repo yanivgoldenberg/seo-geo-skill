@@ -40,13 +40,13 @@ def test_sites_61_matches_published_set() -> None:
 
 def test_sites_61_preserves_published_rank_order() -> None:
     published_order = [r["site"] for r in _published_rows()]
-    assert SITES_61 == published_order, "SITES_61 must keep published rank order"
+    assert published_order == SITES_61, "SITES_61 must keep published rank order"
 
 
 def test_carried_baseline_matches_published_scores() -> None:
     published = _published_rows()
     assert len(CARRIED_BASELINE) == len(published)
-    for got, exp in zip(CARRIED_BASELINE, published):
+    for got, exp in zip(CARRIED_BASELINE, published, strict=True):
         for key in ("site", "composite", *DIMS):
             assert got[key] == exp[key], (
                 f"{got['site']}: {key} baseline={got[key]} published={exp[key]}"

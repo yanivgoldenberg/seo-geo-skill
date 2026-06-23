@@ -6,6 +6,18 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [Unreleased]
+
+Repo hygiene and CI hardening. No change to the installed skill (`seo-geo.md` stays 1.11.0).
+
+### Fixed
+- README version badge corrected 1.10.0 -> 1.11.0 (matched the skill frontmatter).
+
+### Changed
+- CI now runs the full test suite via `pytest` (persona-hygiene, banned-endpoint, scoring-parity, leaderboard-integrity, deep-link-discovery, schema, and frontmatter checks) instead of only two scripts. A persona or client-name regression in the skill body now fails CI.
+- Case study and auto-geo pattern doc: scrubbed operational specifics (internal plugin name/version, exact media count, exact session date) and genericized the page-builder reference. Brand, site, and score deltas retained as social proof.
+- Test suite is now ruff-clean (import ordering, context-managed file reads, explicit `zip(strict=True)`).
+
 ## [1.11.0] - 2026-06-16
 
 Headless content-model release. Adds the two highest-leverage patterns for scaling SEO + GEO on dynamic, JS-rendered sites: a rendering contract that keeps dynamic blocks citable by AI engines, and a content-model archetype map for programmatic SEO at scale.

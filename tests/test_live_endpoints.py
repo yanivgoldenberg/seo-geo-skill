@@ -1,4 +1,5 @@
 import requests
+
 urls = ['https://yanivgoldenberg.com/llms.txt', 'https://yanivgoldenberg.com/favicon.ico']
 for u in urls:
     try:
