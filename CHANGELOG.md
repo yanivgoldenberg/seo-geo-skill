@@ -6,6 +6,14 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [Unreleased]
+
+### Changed (scoring integrity - Bucket C1, no published score moves)
+- `docs/SCORING.md` now honestly separates the **manual-audit rubric** from the **automated benchmark**. Removed the false "identical / no methodology drift" claims; documented exactly what `benchmark_sites.py` scores (crawl-observable proxies) and which criteria are manual-audit-only (Core Web Vitals, broken-link crawl, GSC submission, keyword placement, validation errors, Wikidata verification, proof points, external links, ...). Stated plainly that the GEO checks are over-subscribed (sum 30, clamped to 25), over-weighting llms.txt.
+- Added a `BENCHMARK_CHECKS` table to `benchmark_sites.py` documenting every observable check and its points; `test_scoring_parity.py` now pins it against `docs/SCORING.md` so documented scoring cannot silently drift from the scorer (previously only the six bucket totals were checked).
+- README: corrected the "no methodology drift" line to reflect that the benchmark scores the crawl-observable subset.
+- Deferred (Bucket C2): the llms.txt re-weighting (which lowers published scores) remains tracked in `docs/proposals/scoring-reliability.md`.
+
 ## [1.12.0] - 2026-06-23
 
 Correctness, safety, and freshness release. First update that improves the installed skill itself (not just the repo), driven by a four-dimension audit (freshness, dogfood, coverage, accuracy).

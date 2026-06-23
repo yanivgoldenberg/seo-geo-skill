@@ -207,6 +207,25 @@ def _score_page_signals(html, all_schema_text):
 MAX_POINTS = {"technical": 20, "onpage": 15, "schema": 20, "geo": 25, "aeo": 10, "eeat": 10}
 assert sum(MAX_POINTS.values()) == 100, "rubric must sum to 100"
 
+# Exact crawl-observable checks this scorer awards, per bucket. This table is the
+# documented contract for the automated benchmark; it mirrors docs/SCORING.md
+# ("What the automated benchmark scores") and is pinned by test_scoring_parity.py.
+# GEO is intentionally over-subscribed (sum 30) and clamped to its 25-pt cap.
+BENCHMARK_CHECKS = {
+    "technical": [("robots.txt 200", 4), ("Sitemap: directive", 3), ("canonical link", 4),
+                  ("viewport meta", 3), ("HTTPS", 3), ("single H1", 3)],
+    "onpage": [("title >=10 chars", 3), ("meta description >=50 chars", 3), ("og:image", 3),
+               ("og:title", 2), ("twitter:card", 2), ("H1 present", 2)],
+    "schema": [("any JSON-LD", 5), ("Organization", 5), ("Person", 4), ("sameAs", 3),
+               ("dateModified", 3)],
+    "geo": [("llms.txt text/plain", 7), ("llms-full.txt text/plain", 5),
+            ("AI crawler allows min(5,n)", 5), ("homepage sameAs", 5), ("citation-magnet regex", 4),
+            ("rel=llms-txt link", 2), ("Link header", 2)],
+    "aeo": [("FAQPage", 4), ("Speakable", 3), ("question-style H2", 3)],
+    "eeat": [("author in schema", 3), ("date in schema", 3), ("meta author", 2),
+             ("knowsAbout/hasOccupation", 2)],
+}
+
 
 def score(site, pages=1):
     s = {"site": site, "technical": 0, "schema": 0, "geo": 0, "onpage": 0, "aeo": 0, "eeat": 0, "notes": []}
