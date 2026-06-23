@@ -63,6 +63,6 @@ Expected output (as of 2026-04-24):
 
 Anyone can verify this score in 10 seconds. No claims without evidence.
 
-## The Methodology Site (yanivgoldenberg.com, 97/100)
+## The Methodology Site (yanivgoldenberg.com, 92/100)
 
-For contrast, `yanivgoldenberg.com` tops the same 61-site leaderboard at **97/100** using exactly the same rubric and script. That is the methodology proof, not the case study - a canonical reference deployment of every fix listed above. Replicate those fixes on any CMS (WordPress, Shopify, Webflow, Next.js) using the platform adapters in this repo.
+For contrast, `yanivgoldenberg.com` tops the same 61-site leaderboard at **92/100** (re-scored 2026-06-23) using exactly the same rubric and script. That is the methodology proof, not the case study - a canonical reference deployment of every fix listed above. Replicate those fixes on any CMS (WordPress, Shopify, Webflow, Next.js) using the platform adapters in this repo.
