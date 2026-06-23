@@ -1,7 +1,7 @@
 # seo-geo-skill
 
 <p align="center">
-  <img src="docs/assets/seo-geo-cover-1600x900.png" alt="seo-geo-skill - 20-phase SEO + GEO + AEO skill for Claude Code" width="100%" />
+  <img src="docs/assets/seo-geo-cover-v2.png" alt="seo-geo-skill - SEO + GEO + AEO skill for Claude Code" width="100%" />
 </p>
 
 <p align="center">
