@@ -68,8 +68,8 @@ def test_canonical_csv_matches_published_json() -> None:
     """The canonical CSV IS the published 61-row leaderboard.
 
     It carries source/scored_at provenance columns but every score must equal
-    the published JSON (and therefore the .md headlines: Railway 0, OpenAI 7,
-    yaniv 97). A live re-score writes a dated file elsewhere and never this one;
+    the published JSON (and therefore the .md headlines: OpenAI 7, yaniv 92).
+    A live re-score writes a dated file elsewhere and never this one;
     the runner enforces that. This is what keeps the leaderboard self-consistent
     across the .md / .json / .csv while staying reproducible.
     """
