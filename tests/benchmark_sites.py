@@ -303,8 +303,12 @@ def score(site, pages=1):
         html_lower = home.text.lower()
         if 'sameas' in all_schema_text:
             s["geo"] += 7
-        # generic citation magnets heuristic
-        if re.search(r'\$\d+[km]?\b|\d+%|\d+x\b|\d+\+\s+(?:clients|users|customers)', html_lower):
+        # generic citation magnets heuristic: statistics, social proof, quotations, cited
+        # sources. The three quotation/statistics/cite-source signals are the ones the Princeton
+        # GEO paper (arXiv:2311.09735, KDD 2024) found lift generative-engine citation.
+        if (re.search(r'\$\d+[km]?\b|\d+%|\d+x\b|\d+\+\s+(?:clients|users|customers)', html_lower)
+                or '<blockquote' in html_lower
+                or re.search(r'according to\b|["“][^"”]{40,}["”]', home.text)):
             s["geo"] += 6
         if re.search(r'rel=["\'](?:llms-txt|describedby)["\'][^>]+href=["\'][^"\']*llms\.txt', home.text, re.I):
             s["geo"] += 1

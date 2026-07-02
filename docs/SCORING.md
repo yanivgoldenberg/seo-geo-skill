@@ -30,16 +30,47 @@ Six buckets, 100 points. These bucket weights are the single source of truth and
 are shared by `seo-geo.md` Phase 0, `tests/benchmark_sites.py` MAX_POINTS, and
 `tests/test_scoring_parity.py` (which fails the build if the bucket totals drift).
 
-| Bucket | Points | What it measures |
-|--------|--------|------------------|
-| Technical SEO | 20 | HTTPS, robots.txt + AI crawler access, sitemap, canonical, single H1, mobile viewport, Core Web Vitals, no broken links |
-| On-Page SEO | 15 | Title, meta description, OG tags, Twitter card, primary keyword placement, internal links with descriptive anchors |
-| Schema / Structured Data | 20 | Page-type schema, FAQPage, BreadcrumbList, dateModified freshness, zero validation errors |
-| GEO / LLM Optimization | 25 | sameAs with Wikidata, citation-magnet content, AI search-crawler explicit-allow, entity disambiguation, llms.txt + llms-full.txt (de-weighted), Link header |
-| AEO / Answer Engine | 10 | Speakable schema, HowTo schema, question-style H2s for direct-answer extraction, featured-snippet target structure |
-| E-E-A-T | 10 | Author bio + credentials, author schema, specific proof points, external links to authoritative sources |
+| Bucket | Points | What it measures | Critical? | Evidence tier |
+|--------|--------|------------------|-----------|---------------|
+| Technical SEO | 20 | HTTPS, robots.txt + AI crawler access, sitemap, canonical, single H1, mobile viewport, Core Web Vitals, no broken links | No | Confirmed |
+| On-Page SEO | 15 | Title, meta description, OG tags, Twitter card, primary keyword placement, internal links with descriptive anchors | No | Confirmed |
+| Schema / Structured Data | 20 | Page-type schema, FAQPage, BreadcrumbList, dateModified freshness, zero validation errors | Yes | Confirmed |
+| GEO / LLM Optimization | 25 | sameAs with Wikidata, citation-magnet content, AI search-crawler explicit-allow, entity disambiguation, llms.txt + llms-full.txt (de-weighted), Link header | Yes | Confirmed + Model-observed |
+| AEO / Answer Engine | 10 | Speakable schema, HowTo schema, question-style H2s for direct-answer extraction, featured-snippet target structure | No | Confirmed |
+| E-E-A-T | 10 | Author bio + credentials, author schema, specific proof points, external links to authoritative sources | No | Model-observed |
 
 **Total: 20 + 15 + 20 + 25 + 10 + 10 = 100**
+
+### Evidence tiers (label every score by how solid it is)
+
+No AI vendor publishes its citation logic, so not every point above rests on the
+same footing. Label each bucket's basis so a client-facing score never overstates
+its own certainty:
+
+- **Confirmed** -- crawl-observable and code-checkable (HTTPS, schema presence,
+  crawler allow/block, sitemap). Deterministic; two audits of the same page agree.
+- **Leak-inferred** -- drawn from the 2024 Google Content Warehouse API leak.
+  Directional, not Google-confirmed.
+- **Model-observed** -- drawn from how answer engines behave in the field
+  (citation-magnet phrasing, E-E-A-T signal weight, consensus alignment). Directional
+  and subject to silent change; this is where a human auditor's judgment enters the
+  score, not a regex.
+
+A bucket carrying only "Confirmed" checks (Technical, On-Page, Schema, AEO) is safe
+to state as fact. A bucket carrying "Model-observed" checks (GEO, E-E-A-T) should be
+presented as directional in any client deliverable -- flag it "needs check" rather
+than asserted, per the outbound-claim discipline already in force for SEO/GEO claims.
+
+### Critical-bucket gate
+
+Two buckets are marked **Critical** above because a near-zero score there makes the
+other buckets' points moot: a site with all AI crawlers blocked, or zero structured
+data, is not "moderately ready" no matter how good its meta tags are. **If Schema or
+GEO/LLM scores below 20% of its own max (Schema < 4/20, GEO < 5/25), the overall
+rating is capped at "Poor" regardless of the weighted total.** State the cap
+explicitly in the report ("capped: {bucket} critical failure") rather than silently
+lowering the number, so the client sees why a high-looking total didn't earn a
+better verdict.
 
 ### Per-check breakdown (manual audit)
 
@@ -158,3 +189,31 @@ The parity test pins bucket totals and the benchmark check table; it does not
 assert that every manual sub-check is implemented by the automated benchmark (it
 cannot be: some manual criteria are not crawl-observable, see above). Any skill
 that reports a score cites this rubric.
+
+## Patent and paper grounding for the evidence tiers
+
+The three evidence tiers above are not opinion. Each Confirmed check that reflects a ranking
+mechanism traces to a granted, publicly-readable patent or a peer-reviewed paper. The rule: only
+a VERIFIED source (a specific patent number, or the Princeton GEO paper) may justify a hard check.
+Leak-derived signals stay in the Leak-inferred tier, directional and labeled, never promoted to
+Confirmed.
+
+| Rubric concern | VERIFIED backing (patent / paper) |
+|---|---|
+| Internal links, descriptive anchors (On-Page) | US7716225B1 Reasonable Surfer: link weight scales with placement/prominence, not raw count |
+| Primary-keyword-in-heading, topical coverage (On-Page) | US7536408B2 Phrase-Based Indexing + US6725259B1 Hilltop: phrase co-occurrence and topic-relevant linking, not keyword density |
+| Schema type, sameAs, entity disambiguation (Schema, GEO) | US2017/0140059A1, US11775758 entity disambiguation: confidence-scored entity resolution feeds ranking |
+| dateModified freshness (Schema) | US7346839B2 Historical Data: content-change cadence is a tracked signal |
+| Citation-magnet content, quotable claims, statistics (GEO, AEO) | Princeton "GEO: Generative Engine Optimization" (arXiv:2311.09735, KDD 2024): cite-sources, quotation, and statistics measurably lift generative-engine citation; keyword stuffing does not transfer |
+
+Leak-inferred tier only (2024 Google Content Warehouse leak, Google confirmed none; NEVER a
+Confirmed check): contentEffort, NSR/QualityNsrPQData (meaning itself disputed), siteFocusScore,
+siteRadius, siteAuthority. NavBoost's mechanism is independently corroborated via US v. Google
+antitrust testimony, but the leak's specific field names are not.
+
+Do not assert as fact: any weight for a leaked attribute; "Panda equals patent US9031929" (the
+reporting outlet itself calls the link disputed; Panda/Penguin are algorithm updates, not
+patents); or "E-E-A-T is a ranking algorithm" (it is Search Quality Rater Guidelines language for
+human raters). Cross-engine: Bing is the only engine with an officially stated ranking order
+(Relevance, Quality/Credibility, User Engagement, Freshness); Google AI Overviews only requires a
+page be indexed and snippet-eligible, with the selection algorithm undisclosed.
