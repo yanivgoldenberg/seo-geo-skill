@@ -16,7 +16,6 @@ OUT = REPO / "docs" / "assets"
 BANNERS = [
     ("cover.html", "seo-geo-cover-v5.png", 1600, 900),
     ("og.html", "seo-geo-og-1200x630.png", 1200, 630),
-    ("github-social.html", "seo-geo-github-1280x640.png", 1280, 640),
 ]
 
 
