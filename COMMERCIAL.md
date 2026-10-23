@@ -14,6 +14,15 @@ Examples that need written permission:
 Noncommercial uses permitted by the license (personal use, research, and the
 other uses the license lists) need no permission.
 
+## Additional permission (own sites)
+
+As licensor, Yaniv Goldenberg additionally grants permission, without a
+commercial license, to run the skill and its tools on websites you or your own
+company own or operate, including inside a for-profit company, for internal
+audits and improvements. This permission does not cover using it for clients,
+as a paid service or billable deliverable, or in anything sold; those need
+written permission.
+
 To request permission or a commercial license, contact
 <https://yanivgoldenberg.com/contact/>.
 
