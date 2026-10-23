@@ -1,0 +1,5 @@
+-r requirements.txt
+PyYAML==6.0.3
+jsonschema==4.26.0
+Markdown==3.7
+pytest==8.4.2

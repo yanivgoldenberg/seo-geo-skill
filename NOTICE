@@ -1,0 +1,17 @@
+seo-geo-skill
+Copyright (C) 2026 Yaniv Goldenberg
+
+Required Notice: Built by Yaniv Goldenberg — https://yanivgoldenberg.com
+
+The line above is a "Required Notice" under the PolyForm Noncommercial
+License 1.0.0 (see LICENSE). Anyone who receives a copy of any part of this
+software, modified or not, must also receive that line and the license terms
+or their URL: https://polyformproject.org/licenses/noncommercial/1.0.0
+
+Project fingerprint: YG-SEOGEO-754F1B9DC9A7
+This public identifier appears in the code, the skill file and the benchmark
+dataset (including clearly flagged fictional canary rows). It is documented in
+README.md under "Attribution & fingerprint". The software sends no telemetry.
+
+Commercial use requires written permission: see COMMERCIAL.md.
+Names and marks: see TRADEMARK.md.

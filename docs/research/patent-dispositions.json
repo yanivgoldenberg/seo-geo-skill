@@ -1,0 +1,525 @@
+{
+  "schema": "yg-research-expansion-patents/1",
+  "at": "2026-10-18T08:13:57.809Z",
+  "scope": "19 owner-supplied patent publications; primary header ownership and abstract review. Assignment is recorded bibliographic metadata, not an independent legal chain-of-title opinion.",
+  "status": "COMPLETE_19_PRIMARY_RECORDS_WITH_BOUNDED_DISPOSITIONS",
+  "selectorCorrection": "Only receipts-v2 and PRIMARY_RECEIPTS-v2 are authoritative for patents. Original v1 broad itemprop extraction included citation-table assignees/families; retained as superseded evidence, not consumed.",
+  "counts": {
+    "requestedPublications": 19,
+    "verifiedPrimary": 19,
+    "explicitNonGoogle": 3,
+    "existingFamilyReuses": 2,
+    "additionalDistinctFamilies": 17
+  },
+  "priorVerifiedFamilyAnchors": [
+    {
+      "id": "US12013887B2",
+      "title": "Contextual estimation of link information gain",
+      "familyId": "ID=64110225"
+    },
+    {
+      "id": "US9760641B1",
+      "title": "Site quality score",
+      "familyId": "ID=53038304"
+    },
+    {
+      "id": "US7711679B2",
+      "title": "Phrase-based detection of duplicate documents in an information retrieval system",
+      "familyId": "ID=40096800"
+    },
+    {
+      "id": "US12118325B2",
+      "title": "Generative summaries for search results",
+      "familyId": "ID=88097107"
+    },
+    {
+      "id": "US9767157B2",
+      "title": "Predicting site quality",
+      "familyId": "ID=50478564"
+    },
+    {
+      "id": "US8554769B1",
+      "title": "Identifying gibberish content in resources",
+      "familyId": "ID=49262587"
+    }
+  ],
+  "records": [
+    {
+      "id": "CN115803808A",
+      "url": "https://patents.google.com/patent/CN115803808A/en",
+      "title": "Synthesized speech detection",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Microsoft Technology Licensing LLC"
+      ],
+      "currentAssignees": [
+        "Microsoft Technology Licensing LLC"
+      ],
+      "familyId": "ID=83723688",
+      "familyPublications": [
+        "CN115803808A"
+      ],
+      "publicationDates": [
+        "2021-04-21",
+        "2023-03-14"
+      ],
+      "disposition": "NON_GOOGLE_EXCLUDE",
+      "websiteApplicationAndLimit": "Microsoft synthetic-speech detection; outside text website audit implementation.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US10185778B1",
+      "url": "https://patents.google.com/patent/US10185778B1/en",
+      "title": "Ranking content using content and content authors",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=52632368",
+      "familyPublications": [
+        "US8983970B1",
+        "US9569438B1",
+        "US10185778B1",
+        "US10970353B1"
+      ],
+      "publicationDates": [
+        "2016-12-30",
+        "2019-01-22"
+      ],
+      "disposition": "GOOGLE_ORIGINALITY_BACKGROUND",
+      "websiteApplicationAndLimit": "Original content-piece/author scoring proposal. Support real contribution/provenance; no invented credentials, author score or active modern ranking guarantee.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US11354342B2",
+      "url": "https://patents.google.com/patent/US11354342B2/en",
+      "title": "Contextual estimation of link information gain",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=64110225",
+      "familyPublications": [
+        "US11354342B2",
+        "US11720613B2",
+        "US12013887B2",
+        "US12326889B2"
+      ],
+      "publicationDates": [
+        "2018-10-18",
+        "2022-06-07"
+      ],
+      "disposition": "EXISTING_P01_FAMILY",
+      "websiteApplicationAndLimit": "Adds a family member, not another independent mechanism. Use only as background for page-specific informational value; no patented score implementation or deployed ranking claim.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US12190403B2",
+      "url": "https://patents.google.com/patent/US12190403B2/en",
+      "title": "Image watermarking",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=69500871",
+      "familyPublications": [
+        "US12190403B2",
+        "US20250225605A1"
+      ],
+      "publicationDates": [
+        "2020-01-13",
+        "2025-01-07"
+      ],
+      "disposition": "GOOGLE_MEDIA_PROVENANCE_CONTEXT",
+      "websiteApplicationAndLimit": "Image watermark encoding/decoding; absence of a detected mark does not establish human origin.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US12322402B2",
+      "url": "https://patents.google.com/patent/US12322402B2/en",
+      "title": "AI-generated music derivative works",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Individual"
+      ],
+      "currentAssignees": [
+        "Individual"
+      ],
+      "familyId": "ID=95400532",
+      "familyPublications": [
+        "US12322402B2"
+      ],
+      "publicationDates": [
+        "2024-10-24",
+        "2025-06-03"
+      ],
+      "disposition": "NON_GOOGLE_EXCLUDE",
+      "websiteApplicationAndLimit": "Music derivative approval/watermark workflow assigned to an individual; not a website-content or Google ranking mechanism.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US20120209838A1",
+      "url": "https://patents.google.com/patent/US20120209838A1/en",
+      "title": "Document scoring based on query analysis",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=34381362",
+      "familyPublications": [
+        "US7346839B2",
+        "US7840572B2",
+        "US8112426B2",
+        "US8051071B2",
+        "US20070094255A1",
+        "US8316029B2",
+        "US8407231B2",
+        "US8521749B2",
+        "US8527524B2",
+        "US8234273B2",
+        "US8549014B2",
+        "US8244723B2",
+        "US8266143B2",
+        "US8239378B2",
+        "US8224827B2",
+        "US8185522B2",
+        "US8577901B2",
+        "US8639690B2",
+        "US9767478B2"
+      ],
+      "publicationDates": [
+        "2012-04-24",
+        "2012-08-16"
+      ],
+      "disposition": "GOOGLE_SEARCH_HISTORY_BACKGROUND",
+      "websiteApplicationAndLimit": "Search-result selections used in document scoring proposal. Do not generate clicks or treat local analytics as an internal Search score.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US20140325401A1",
+      "url": "https://patents.google.com/patent/US20140325401A1/en",
+      "title": "Identifying viral videos",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=51267456",
+      "familyPublications": [
+        "US8806000B1",
+        "US20140325401A1"
+      ],
+      "publicationDates": [
+        "2014-07-09",
+        "2014-10-30"
+      ],
+      "disposition": "GOOGLE_VIDEO_CONTEXT_NOT_WEBSITE_RANKING",
+      "websiteApplicationAndLimit": "Sharing-derived video virality; no evidence for modern website slop defense.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US20180150752A1",
+      "url": "https://patents.google.com/patent/US20180150752A1/en",
+      "title": "Identifying artificial intelligence content",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Newsrx LLC"
+      ],
+      "currentAssignees": [
+        "Newsrx LLC"
+      ],
+      "familyId": "ID=62190276",
+      "familyPublications": [
+        "US20180150752A1"
+      ],
+      "publicationDates": [
+        "2016-11-30",
+        "2018-05-31"
+      ],
+      "disposition": "NON_GOOGLE_EXCLUDE",
+      "websiteApplicationAndLimit": "Content-origin marking patent assigned to Newsrx; cannot support Google Search AI-writing detection claims.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US20240320529A1",
+      "url": "https://patents.google.com/patent/US20240320529A1/en",
+      "title": "Multi-stage watermarking of a digital object generated by a machine learning model",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "DeepMind Technologies Ltd"
+      ],
+      "currentAssignees": [
+        "GDM Holding LLC"
+      ],
+      "familyId": "ID=85704875",
+      "familyPublications": [
+        "US20240320529A1"
+      ],
+      "publicationDates": [
+        "2024-03-20",
+        "2024-09-26"
+      ],
+      "disposition": "GOOGLE_DEEPMIND_PROVENANCE_CONTEXT",
+      "websiteApplicationAndLimit": "Generation-time token watermarking; not a retroactive universal authorship test or Search ranking defense.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US20250149048A1",
+      "url": "https://patents.google.com/patent/US20250149048A1/en",
+      "title": "Verifying the provenance of a digital object using watermarking and embeddings",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "DeepMind Technologies Ltd"
+      ],
+      "currentAssignees": [
+        "GDM Holding LLC"
+      ],
+      "familyId": "ID=90057231",
+      "familyPublications": [
+        "US20250087221A1",
+        "US20250149048A1"
+      ],
+      "publicationDates": [
+        "2024-09-16",
+        "2025-05-08"
+      ],
+      "disposition": "GOOGLE_DEEPMIND_PROVENANCE_CONTEXT",
+      "websiteApplicationAndLimit": "Watermark-and-embedding provenance for digital media; no need for website API integration.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US8140505B1",
+      "url": "https://patents.google.com/patent/US8140505B1/en",
+      "title": "Near-duplicate document detection for web crawling",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=45813427",
+      "familyPublications": [
+        "US8140505B1",
+        "US8548972B1"
+      ],
+      "publicationDates": [
+        "2005-03-31",
+        "2012-03-20"
+      ],
+      "disposition": "GOOGLE_CRAWLING_BACKGROUND",
+      "websiteApplicationAndLimit": "Near-duplicate fingerprints for crawling. Preserve translations, templates and distinct reader utility; no automatic merge/noindex from a local similarity threshold.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US8171020B1",
+      "url": "https://patents.google.com/patent/US8171020B1/en",
+      "title": "Spam detection for user-generated multimedia items based on appearance in popular queries",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=45990945",
+      "familyPublications": [
+        "US8171020B1",
+        "US8572073B1"
+      ],
+      "publicationDates": [
+        "2008-03-31",
+        "2012-05-01"
+      ],
+      "disposition": "GOOGLE_VIDEO_SPAM_CONTEXT",
+      "websiteApplicationAndLimit": "Video metadata spam associated with popular queries; review truthful metadata as a general editorial duty, not proof a website ranker uses this mechanism.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US8442984B1",
+      "url": "https://patents.google.com/patent/US8442984B1/en",
+      "title": "Website quality signal generation",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=48225562",
+      "familyPublications": [
+        "US8442984B1"
+      ],
+      "publicationDates": [
+        "2008-03-31",
+        "2013-05-14"
+      ],
+      "disposition": "GOOGLE_QUALITY_MODEL_BACKGROUND",
+      "websiteApplicationAndLimit": "Models relating rated sites to site signals. Not a disclosed active AI-content penalty or a reproducible modern Google site score.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US8745056B1",
+      "url": "https://patents.google.com/patent/US8745056B1/en",
+      "title": "Spam detection for user-generated multimedia items based on concept clustering",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=50781390",
+      "familyPublications": [
+        "US8745056B1",
+        "US9208157B1"
+      ],
+      "publicationDates": [
+        "2008-03-31",
+        "2014-06-03"
+      ],
+      "disposition": "GOOGLE_VIDEO_SPAM_CONTEXT",
+      "websiteApplicationAndLimit": "Concept clustering for video metadata spam; no website keyword or AI-detection threshold follows.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US8752184B1",
+      "url": "https://patents.google.com/patent/US8752184B1/en",
+      "title": "Spam detection for user-generated multimedia items based on keyword stuffing",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=50845640",
+      "familyPublications": [
+        "US8752184B1"
+      ],
+      "publicationDates": [
+        "2008-01-17",
+        "2014-06-10"
+      ],
+      "disposition": "GOOGLE_VIDEO_SPAM_CONTEXT",
+      "websiteApplicationAndLimit": "Keyword-stuffing video metadata mechanism; do not infer a website keyword-density threshold.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US9031929B1",
+      "url": "https://patents.google.com/patent/US9031929B1/en",
+      "title": "Site quality score",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=53038304",
+      "familyPublications": [
+        "US9031929B1",
+        "US9760641B1"
+      ],
+      "publicationDates": [
+        "2012-06-27",
+        "2015-05-12"
+      ],
+      "disposition": "EXISTING_P03_FAMILY",
+      "websiteApplicationAndLimit": "Adds a family member, not independent evidence. Do not manufacture brand queries, clicks or a site score.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US9043417B1",
+      "url": "https://patents.google.com/patent/US9043417B1/en",
+      "title": "Detecting spam across a social network",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=53176469",
+      "familyPublications": [
+        "US9043417B1"
+      ],
+      "publicationDates": [
+        "2012-07-10",
+        "2015-05-26"
+      ],
+      "disposition": "GOOGLE_SOCIAL_SPAM_CONTEXT",
+      "websiteApplicationAndLimit": "Fingerprinting repeated social comments; not authority to classify legitimate shared website prose as spam.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US9195944B1",
+      "url": "https://patents.google.com/patent/US9195944B1/en",
+      "title": "Scoring site quality",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=54542908",
+      "familyPublications": [
+        "US9195944B1"
+      ],
+      "publicationDates": [
+        "2013-02-25",
+        "2015-11-24"
+      ],
+      "disposition": "GOOGLE_SEARCH_HISTORY_BACKGROUND",
+      "websiteApplicationAndLimit": "Visit-duration-derived site quality proposal. Do not fabricate engagement or infer dwell-time thresholds/current deployment.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    },
+    {
+      "id": "US9569504B1",
+      "url": "https://patents.google.com/patent/US9569504B1/en",
+      "title": "Deriving and using document and site quality signals from search query streams",
+      "recordStatus": "VERIFIED_PRIMARY_BIBLIOGRAPHY_AND_ABSTRACT",
+      "originalAssignees": [
+        "Google LLC"
+      ],
+      "currentAssignees": [
+        "Google LLC"
+      ],
+      "familyId": "ID=44121982",
+      "familyPublications": [
+        "US7962462B1",
+        "US8818982B1",
+        "US9569504B1"
+      ],
+      "publicationDates": [
+        "2014-08-22",
+        "2017-02-14"
+      ],
+      "disposition": "GOOGLE_SEARCH_HISTORY_BACKGROUND",
+      "websiteApplicationAndLimit": "Associations in query streams used as quality signals. Does not justify branded-search manipulation or a measured local Search quality score.",
+      "deployedInGoogleSearch": "NOT_ESTABLISHED_BY_PATENT_RECORD"
+    }
+  ],
+  "globalLimits": [
+    "Google Patents hosting and citation tables do not establish Google ownership.",
+    "A publication, grant or active legal status does not establish deployment or ranking weight.",
+    "Do not call any listed mechanism the primary ranking defense or an AI-writing penalty without separate deployment evidence.",
+    "Neither query/visit patents nor website analytics authorize manufactured signals.",
+    "Watermark absence is not evidence of human authorship."
+  ]
+}

@@ -1,0 +1,328 @@
+{
+  "schema": "yg-research-expansion/1",
+  "at": "2026-10-18T08:16:41.557Z",
+  "status": "PRIMARY_RECORDS_VERIFIED_WITH_SCOPE_AND_VERSION_LIMITS",
+  "patentRegister": {
+    "sha256": "8940b8edbb5cdc45ea2f72431ac9cb467911f84d508050ded2ec3ffef065383c"
+  },
+  "records": [
+    {
+      "id": "arxiv-2610.00531",
+      "title": "Science or Slop?: Benchmarking and Mitigating Scientific Slop in AI-Generated Papers",
+      "url": "https://arxiv.org/abs/2610.00531",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "SciSlopBench compares generated scientific papers with matched human papers using structure, argument and artifact measures. Its revision framework grounds changes in experiment records and reports that directly optimizing slop metrics can invite reward hacking.",
+      "websiteApplication": "Check whether supporting evidence actually connects a claim, method and conclusion. Revise only where the underlying record supports the change.",
+      "limits": "Scientific-paper benchmark, not a commercial-website classifier or Google Search ranking system. Do not import its accuracy/gap percentages as a site score.",
+      "version": "[Submitted on 30 Sep 2026]"
+    },
+    {
+      "id": "arxiv-2510.15061",
+      "title": "Antislop: A Comprehensive Framework for Identifying and Eliminating Repetitive Patterns in Language Models",
+      "url": "https://arxiv.org/abs/2510.15061",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "Antislop studies model-specific repetitive phrase patterns and proposes inference-time sampling and token-preference training methods, evaluated on selected language and writing tasks.",
+      "websiteApplication": "Use repeated formulaic wording as an editorial review candidate; prefer substantive specificity over cosmetic synonym substitution.",
+      "limits": "Model training/sampling research is not evidence that a local banned-phrase list proves authorship or quality. No provider tuning or model change is needed for this website.",
+      "version": "[Submitted on 16 Oct 2025 (v1), last revised 21 Oct 2025 (this version, v2)]"
+    },
+    {
+      "id": "slopshape-v3",
+      "title": "SlopShape: Identifying AI-Generated Commercial Web Content",
+      "url": "https://arxiv.org/abs/2609.15369v3",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "A commercial-blog benchmark uses structural features and LLM annotation to distinguish pre-ChatGPT human posts from generated mirrors across held-out company domains. The third version excludes format-sensitive features and revises the reported results.",
+      "websiteApplication": "Review page-level structure, concrete evidence, voice and reasoning together; distinguish genuine service utility from repetitive presentation.",
+      "limits": "Limited English commercial-blog/model/task setting. Classification is not a Hebrew authorship judgment, a Google detector, a ranking factor or an automatic editing gate.",
+      "version": "2609.15369v3, 28 September2026",
+      "versionCorrection": {
+        "currentFeatures": 203,
+        "currentStructuralFeatures": 176,
+        "macroF1": 97,
+        "rewordedMacroF1": 96.1,
+        "sourceAttributionPercent": 68.6,
+        "supersededSnippetFigures": [
+          214,
+          187,
+          98,
+          98.1,
+          79.3
+        ],
+        "instruction": "Do not mix versions. Values describe this benchmark only."
+      }
+    },
+    {
+      "id": "arxiv-2606.12285",
+      "title": "Why AI Slop Matters, but Not Like That",
+      "url": "https://arxiv.org/abs/2606.12285",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "A social-science and ethical critique argues that discussions of AI slop require cultural and socio-technical context.",
+      "websiteApplication": "Do not equate all AI-assisted writing, polish or shared templates with abuse.",
+      "limits": "Conceptual critique, not a detector validation or Search experiment. Contextual reading only."
+    },
+    {
+      "id": "arxiv-2609.38571",
+      "title": "Drowning in AI Slop: How Social Media Platforms (Do Not) Label AI and Deepfake Content under EU law",
+      "url": "https://arxiv.org/abs/2609.38571",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "The study audits platform AI labels using collected social-media posts, expert annotations and controlled uploads; it finds incomplete and inconsistent labeling of generated media.",
+      "websiteApplication": "Keep provenance observations separate from broad authorship conclusions; record uncertainty and the exact platform/content setting.",
+      "limits": "Social-platform/EU-policy audit, not a website ranking study. Do not extrapolate its platform-label percentages to this website or treat it as legal advice."
+    },
+    {
+      "id": "arxiv-2610.14231",
+      "title": "Defective, Amplified, Contested: Folk Conceptualizations of AI Slop",
+      "url": "https://arxiv.org/abs/2610.14231",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "Qualitative analysis of slop-related Reddit discussions describes contested audience views of quality, agency and entertainment.",
+      "websiteApplication": "Assess whether content helps its intended audience and solves a real reader task.",
+      "limits": "Descriptive user-discourse study; no numerical quality threshold, authorship classifier or ranking inference."
+    },
+    {
+      "id": "arxiv-2603.27249",
+      "title": "\"An Endless Stream of AI Slop\": How Developers Discuss the Burden of AI-Assisted Software Development",
+      "url": "https://arxiv.org/abs/2603.27249",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "Qualitative analysis of developer discussions identifies review burden, trust, quality degradation and incentive problems associated with low-quality generated contributions.",
+      "websiteApplication": "Include review effort, correction cost and maintainability in the content/code workflow; preserve evidence rather than expanding output volume.",
+      "limits": "Forum-discussion evidence, not measured causal effects on website traffic, ranking or every development team.",
+      "version": "[Submitted on 28 Mar 2026 (v1), last revised 28 Aug 2026 (this version, v4)]"
+    },
+    {
+      "id": "arxiv-2610.15033",
+      "title": "What Drives AI Citations? Content, Retrieval and Model Knowledge in Generative Engine Optimization (GEO)",
+      "url": "https://arxiv.org/abs/2610.15033",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "Commercial-question answer collections and API replays separate page-content alignment, retrieval and model brand knowledge. Within-site page properties explain much less citation variation than retrieved-page selection in the studied engines; some controlled experiments concern brand-name effects.",
+      "websiteApplication": "Retain fixed buyer questions and raw answer/citation records. Distinguish retrieval, cited URLs, named brands and downstream visits or qualified demand. Improve exact question/evidence relevance on useful existing pages.",
+      "limits": "Specific engine/API/market/time settings; observational associations and controlled brand experiments have different causal scope. No forecast of current-site uplift or proof our page was omitted for one named reason."
+    },
+    {
+      "id": "arxiv-2607.14035",
+      "title": "Optimizing Visibility in Generative Engines: A Critical Survey of Generative Engine Optimization (2023-2026)",
+      "url": "https://arxiv.org/abs/2607.14035",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "A critical survey separates stages from search activation and retrieval through citation, absorption and user outcomes, and describes heterogeneous evidence and weak transfer of generic heuristics.",
+      "websiteApplication": "Measure discovery, citations, answer fidelity and commercial outcomes separately; use repeated questions, paraphrases, controls and human validation.",
+      "limits": "Selected research corpus and publication window. Not proof that every GEO technique fails, or a stable cross-platform causal uplift estimate."
+    },
+    {
+      "id": "arxiv-2609.06027",
+      "title": "Evaluating Deep-Search Agents under Hierarchical Web Evidence Poisoning",
+      "url": "https://arxiv.org/abs/2609.06027",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "HAE-GEO evaluates deep-search agents against increasingly persuasive poisoned web evidence and tracks recognition, verification and recovery, including apparent corroboration.",
+      "websiteApplication": "Do not count mirrored or mutually copied claims as independent confirmation. Trace claims to original records and preserve failed verifications.",
+      "limits": "Controlled poisoning benchmark, not a live Google ranking audit. Do not reproduce poisoning tactics on the website."
+    },
+    {
+      "id": "nature-synthid",
+      "title": "Scalable watermarking for identifying large language model outputs",
+      "url": "https://www.nature.com/articles/s41586-024-08025-4",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "The Nature study evaluates generation-time SynthID-Text watermarking designed to preserve output quality and permit probabilistic matched-watermark detection, including a large Gemini production experiment.",
+      "websiteApplication": "Explain watermark provenance and its limits accurately; keep generated assets and real evidence clearly distinguished.",
+      "limits": "A known compatible watermark is different from general AI authorship detection. Watermark absence does not establish human authorship. The paper is not evidence of a Search penalty or a universal detection API.",
+      "doi": "10.1038/s41586-024-08025-4"
+    },
+    {
+      "id": "model-collapse-crossref",
+      "title": "AI models collapse when trained on recursively generated data",
+      "url": "https://api.crossref.org/works/10.1038/s41586-024-07566-y",
+      "primaryRecordStatus": "VERIFIED_PUBLISHER_DEPOSITED_TITLE_AND_ABSTRACT_VIA_CROSSREF",
+      "summary": "The study examines degradation when generative models are repeatedly trained on model-generated data, including loss of information about distribution tails.",
+      "websiteApplication": "Preserve original evidence and human observations instead of recursively presenting generated summaries as new independent sources.",
+      "limits": "Training-data/model-collapse mechanism, not a penalty against AI-assisted web pages or proof all synthetic data is unusable.",
+      "doi": "10.1038/s41586-024-07566-y",
+      "publisherUrl": "https://www.nature.com/articles/s41586-024-07566-y",
+      "retrievalBoundary": "Direct publisher GET returned a client challenge; Crossref publisher-deposited title/abstract and publisher search record verified. Not full publisher-text review."
+    },
+    {
+      "id": "springer-crossref",
+      "title": "Is Google Getting Worse? A Longitudinal Investigation of SEO Spam in Search Engines",
+      "url": "https://api.crossref.org/works/10.1007/978-3-031-56063-7_4",
+      "primaryRecordStatus": "VERIFIED_CROSSREF_TITLE_AND_AUTHOR_HOSTED_ABSTRACT",
+      "summary": "The author-hosted abstract describes a year-long study of product-review search queries across Google, Bing and DuckDuckGo, studying affiliate content and low-quality SEO spam.",
+      "websiteApplication": "Review actual incentives, substantive usefulness and misleading commercial copy rather than using production method alone as a quality judgment.",
+      "limits": "Product-review/affiliate search setting; not an all-web or current-site AI-writing prevalence estimate. No live Search detector established.",
+      "doi": "10.1007/978-3-031-56063-7_4",
+      "abstractPrimaryUrl": "https://downloads.webis.de/publications/papers/bevendorff_2024a.pdf",
+      "retrievalBoundary": "Publisher challenge; author institution primary paper used for abstract, DOI registration used for title."
+    },
+    {
+      "id": "jmir-e80084",
+      "title": "AI-Generated Slop in Online Biomedical Science Educational Videos: Mixed Methods Study of Prevalence, Characteristics, and Hazards to Learners and Teachers",
+      "url": "https://mededu.jmir.org/2025/1/e80084/",
+      "primaryRecordStatus": "VERIFIED_PUBLISHER_TITLE_AND_ABSTRACT_VIA_WEB_TOOL",
+      "summary": "A mixed-methods study screens English biomedical educational videos and qualitatively assesses problematic features. Its sample finds limited prevalence, and the authors caution about the size of the dataset.",
+      "websiteApplication": "Use qualified language and review instructional quality where video is relevant.",
+      "limits": "Biomedical YouTube/TikTok sample, not an English/Hebrew website classifier or global prevalence rate. Context-only; no website implementation needed.",
+      "doi": "10.2196/80084",
+      "retrievalBoundary": "Direct GET202 was not treated as evidence; accessible publisher web-tool view verified the title/abstract."
+    },
+    {
+      "id": "cvpr-abstract",
+      "title": "The Synthetic Media Shift: Tracking the Rise, Virality, and Detectability of AI-Generated Multimodal Misinformation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/html/Chrysidis_The_Synthetic_Media_Shift_Tracking_the_Rise_Virality_and_Detectability_CVPRW_2026_paper.html",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "CONVEX analyzes multimodal misinformation in X Community Notes data, including engagement, reporting and detector performance as generative media changes.",
+      "websiteApplication": "Keep media provenance, truthfulness and platform engagement separate; detector performance can drift.",
+      "limits": "X Community Notes multimodal dataset, not website text quality or deployed Search ranking evidence. Context-only."
+    },
+    {
+      "id": "ai-forensics-agentic",
+      "title": "Prompt, Upload, Repeat: Agentic AI Accounts Flood TikTok",
+      "url": "https://aiforensics.org/work/agentic-ai-accounts",
+      "primaryRecordStatus": "VERIFIED_PUBLISHER_SUMMARY_CONTEXT_ONLY",
+      "summary": "Publisher investigation describes automated generative-media account activity on TikTok.",
+      "websiteApplication": "Avoid manufactured accounts, engagement and fake endorsement evidence.",
+      "limits": "Social-platform investigation; publisher summary verified, detailed report not independently reproduced. No website ranking rule follows."
+    },
+    {
+      "id": "ai-forensics-slop",
+      "title": "AI Generated Algorithmic Virality",
+      "url": "https://aiforensics.org/work/gen-ai-slop",
+      "primaryRecordStatus": "VERIFIED_PUBLISHER_SUMMARY_CONTEXT_ONLY",
+      "summary": "Publisher investigation examines synthetic-media visibility and platform labeling in selected European TikTok/Instagram contexts.",
+      "websiteApplication": "Treat missing labels and provenance uncertainty explicitly where media is used.",
+      "limits": "Specific countries/platform queries; not prevalence on the full internet or this website. Publisher summary only."
+    },
+    {
+      "id": "misinfo-10.37016-mr-2020-151",
+      "title": "How spammers and scammers leverage AI-generated images on Facebook for audience growth",
+      "url": "https://doi.org/10.37016/mr-2020-151",
+      "primaryRecordStatus": "VERIFIED_PUBLISHER_SUMMARY_CONTEXT_ONLY",
+      "summary": "The publisher reports examples and analysis of spammers and scammers using generated Facebook imagery to attract audiences.",
+      "websiteApplication": "No fake audiences, misleading imagery, testimonials or manufactured proof.",
+      "limits": "Facebook image/account behavior, not Google Search authorship detection or website ranking evidence.",
+      "doi": "10.37016/mr-2020-151"
+    },
+    {
+      "id": "pew",
+      "title": "How Much of the Internet Is Written With AI?",
+      "url": "https://www.pewresearch.org/data-labs/2026/08/20/how-much-of-the-internet-is-written-with-ai/",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "Pew uses Common Crawl English-page samples and Open Pangram to estimate signs of AI authorship over time. Its July2026 sample includes old and new pages; a separate post-ChatGPT subset has a different estimate.",
+      "websiteApplication": "Keep population, date, language and classification method alongside each prevalence statement. Punctuation or wording alone cannot establish authorship.",
+      "limits": "The10% July sample figure, recently published-page estimate and other studies use different denominators. Not a Hebrew or individual-site verdict; detector classifications are probabilistic.",
+      "observedMethod": {
+        "totalEnglishPageTexts": 490000,
+        "julySnapshotPages": 10000,
+        "julyAllPageSignsOfAiPercent": 10,
+        "sourceDate": "2026-08-20"
+      }
+    },
+    {
+      "id": "graphite-prevalence",
+      "title": "AI Now Writes as Many Online Articles as Humans",
+      "url": "https://graphite.io/five-percent/research/ai-now-writes-as-many-online-articles-as-humans-do",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "Graphite estimates primarily generated English articles/listicles in a selected Common Crawl sample using three detectors and detector-specific thresholds. Its updated series plateaus around half in recent quarters.",
+      "websiteApplication": "Treat detector output as a population estimate within its sampling frame, not proof that particular pages are low quality.",
+      "limits": "Article schema, minimum length, publication dates and English classification restrict the sample. Human-revised generated drafts were not validated; do not equate this denominator with Pew all-page samples.",
+      "observedMethod": {
+        "urls": 55400,
+        "language": "English",
+        "pageTypes": "Article/listicle with article schema and at least100 words",
+        "publicationWindow": "January2020–March2026",
+        "detectors": [
+          "Pangram",
+          "GPTZero",
+          "Copyleaks"
+        ],
+        "sourceDate": "2026-05-15"
+      }
+    },
+    {
+      "id": "graphite-search",
+      "title": "How Does AI-Generated Content Perform in Search and Answer Engines?",
+      "url": "https://graphite.io/five-percent/research/ai-content-in-search-and-llms",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "Graphite studies detector-classified English articles in sampled Google result pages and ChatGPT/Perplexity citations. It reports a minority classified as primarily generated and differences by rank.",
+      "websiteApplication": "Separate search-result composition, citation composition and authorship thresholds. Inspect confounders and engine settings before making causal recommendations.",
+      "limits": "Observational selection, detector error, query/category selection and date constrain interpretation. Results do not isolate an AI-writing penalty and exclude heavily human-edited AI assistance.",
+      "observedMethod": {
+        "keywords": 31493,
+        "categories": 10,
+        "googleCollection": "June2025 first two SERPs",
+        "sourceDate": "2025-10-14",
+        "detector": "Surfer; weighted500-word chunks",
+        "googlePrimarilyAiPercent": 14,
+        "answerEnginePrimarilyAiPercent": 18
+      }
+    },
+    {
+      "id": "ahrefs-rankings",
+      "title": "AI-Generated Content Does Not Hurt Your Google Rankings (600,000 Pages Analyzed)",
+      "url": "https://ahrefs.com/blog/ai-generated-content-does-not-hurt-your-google-rankings/",
+      "primaryRecordStatus": "VERIFIED_TITLE_AND_ABSTRACT_OR_PUBLISHER_SUMMARY",
+      "summary": "Ahrefs classifies already-ranking pages and reports effectively zero overall correlation between detector AI percentage and rank in its selected dataset.",
+      "websiteApplication": "Avoid categorical claims that AI use alone causes good or bad rankings; evaluate relevance, factual support and reader utility.",
+      "limits": "Selection among top-ranking pages, detector assumptions and observational correlation do not identify an algorithm or prove no causal effects in every setting. Its any-AI-assistance definition differs from Graphite primarily-generated classes.",
+      "observedMethod": {
+        "pages": 600000,
+        "sourceDate": "2025-07-07",
+        "reportedCorrelation": 0.011
+      }
+    },
+    {
+      "id": "synthid-official-current",
+      "title": "Google SynthID",
+      "url": "https://deepmind.google/models/synthid/",
+      "primaryRecordStatus": "VERIFIED_CURRENT_OFFICIAL_PRODUCT_DOCUMENTATION",
+      "summary": "The current DeepMind product page describes a publicly expanding detector portal for compatible image, video and audio watermarks. It separately describes watermarking of text generated in Gemini experiences.",
+      "websiteApplication": "If provenance matters, inspect the exact supported medium and preserve origin records. No site detector integration required.",
+      "limits": "Do not reuse the older waitlist-only state as current. The page does not document a universal public Google text-detection HTTP endpoint; absence of a mark is not human-origin proof."
+    },
+    {
+      "id": "synthid-google-developer-guide",
+      "title": "SynthID: Tools for watermarking and detecting LLM-generated Text | Responsible Generative AI Toolkit | Google AI for Developers",
+      "url": "https://ai.google.dev/responsible/docs/safeguards/synthid",
+      "primaryRecordStatus": "VERIFIED_OFFICIAL_DEVELOPER_DOCUMENTATION",
+      "summary": "Google documents open-source generation-time text watermarking, trained compatible detectors and probabilistic outcomes. Private, API-exposed and downloadable detector arrangements are implementation choices for developers.",
+      "websiteApplication": "Keep watermarked, not-watermarked and uncertain distinct. Secure compatible watermark configurations if building a separately authorized model pipeline.",
+      "limits": "The API discussion is a design option for exposing your trained detector, not a verified public universal Google API. Rewriting/translation can reduce detectability. No endpoint, credentials, model/provider calls or website code should be invented.",
+      "publicGoogleUniversalTextEndpoint": "UNVERIFIED_NOT_SPECIFIED_IN_REVIEWED_DOCS",
+      "websiteImplementation": "NOT_APPLICABLE_TO_CURRENT_WEBSITE_SKILL"
+    },
+    {
+      "id": "ahrefs-llmstxt",
+      "url": "https://ahrefs.com/blog/llmstxt-study/",
+      "primaryRecordStatus": "REUSED_ROOT_PRIMARY_VERIFICATION_NOT_INDEPENDENTLY_REFETCHED",
+      "summary": "Root reports137,210-domain May2026 study and97% valid-file denominator correction.",
+      "websiteApplication": "Preserve useful discovery files when independently needed; no claim of a Google ranking factor.",
+      "limits": "Do not convert a missing/invalid-file denominator into all websites or causal Google effects."
+    }
+  ],
+  "counts": {
+    "records": 25,
+    "independentlyPrimaryReviewed": 24,
+    "rootVerificationReused": 1,
+    "confirmedFabricatedSources": 0
+  },
+  "criticalCorrections": [
+    "Three patent records are non-Google; citation links do not establish ownership.",
+    "P01 and P03 family members must not be counted as independent new mechanisms.",
+    "SlopShape v3 figures replace stale search-snippet figures; do not combine versions.",
+    "SynthID portal public access is now described for image/video/audio; generic Google text API is unverified.",
+    "Pew, Graphite and Ahrefs use different samples and classification thresholds; their percentages are not directly interchangeable.",
+    "No record establishes a primary modern Google anti-slop ranking defense."
+  ],
+  "quarantine": [
+    "Unsupported Google ownership for Newsrx, Microsoft or Individual-assignee patents.",
+    "Any claim that patent existence establishes deployed ranking weights or a Search AI-writing penalty.",
+    "A universal public Google text-detection API without exact current official endpoint/access evidence.",
+    "Human-authorship assertions based on absence of watermark or a detector percentage.",
+    "Direct website scores or predicted uplift derived from research benchmark figures."
+  ],
+  "allowedSkillKernel": [
+    "Audit exact source claims and record provenance/period/population/causal boundaries.",
+    "Review repeated prose and near-duplicate intent semantically; preserve useful translations and shared standards.",
+    "Inspect page-specific buyer tasks, genuine first-person contribution, supported examples and functioning tools.",
+    "Use source-linked claims and actual observed data; never manufacture proof or replace unknowns with zero.",
+    "Keep retrieval, mention, citation, answer fidelity, referral, qualified inquiry and revenue outcomes separate.",
+    "Measure repeated buyer-question observations with exact engine/date/settings and retained answers.",
+    "Preserve benign human style; do not use a forbidden-word list as authorship or ranking proof."
+  ],
+  "boundary": "Selected primary title/abstract/publisher-method review, not worldwide literature exhaustion, model reproduction, a legal opinion, provider API access or website/publication acceptance. Earlier package review blockers remain until their independently bound fixes are verified."
+}

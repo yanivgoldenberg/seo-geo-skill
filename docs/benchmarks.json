@@ -1,0 +1,179 @@
+[
+  {
+    "site": "https://yanivgoldenberg.com",
+    "technical": 25,
+    "schema": 20,
+    "geo": 15,
+    "onpage": 15,
+    "aeo": 10,
+    "eeat": 5,
+    "notes": [
+      "allows AI bots",
+      "has llms.txt"
+    ],
+    "composite": 90
+  },
+  {
+    "site": "https://stripe.com",
+    "technical": 15,
+    "schema": 20,
+    "geo": 15,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 3,
+    "notes": [
+      "no AI bot rules in robots.txt",
+      "has llms.txt"
+    ],
+    "composite": 73
+  },
+  {
+    "site": "https://resend.com",
+    "technical": 15,
+    "schema": 20,
+    "geo": 15,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 3,
+    "notes": [
+      "no AI bot rules in robots.txt",
+      "has llms.txt"
+    ],
+    "composite": 73
+  },
+  {
+    "site": "https://planetscale.com",
+    "technical": 15,
+    "schema": 15,
+    "geo": 15,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 0,
+    "notes": [
+      "no AI bot rules in robots.txt",
+      "has llms.txt"
+    ],
+    "composite": 65
+  },
+  {
+    "site": "https://vercel.com",
+    "technical": 15,
+    "schema": 10,
+    "geo": 15,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 3,
+    "notes": [
+      "no AI bot rules in robots.txt",
+      "has llms.txt"
+    ],
+    "composite": 63
+  },
+  {
+    "site": "https://figma.com",
+    "technical": 25,
+    "schema": 15,
+    "geo": 0,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 3,
+    "notes": [
+      "allows AI bots"
+    ],
+    "composite": 63
+  },
+  {
+    "site": "https://notion.so",
+    "technical": 25,
+    "schema": 0,
+    "geo": 15,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 0,
+    "notes": [
+      "allows AI bots",
+      "has llms.txt"
+    ],
+    "composite": 60
+  },
+  {
+    "site": "https://mercury.com",
+    "technical": 15,
+    "schema": 20,
+    "geo": 0,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 3,
+    "notes": [
+      "no AI bot rules in robots.txt"
+    ],
+    "composite": 58
+  },
+  {
+    "site": "https://supabase.com",
+    "technical": 10,
+    "schema": 0,
+    "geo": 25,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 0,
+    "notes": [
+      "no AI bot rules in robots.txt",
+      "has llms.txt",
+      "has llms-full.txt"
+    ],
+    "composite": 55
+  },
+  {
+    "site": "https://linear.app",
+    "technical": 15,
+    "schema": 0,
+    "geo": 15,
+    "onpage": 15,
+    "aeo": 5,
+    "eeat": 3,
+    "notes": [
+      "no AI bot rules in robots.txt",
+      "has llms.txt"
+    ],
+    "composite": 53
+  },
+  {
+    "site": "https://anthropic.com",
+    "technical": 15,
+    "schema": 0,
+    "geo": 0,
+    "onpage": 10,
+    "aeo": 5,
+    "eeat": 0,
+    "notes": [
+      "no AI bot rules in robots.txt"
+    ],
+    "composite": 30
+  },
+  {
+    "site": "https://ramp.com",
+    "technical": 10,
+    "schema": 0,
+    "geo": 15,
+    "onpage": 0,
+    "aeo": 0,
+    "eeat": 0,
+    "notes": [
+      "no AI bot rules in robots.txt",
+      "has llms.txt"
+    ],
+    "composite": 25
+  },
+  {
+    "site": "https://fly.io",
+    "technical": 0,
+    "schema": 0,
+    "geo": 0,
+    "onpage": 5,
+    "aeo": 5,
+    "eeat": 0,
+    "notes": [],
+    "composite": 10
+  }
+]

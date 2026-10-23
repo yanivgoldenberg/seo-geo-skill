@@ -1,0 +1,30 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Install
+        run: python -m pip install -r requirements-dev.txt
+      - name: Test suite (frontmatter, schema, persona hygiene, banned endpoints, scoring parity, leaderboard integrity, deep-link discovery)
+        run: pytest -q --ignore=tests/test_live_endpoints.py
+      - name: Live llms.txt endpoints reachable
+        run: python tests/test_live_endpoints.py
+        continue-on-error: true
+      - name: No em dashes in markdown
+        run: |
+          hits=$(LC_ALL=C grep -rln $'\xe2\x80\x94' --include='*.md' --exclude='seo-geo.md' . || true)
+          if [ -n "$hits" ]; then
+            echo "Em dash (U+2014) found. Brand voice forbids em dashes. Use hyphens, colons, commas, semicolons, or parentheses."
+            LC_ALL=C grep -rn $'\xe2\x80\x94' --include='*.md' --exclude='seo-geo.md' .
+            exit 1
+          fi
+          echo "No em dashes found in markdown."
+      - name: Link check
+        uses: lycheeverse/lychee-action@v1
+        with: { args: --no-progress --exclude-path 'docs/archive' seo-geo.md README.md }
