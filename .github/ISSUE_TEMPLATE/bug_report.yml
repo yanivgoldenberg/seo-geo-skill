@@ -1,0 +1,46 @@
+name: Bug report
+description: A phase, score or write produced incorrect output
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for the report. Do not paste passwords, API keys, application passwords or private customer data. Security issues go to the Security tab instead.
+  - type: input
+    id: version
+    attributes:
+      label: Skill version
+      description: The `version:` line at the top of `seo-geo.md`, or `git rev-parse HEAD`.
+      placeholder: 1.17.0
+    validations: { required: true }
+  - type: input
+    id: phase
+    attributes:
+      label: Phase or tool
+      placeholder: Phase 4 GEO / scripts/benchmark_demo.py / tests/benchmark_sites.py
+    validations: { required: true }
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: [WordPress, Shopify, Webflow, Next.js, Other or not applicable]
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or prompt you ran
+      render: shell
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations: { required: true }
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened (paste the real output)
+      render: text
+    validations: { required: true }
+  - type: input
+    id: url
+    attributes:
+      label: Public site URL (optional)

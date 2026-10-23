@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this skill, its scoring rubric or its benchmark dataset, please cite it as below."
+type: software
+title: "seo-geo-skill: SEO + GEO (AI search) readiness skill for Claude and other agents"
+abstract: >-
+  An agent skill and reproducible scorer for AI Search Readiness: a 100-point
+  rubric across Technical, On-Page, Schema, GEO, AEO and E-E-A-T, with a public
+  61-site benchmark dataset (State of AI Search Visibility 2026).
+authors:
+  - given-names: Yaniv
+    family-names: Goldenberg
+    website: "https://yanivgoldenberg.com/"
+version: 1.17.0
+date-released: 2026-10-23
+license: PolyForm-Noncommercial-1.0.0
+repository-code: "https://github.com/yanivgoldenberg/seo-geo-skill"
+url: "https://github.com/yanivgoldenberg/seo-geo-skill"
+identifiers:
+  - type: other
+    value: YG-SEOGEO-754F1B9DC9A7
+    description: Project fingerprint
+keywords:
+  - seo
+  - generative engine optimization
+  - geo
+  - ai search
+  - llms.txt
+  - schema.org
+  - claude
+  - agent skill

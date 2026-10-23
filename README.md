@@ -1,89 +1,153 @@
-# seo-geo-skill
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
+    <img src="assets/banner-dark.svg" alt="seo-geo-skill: SEO + GEO audits for the AI search era. A real benchmark_demo.py run on 2026-10-23 scores yanivgoldenberg.com 92/100 across Technical, On-Page, Schema, GEO, AEO and E-E-A-T." width="100%">
+  </picture>
+</p>
+
+<h3 align="center">Score and fix how well AI search engines can read, trust and cite a website.</h3>
 
 <p align="center">
-  <img src="docs/assets/seo-geo-cover-v5.png" alt="seo-geo-skill - SEO + GEO + AEO skill for Claude Code" width="100%" />
+  <a href="https://github.com/yanivgoldenberg/seo-geo-skill/actions/workflows/ci.yml"><img src="https://github.com/yanivgoldenberg/seo-geo-skill/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.17.0-00866F?style=flat-square" alt="Version 1.17.0"></a>
+  <a href="requirements-dev.txt"><img src="https://img.shields.io/badge/python-3.12-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.12"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-orange?style=flat-square" alt="License: PolyForm Noncommercial 1.0.0"></a>
+  <a href="docs/state-of-ai-search-2026.md"><img src="https://img.shields.io/badge/benchmark-61%20sites-00F7D2?style=flat-square" alt="Benchmark: 61 sites"></a>
+  <a href="seo-geo.md"><img src="https://img.shields.io/badge/Claude-agent%20skill-D97757?style=flat-square" alt="Claude agent skill"></a>
 </p>
 
 <p align="center">
-  <img src="docs/assets/benchmark-terminal.png" alt="Terminal capture: python scripts/benchmark_demo.py scoring yanivgoldenberg.com 92/100 and openai.com 7/100 across Tech, Schema, GEO, On-Page, AEO, E-E-A-T" width="100%" />
+  <a href="#quickstart">Quickstart</a> ·
+  <a href="docs/SCORING.md">Scoring rubric</a> ·
+  <a href="docs/state-of-ai-search-2026.md">2026 benchmark</a> ·
+  <a href="docs/README.md">Docs</a> ·
+  <a href="CHANGELOG.md">Changelog</a>
 </p>
-
-<p align="center"><sub>Real output. Reproduce it: <code>python scripts/benchmark_demo.py</code></sub></p>
-
-<div align="center">
-
-**A single-file Claude Code skill that audits and fixes AI Search Readiness across SEO, GEO, AEO, schema, llms.txt, robots.txt, and E-E-A-T.**
-
-*Benchmarked on 61 SaaS and AI sites (re-scored 2026-06-23). 56% scored 60 or below. OpenAI and Perplexity score 7/100 each. Same 100-point rubric. Reproducible script. Safe by default.*
-
-*See the full [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) report.*
-
-[![Version](https://img.shields.io/badge/version-1.17.0-blue?style=flat-square)](CHANGELOG.md)
-[![GitHub stars](https://img.shields.io/github/stars/yanivgoldenberg/seo-geo-skill?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/stargazers)
-[![CI](https://img.shields.io/github/actions/workflow/status/yanivgoldenberg/seo-geo-skill/ci.yml?style=flat-square)](https://github.com/yanivgoldenberg/seo-geo-skill/actions)
-[![Benchmark](https://img.shields.io/badge/61_sites_benchmarked-brightgreen?style=flat-square)](docs/state-of-ai-search-2026.md)
-[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-orange?style=flat-square)](LICENSE)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-purple?style=flat-square)](https://claude.ai/code)
-[![Built by Yaniv Goldenberg](https://img.shields.io/badge/built_by-Yaniv_Goldenberg-black?style=flat-square)](https://yanivgoldenberg.com)
-
-</div>
 
 ---
 
-## Quick start
+## Contents
+
+- [What it does](#what-it-does)
+- [Quickstart](#quickstart)
+- [Real example output](#real-example-output)
+- [Features](#features)
+- [How scoring works](#how-scoring-works)
+- [Benchmark highlights](#benchmark-highlights)
+- [What this score is, and is not](#what-this-score-is-and-is-not)
+- [Use it in your agent](#use-it-in-your-agent)
+- [FAQ](#faq)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Attribution & fingerprint](#attribution--fingerprint)
+- [Built by Yaniv Goldenberg](#built-by-yaniv-goldenberg)
+
+---
+
+## What it does
+
+- **Audits** a site against one 100-point AI Search Readiness rubric: Technical 20, On-Page 15, Schema 20, GEO 25, AEO 10, E-E-A-T 10 ([rubric](docs/SCORING.md)).
+- **Fixes** what it finds, phase by phase: JSON-LD schema, `llms.txt`, `robots.txt` AI-crawler rules, entity anchoring, answer-engine structure, agent-readiness signals. Writes are opt-in and dry-run gated.
+- **Proves** it: a reproducible Python scorer, a public 61-site benchmark, and a monthly GitHub Action that commits fresh snapshots.
+
+## Quickstart
+
+Python 3.12. Linux, macOS or WSL2:
 
 ```bash
-git clone https://github.com/yanivgoldenberg/seo-geo-skill.git
-cd seo-geo-skill
+git clone https://github.com/yanivgoldenberg/seo-geo-skill.git && cd seo-geo-skill
+python3.12 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python scripts/benchmark_demo.py https://yoursite.com
 ```
 
-In your agent, ask it to read `seo-geo.md` and `docs/SCORING.md`, then perform
-an audit-only review of your site. Keep the repository available for its
-supporting documentation, scripts, and fixtures. Reading the skill does not
-grant website credentials or execute its tools.
+Windows PowerShell: use `py -3.12 -m venv .venv`, then `.venv\Scripts\python.exe` in place of `.venv/bin/python`, and set `$env:PYTHONUTF8 = '1'` before running the test suite. Full guide: [Installation](docs/setup/installation.md).
 
-Windows, Linux, ChatGPT, and offline validation instructions:
-[Installation](docs/setup/installation.md).
+With no URL, `benchmark_demo.py` scores the two reference sites shown below. The scorer only reads public pages (`/`, `/robots.txt`, `/llms.txt`, `/llms-full.txt`), refuses private and local addresses, and identifies itself with a `seo-geo-skill/<version>` User-Agent.
 
----
+## Real example output
 
-## We benchmarked 61 top SaaS and AI sites. 56% fail AI Search Readiness.
+Captured on 2026-10-23 from a clean checkout with `python scripts/benchmark_demo.py`:
 
-The two AI category leaders, OpenAI and Perplexity, score 7/100 each, the lowest on the board. Full leaderboard in [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md) (re-scored 2026-06-23).
+```text
+Site                    Tech   Sch   GEO   OnP   AEO  EEAT  TOTAL
+-------------------------------------------------------------
+yanivgoldenberg.com       20    20    22    15     7     8     92
+openai.com                17     0     6    13     0     0     36
+-------------------------------------------------------------
+max points                20    20    25    15    10    10    100
+```
 
-The bottom of the 61-site leaderboard tells the story:
+Live sites change. openai.com scored 7 in the 2026-06-23 canonical dataset, 41 in the 2026-10-01 monthly snapshot and 36 in this run, so your number is the one on the day you run it.
+
+## Features
+
+| Area | What you get | Where |
+|---|---|---|
+| Phase 0 audit | 100-point score across 6 dimensions, non-destructive | [seo-geo.md](seo-geo.md#phase-0---audit-always-run-first) |
+| Technical + on-page | robots, sitemaps, canonicals, titles, meta, Core Web Vitals, hreflang, internal links | Phases 1, 2, 8, 9, 13 |
+| Structured data | 18 schema types with validated JSON-LD fixtures | Phase 3, [examples/](examples/) |
+| GEO (AI search) | `llms.txt` + `llms-full.txt`, entity anchoring with `sameAs`, AI-crawler access, citation-worthy content | Phase 4 |
+| AEO | FAQPage, Speakable, question-style headings | Phase 5 |
+| E-E-A-T | author, dates, `knowsAbout`, trust signals | Phase 6 |
+| Agent readiness | Content Signals, IETF `Content-Usage`, RSL licensing, markdown twins, Web Bot Auth | Phase 21 |
+| Content integrity | source-verified claims, per-page reader review, no invented statistics | Phase 22 |
+| Safe writes | dry-run gates, banned-endpoint list, SSRF guard, opt-in `--apply` | Phase 17 |
+| Platform adapters | WordPress, Shopify, Webflow, Next.js | Phase 18, [examples/](examples/) |
+| Benchmarking | head-to-head competitor scoring, 61-site public leaderboard, monthly snapshots | Phase 19, [docs/](docs/README.md) |
+
+Schema types covered: `Person` `Organization` `SoftwareApplication` `LocalBusiness` `Product` `Service` `Article` `BlogPosting` `FAQPage` `HowTo` `BreadcrumbList` `WebSite` `ProfilePage` `DefinedTerm` `Review` `SpeakableSpecification` `VideoObject` `ItemList`
+
+## How scoring works
+
+The automated scorer is `score()` in [`tests/benchmark_sites.py`](tests/benchmark_sites.py). It awards only crawl-observable checks, each with a fixed point value, and clamps every dimension to its cap. The full check list is in [SCORING.md](docs/SCORING.md) and is pinned by `tests/test_scoring_parity.py`.
+
+```mermaid
+flowchart LR
+    URL([Site URL]) --> GUARD{Public URL?<br/>SSRF guard}
+    GUARD -- no --> ZERO[Fetch skipped]
+    GUARD -- yes --> ROB["/robots.txt"]
+    GUARD -- yes --> HOME[Homepage HTML]
+    GUARD -- yes --> LLMS["/llms.txt + /llms-full.txt"]
+    HOME --> LD[Extract JSON-LD]
+    HOME --> SIG[Page signals:<br/>title, meta, OG, H1, H2]
+    ROB --> TECH[Technical /20]
+    HOME --> TECH
+    SIG --> ONP[On-Page /15]
+    LD --> SCH[Schema /20]
+    LD --> AEO[AEO /10]
+    SIG --> AEO
+    LD --> EEAT[E-E-A-T /10]
+    ROB -- AI-crawler allows --> GEO[GEO /25]
+    LD -- sameAs --> GEO
+    LLMS --> GEO
+    HOME -- citation signals --> GEO
+    TECH & ONP & SCH & AEO & EEAT & GEO --> CLAMP[Clamp each to cap] --> TOTAL([Composite /100])
+```
+
+The full skill rubric in `seo-geo.md` scores more than a crawler can see (for example content quality and off-site entity presence). The benchmark scores the crawl-observable subset on the same six buckets and 100-point scale.
+
+## Benchmark highlights
+
+Computed from [`docs/state-of-ai-search-2026.json`](docs/state-of-ai-search-2026.json), the canonical dataset scored 2026-06-23: 61 public SaaS and AI sites, 3 canary rows excluded.
+
+- **Mean 54.3, median 59.** 34 of 61 sites (56%) scored 60 or below; 4 scored 80 or above.
+- **Schema is the widest gap.** 22 of 61 homepages scored 0 of 20 on Schema; 52 scored 0 of 10 on E-E-A-T; 31 scored 0 of 10 on AEO.
+- **37 of 61 publish a `text/plain` `/llms.txt`.** It is worth 2 of 25 GEO points (3 with `llms-full.txt`) because file presence does not establish use in answers or rankings.
+
+The bottom of the canonical leaderboard:
 
 | Rank | Site | Score | Notable |
 |---:|---|---:|---|
 | 59 | **canva.com** | **13** | *No JSON-LD schema, no AI-crawler allow.* |
-| 60 | **openai.com** | **7** | *ChatGPT's parent. Zero JSON-LD schema on homepage.* |
+| 60 | **openai.com** | **7** | *Zero JSON-LD schema on homepage.* |
 | 60 | **perplexity.ai** | **7** | *Same profile as OpenAI.* |
 
-These category leaders score near zero on this proprietary readiness rubric; this does not establish low real-world AI visibility.
+These are low scores on this readiness rubric, not measured invisibility in AI answers. The 2026-10-01 monthly snapshot (60 fresh rows, 1 carried) has a mean of 59.5; see [history](docs/state-of-ai-search-history/README.md). Full leaderboard and methodology: [State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md). Worked fix path: [OpenAI case study](docs/case-study-openai.md).
 
-**[Full 61-site leaderboard + methodology](docs/state-of-ai-search-2026.md)** | **[OpenAI case study: 7 to 70 fix blueprint](docs/case-study-openai.md)**
-
-### What the data shows
-
-- **56% of 61 top SaaS and AI sites scored 60 or below.** Failing AI Search Readiness is still the norm.
-- **Mean score: 54.3 / 100. Median: 59.** Most sites leave a third or more of rubric points on the table.
-- **llms.txt is entity hygiene, not a ranking lever** - file requests do not establish use in answers or rankings; current Google Search guidance does not require it. The rubric weights it accordingly (3 of 25 GEO points); entity presence and citation-worthy content carry the GEO score.
-- **44% still lack full Person + Organization schema on their homepage.**
-- **OpenAI and Perplexity score 7/100 each.** This is a low rubric score, not measured invisibility in AI answers.
-
-If your site scores below 60 on this rubric, you're in the bottom half of well-funded SaaS brands. The three highest-leverage wins:
-
-1. Add Organization + Person JSON-LD with sameAs → +~14 points
-2. sameAs with Wikidata + allow AI search crawlers (OAI-SearchBot, Perplexity-User) → +13 points
-3. Publish `/llms.txt` + `/llms-full.txt` → +3 points (cheap hygiene)
-
-This skill automates all three in one session.
-
----
-
-## Original 13-site cohort (the first public benchmark)
-
-Before the 61-site study, I scored a 13-site cohort and published it in [`docs/benchmarks.md`](docs/benchmarks.md). Different run, different rubric calibration (v1.6.0), so the scores here are not the same numbers as the 61-site study above. This is the original Top-13, reproduced here so the two documents always agree:
+<details>
+<summary><b>Original 13-site cohort</b> (first public benchmark, 2026-04-24, v1.6.0 calibration; a different run, so scores differ from the 61-site study)</summary>
 
 | Rank | Site | Score |
 |---:|---|---:|
@@ -101,185 +165,100 @@ Before the 61-site study, I scored a 13-site cohort and published it in [`docs/b
 | 12 | ramp.com | 25 |
 | 13 | fly.io | 10 |
 
-Full per-dimension breakdown and methodology in [`docs/benchmarks.md`](docs/benchmarks.md).
+Per-dimension breakdown: [`docs/benchmarks.md`](docs/benchmarks.md).
 
----
+</details>
 
-## What Google actually says (and what this score is)
+## What this score is, and is not
 
-I am not going to sell you a guarantee. Google has publicly stated that no special file is required to appear in AI Overviews, and there is no documented ranking signal called "llms.txt." So this is the honest framing:
+- **It is machine-legibility.** How cleanly a crawler, an LLM or an answer engine can parse your entity, schema and stated facts.
+- **It is not a ranking promise.** Google states no special file is required to appear in AI Overviews. Citations depend on each engine, your authority and your content.
+- **Correlation stays correlation.** Patterns in the benchmark are reported as patterns, not causal levers.
+- **It is reproducible.** Same scorer, same checks, dated snapshots. If your run disagrees with a number here, [open an issue](https://github.com/yanivgoldenberg/seo-geo-skill/issues) with the output.
 
-- **The score is AI Search Readiness: machine-legibility, not a ranking promise.** It measures how cleanly a machine (a crawler, an LLM, an answer engine) can parse your entity, your schema, and your stated facts. It does not predict your position.
-- **Citations and rankings are the outcome, not the deliverable.** I make your site easier to read and trust. Whether ChatGPT, Claude, Perplexity, or Google AI Overviews then cite you depends on their systems, your authority, and your content. I do not control those, and anyone who says they guarantee a #1 result is selling you something I will not.
-- **The evidence is correlation, stated as correlation.** Across the 61-site benchmark, the sites that publish `/llms.txt` consistently pair with the strongest GEO scores. That is a pattern in the data, not a causal lever I am promising.
+## Use it in your agent
 
-What I will stand behind: the score is reproducible. Run `tests/benchmark_sites.py` against any URL and you get the same number I do. No claim in this repo lacks a number or a named site behind it.
-
----
-
-## Who this is for
-
-- Marketers who want citations in ChatGPT, Perplexity, and Google AI Overviews
-- Developers adding SEO to a client site and need it done right the first time
-- Agencies running the same 20-phase audit on 50+ client sites per year
-
-**Not a fit** if you want a 20-sub-skill toolbox. See [`docs/compare.md`](docs/compare.md) for honest comparisons to other Claude Code SEO skills.
-
----
-
-## What it does (Phase 0 audit + 20 optimization phases)
-
-Open `seo-geo.md` for the full skill. At a glance:
-
-**The audit** (Phase 0, non-destructive, always safe):
-- 100-point rubric across 6 dimensions: Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10
-- Same six buckets and 100-pt scale as the automated benchmark (`tests/benchmark_sites.py`); the benchmark scores the crawl-observable subset (see [SCORING.md](docs/SCORING.md))
-- Phases 1-3 - Technical SEO, on-page, schema (18 types)
-- Phase 4 - LLM citation (llms.txt + entity anchoring)
-- Phase 5 - Answer engine optimization
-- Phase 6 - E-E-A-T trust signals
-- Phases 7-14 - Content, speed, hreflang, debugging
-
-**The writes** (opt-in via `--apply`):
-- Phase 15 - WordPress security hardening
-- Phase 16 - Field patterns from production
-- Phase 17 - Dry-run safety gates + banned endpoint list
-- Phase 18 - Multi-platform adapters (WordPress / Shopify / Webflow / Next.js)
-- Phase 19 - Competitor benchmarking
-- Phase 20 - LLM Extractability Polish (LLM Summary, claims table, cite block, glossary, raw-data download, self-consistency check)
-
----
-
-## Install
-
-Follow the [installation guide](docs/setup/installation.md).
-It uses Python 3.12, pinned test dependencies, and an isolated virtual
-environment. It does not overwrite existing agent profiles.
-The slash commands below describe the skill's interface when your agent has
-registered it; a Git clone alone does not register slash commands.
-
----
-
-## Usage
+Open the clone in Claude Code (or another agent) and ask it to load `seo-geo.md` and `docs/SCORING.md`, then run an audit-only review of your site. Reading the skill grants no credentials and changes nothing. When registered as a slash command, the interface is:
 
 ```bash
-# Start here
-/seo-geo https://yoursite.com
-
-# Variants
-/seo-geo --verify                # self-test: tools accessible?
-/seo-geo --audit-only            # score only, no writes
-/seo-geo --phase geo             # LLM citation only (fastest ROI)
-/seo-geo --phase technical       # technical SEO only
-/seo-geo --page <url>            # single page audit
-/seo-geo --apply                 # writes enabled (opt-in, see Phase 17)
-/seo-geo --benchmark <competitor> # head-to-head score
+/seo-geo https://yoursite.com          # full audit, then ranked fixes
+/seo-geo --audit-only                  # score only, no writes
+/seo-geo --phase geo                   # one phase (geo, technical, ...)
+/seo-geo --page <url>                  # single page
+/seo-geo --benchmark <competitor>      # head-to-head score
+/seo-geo --apply                       # writes enabled (opt-in, see Phase 17)
 ```
 
----
+Slash-command registration is agent-specific; a Git clone alone does not register it. See [Installation](docs/setup/installation.md).
 
-## Seen at / Running in production
+## FAQ
 
-- **yanivgoldenberg.com** - canonical reference deployment. **92/100, rank 1 of 61** on the re-scored 2026-06-23 leaderboard (down from 97 after llms.txt was de-weighted; the GEO points moved to entity presence and citation content, which the site already wins). The monthly Action commits every fresh snapshot to [docs/state-of-ai-search-history/](docs/state-of-ai-search-history/). Run it yourself and you get today's number. ([proof](docs/state-of-ai-search-2026.md))
-- Used to generate the **[State of AI Search Visibility 2026](docs/state-of-ai-search-2026.md)** benchmark (61 SaaS and AI sites, 56% fail). [Read the live report.](https://yanivgoldenberg.com/state-of-ai-search-visibility-2026/)
-- Public benchmark methodology: `tests/benchmark_sites.py` - runnable and reproducible by anyone.
+<details>
+<summary><b>What is GEO?</b></summary>
 
----
+Generative Engine Optimization: making a site easy for AI answer engines (ChatGPT, Claude, Perplexity, Google AI Overviews) to parse, attribute and cite. Here it is the 25-point GEO dimension: entity presence, citation-worthy content, AI-crawler access and `llms.txt` hygiene.
+</details>
 
-## Schemas supported
+<details>
+<summary><b>Does it change my site?</b></summary>
 
-`Person` `Organization` `SoftwareApplication` `LocalBusiness` `Product` `Service` `Article` `BlogPosting` `FAQPage` `HowTo` `BreadcrumbList` `WebSite` `ProfilePage` `DefinedTerm` `Review` `SpeakableSpecification` `VideoObject` `ItemList`
+Not by default. Phase 0 is read-only. Writes need explicit `--apply`, pass dry-run gates, and never touch password, user-deletion or credential-rotation endpoints (Phase 17 banned list).
+</details>
 
----
+<details>
+<summary><b>Does it send data anywhere?</b></summary>
 
-## Author
+No telemetry. The only outbound requests are to the site you score, with an identifying User-Agent.
+</details>
 
-**[Yaniv Goldenberg](https://yanivgoldenberg.com)** | [The skill, hosted](https://yanivgoldenberg.com/ai-search-readiness/) | [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/)
+<details>
+<summary><b>Why is <code>llms.txt</code> worth so few points?</b></summary>
 
-Fractional Head of Growth. Scaled a PLG SaaS to 20M+ users (100x ARR), tripled MRR at a consumer SaaS (+337%), grew an MLOps SaaS acquired by a Fortune 100. $100M+ in ad spend managed. I help post-PMF SaaS and e-commerce brands dominate AI search results - so ChatGPT, Claude, and Perplexity cite you before your competitors.
+Requests for the file do not establish that any engine uses it in answers or rankings, and current Google Search guidance does not require it. It was de-weighted on 2026-06-23 ([proposal](docs/proposals/scoring-reliability.md)).
+</details>
 
-If this saved you an afternoon, star the repo.
+<details>
+<summary><b>Can I use it at work or for clients?</b></summary>
 
----
+On sites you or your company own or operate: yes, including internal audits at a for-profit company. For clients, as a paid service, or in anything sold: written permission first. See [License](#license).
+</details>
 
-## Want this applied to your SaaS site?
+<details>
+<summary><b>Does it only work with Claude?</b></summary>
 
-I run a paid **AI Search Visibility Audit** for post-PMF SaaS, B2B, and e-commerce brands.
+The skill is a Markdown file any capable agent can follow; it is written and tested for Claude Code. The scorer and tests are plain Python 3.12.
+</details>
 
-For post-PMF SaaS and e-commerce brands with organic demand but no technical citation layer. Not keyword research. Not link building. The layer that helps AI systems understand, trust, and cite your brand.
+## Roadmap
 
-**You get:**
-- 0-100 AI Search Readiness score across 6 dimensions (Technical 20 + On-Page 15 + Schema 20 + GEO 25 + AEO 10 + E-E-A-T 10)
-- Head-to-head benchmark vs 3 competitors
-- Top 10 fixes ranked by impact, effort, and implementation risk
-- Schema, llms.txt, robots.txt, and entity-signal gap report
-- Implementation plan your dev team can ship
-- 30-minute walkthrough
+Open directions, not dated commitments. Proposals welcome via [issues](https://github.com/yanivgoldenberg/seo-geo-skill/issues).
 
-**Price anchor:** Audit starts at **$7.5K**. Larger sites and multi-brand benchmarks are scoped separately. If you continue into the Implementation Sprint, the audit fee is credited in full.
+- [x] Monthly 61-site benchmark snapshot, committed by GitHub Action
+- [x] Agent-readiness phase (Content Signals, `Content-Usage`, RSL, Web Bot Auth)
+- [x] Content integrity and reader review (Phase 22)
+- [ ] More platform adapters (Ghost, Astro, Craft CMS) following the Phase 18 pattern
+- [ ] More validated JSON-LD fixtures in `examples/`
+- [ ] Community case studies in the [case-study format](docs/case-studies/yanivgoldenberg.com.md)
 
-**Format:** application-only. Post-PMF SaaS, B2B, and e-commerce brands.
+## Contributing
 
-**Sample output:** [`docs/sample-paid-audit.md`](docs/sample-paid-audit.md) - see exactly what a finished audit looks like before applying.
-
-[**Apply for the AI Search Visibility Audit →**](https://yanivgoldenberg.com/contact/)
-
----
+Bug reports with real output, platform adapters, schema fixtures and regression tests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md); report security issues privately per [SECURITY.md](SECURITY.md). Researchers: cite via [CITATION.cff](CITATION.cff).
 
 ## License
 
-[PolyForm Noncommercial 1.0.0](LICENSE) ([official text](https://polyformproject.org/licenses/noncommercial/1.0.0)). Commercial use requires written permission: see [COMMERCIAL.md](COMMERCIAL.md). Names and marks: [TRADEMARK.md](TRADEMARK.md). Every copy must keep the attribution line in [NOTICE](NOTICE).
-
-You may run this on your own sites and internal company sites. Paid agency resale, white-labeling, SaaS packaging, or using it as a billable client deliverable requires a commercial license. For client-service use cases, contact me for permission or a commercial license.
+[PolyForm Noncommercial 1.0.0](LICENSE) ([official text](https://polyformproject.org/licenses/noncommercial/1.0.0)) with an additional own-site permission in [COMMERCIAL.md](COMMERCIAL.md). Names and marks: [TRADEMARK.md](TRADEMARK.md). Every copy must keep the attribution line in [NOTICE](NOTICE).
 
 | Use case | Allowed | License required |
 |---|---|---|
 | Run on your own site | Yes | No |
-| Run on client sites as part of your service | Yes, with written permission | Contact for permission |
-| Run inside your company for internal audits | Yes | No |
-| Fork and modify for personal/internal use | Yes | No |
+| Run inside your company for internal audits of its own sites | Yes | No |
+| Fork and modify for personal or internal use | Yes | No |
+| Run on client sites as part of your service | Only with written permission | Contact for permission |
 | Resell as a paid product or SaaS | No | Commercial license |
 | White-label or package under your brand | No | Commercial license |
 | Embed in a commercial tool you sell | No | Commercial license |
 
-Commercial license: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact/)
-
----
-
-## Suggested repo topics
-
-If you fork or star this, these are the GitHub topics that make it findable for the AI-search crowd. Add them under the repo "About" gear:
-
-```
-claude-code  claude-skill  seo  geo  aeo  llms-txt  schema-org  ai-search
-```
-
----
-
-## Don't trust me. Run it.
-
-This whole repo is falsifiable in two commands. First, score your own site in 10 seconds (the install is at the top of this README):
-
-```bash
-/seo-geo https://yoursite.com
-```
-
-Then score mine and check my claim:
-
-```bash
-/seo-geo https://yanivgoldenberg.com
-```
-
-I claim yanivgoldenberg.com scores 92/100, rank 1 of 61 on the re-scored 2026-06-23 leaderboard. The dated snapshots live in docs/state-of-ai-search-history/, committed by the monthly Action, not by me. Run it yourself and you get today's number. If your run disagrees, open an issue with the output and I will fix the skill or the claim. Every number in this repo is reproducible with `tests/benchmark_sites.py`, so there is nowhere for a bad number to hide.
-
-
-## Content integrity and the reader review (1.16.0)
-
-Phase22 adds a source-verified research and patent registry, per-page human-first review, claim/source checking, same-language overlap triage, safe functional-tool checks and measured before/after release evidence. It rejects AI-detector certainty, patent-as-production claims, invented statistics, fake reviews and query-variant page proliferation. The reader review is an editorial checklist for purpose, usefulness, scanning, comprehension, relevance and accessible presentation, not a medical or Google certification.
-
-Read [the research dispositions](docs/research/ai-slop-2026-10-18.md) before applying a study. Use [Phase22](seo-geo.md#phase-22---content-integrity-and-the-reader-review) for every current page and future content change. No public text-detection API or provider credential is needed.
-
----
+Permission or a commercial license: [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact/).
 
 ## Attribution & fingerprint
 
@@ -291,6 +270,10 @@ This project carries visible, disclosed footprints so copies stay attributable. 
 - **User-Agent.** Every outbound HTTP request the tools make identifies itself as `seo-geo-skill/<version> (+https://yanivgoldenberg.com/)`, so site owners can see who is crawling.
 - **No telemetry.** Nothing calls home, automatically or otherwise.
 
-## Register your use
+## Built by Yaniv Goldenberg
 
-Optional and manual: if you use this skill, tell me at [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact/?source=seo-geo-skill). Nothing is sent automatically.
+**[Yaniv Goldenberg](https://yanivgoldenberg.com/)**, Fractional Head of Growth · [LinkedIn](https://www.linkedin.com/in/yanivgoldenberg/) · [The skill, hosted](https://yanivgoldenberg.com/ai-search-readiness/)
+
+Want it applied to your site by the author? A paid AI Search Visibility Audit is available; see an illustrative [sample deliverable](docs/sample-paid-audit.md) and [apply here](https://yanivgoldenberg.com/contact/).
+
+**Register your use (optional, manual):** if you use this skill, tell me at [yanivgoldenberg.com/contact](https://yanivgoldenberg.com/contact/?source=seo-geo-skill). Nothing is sent automatically.

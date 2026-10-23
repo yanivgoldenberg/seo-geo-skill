@@ -16,20 +16,20 @@ Author: see repo README.
 ## Table of Contents
 
 - [Quick start](#quick-start-2-minutes-to-value)
-- [Phase 0 - Audit](#phase-0---audit) - 100-pt scoring rubric, 6 dimensions
+- [Phase 0 - Audit](#phase-0---audit-always-run-first) - 100-pt scoring rubric, 6 dimensions
 - [Phase 1 - Technical SEO](#phase-1---technical-seo) - robots, canonical, sitemap, mobile
 - [Phase 2 - On-Page SEO](#phase-2---on-page-seo) - titles, meta, OG, H1
-- [Phase 3 - Schema](#phase-3---schema) - 16 types, JSON-LD, validation
+- [Phase 3 - Schema](#phase-3---schema-markup) - 16 types, JSON-LD, validation
 - [Phase 4 - GEO](#phase-4---geo-llm--generative-engine-optimization) - llms.txt, entity, AI crawler allow
   - [Research-backed citation findings](#research-backed-citation-findings)
   - [Per-platform selection intelligence](#per-platform-selection-intelligence)
   - [Generate fixes as files](#generate-fixes-as-files)
 - [Phase 5 - AEO](#phase-5---aeo-answer-engine-optimization) - Speakable, direct-answer
-- [Phase 6 - E-E-A-T](#phase-6---e-e-a-t) - author, credentials, trust signals
-- [Phase 7 - Content optimization](#phase-7---content-optimization)
+- [Phase 6 - E-E-A-T](#phase-6---e-e-a-t-experience-expertise-authoritativeness-trustworthiness) - author, credentials, trust signals
+- [Phase 7 - Content optimization](#phase-7---content-strategy-for-seo)
 - [Phase 8 - Core Web Vitals](#phase-8---core-web-vitals) - LCP, INP, CLS
-- [Phase 9 - Internal linking](#phase-9---internal-linking)
-- [Phase 10 - Content refresh](#phase-10---content-refresh-strategy)
+- [Phase 9 - Internal linking](#phase-9---internal-linking-architecture)
+- [Phase 10 - Content refresh](#phase-10---content-decay-recovery)
 - [Phase 11 - Programmatic SEO](#phase-11---programmatic-seo)
 - [Phase 12 - Video SEO](#phase-12---video-seo)
 - [Phase 13 - International SEO + hreflang](#phase-13---international-seo-and-hreflang)
@@ -40,7 +40,7 @@ Author: see repo README.
 - [Phase 18 - Multi-platform adapters](#phase-18---multi-platform-adapters) *(v1.3.0+)*
 - [Phase 19 - Competitor benchmarking](#phase-19---competitor-benchmarking) *(v1.3.0+)*
 - [Phase 20 - LLM Extractability Polish](#phase-20---llm-extractability-polish) *(v1.8.0+)*
-- [Phase 21 - Agent readiness](#phase-21---agent-readiness-the-agentic-web) *(v1.14.0+)*
+- [Phase 21 - Agent readiness](#phase-21---agent-readiness-the-agentic-web-v1140) *(v1.14.0+)*
 - [Phase 22 - Content integrity and the reader review](#phase-22---content-integrity-and-the-reader-review)
 - [Maintenance schedule](#maintenance-schedule)
 - [Platform quick reference](#platform-quick-reference)
@@ -368,7 +368,7 @@ Allow: /
 ```
 
 It must sit inside a `User-agent` group to apply to anything. Full treatment in
-[Phase 21](#phase-21---agent-readiness-the-agentic-web).
+[Phase 21](#phase-21---agent-readiness-the-agentic-web-v1140).
 
 ### Canonical tags
 

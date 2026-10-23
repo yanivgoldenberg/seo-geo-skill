@@ -1,0 +1,29 @@
+name: Feature request
+description: Propose a phase, platform adapter, schema type or scoring change
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem this solves
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations: { required: true }
+  - type: input
+    id: phase
+    attributes:
+      label: Which phase does it fit (or is it a new one)?
+  - type: dropdown
+    id: rubric
+    attributes:
+      label: Does it change the 100-point rubric weights?
+      options: ["No", "Yes (explain why comparability with past scores is worth breaking)"]
+    validations: { required: true }
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Primary sources, official documentation or a reproducible measurement. Claims without a source are not accepted into the skill.

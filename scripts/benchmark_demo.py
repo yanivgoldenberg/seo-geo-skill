@@ -14,7 +14,8 @@ HEAD = ["Site", "Tech", "Sch", "GEO", "OnP", "AEO", "EEAT", "TOTAL"]
 
 
 def main() -> None:
-    rows = sorted((score(u) for u in SITES), key=lambda r: -r["composite"])
+    sites = sys.argv[1:] or SITES
+    rows = sorted((score(u) for u in sites), key=lambda r: -r["composite"])
     print(f"{HEAD[0]:<22}" + "".join(f"{h:>6}" for h in HEAD[1:7]) + f"{HEAD[7]:>7}")
     print("-" * 61)
     for r in rows:

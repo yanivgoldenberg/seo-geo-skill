@@ -2,6 +2,8 @@
 
 Thanks for considering a contribution. This skill is under the PolyForm Noncommercial 1.0.0 license (see `LICENSE`). Commercial use, including client work, needs written permission (see `COMMERCIAL.md`). Contributions are accepted under the same license, and every copy must keep the attribution in `NOTICE`.
 
+By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## What's welcome
 
 - **Bug reports** on specific phases that produce incorrect scores or writes
@@ -26,11 +28,15 @@ Thanks for considering a contribution. This skill is under the PolyForm Noncomme
 
 ## Testing
 
+Python 3.12, from the repository root:
+
 ```bash
-python3 tests/test_skill_metadata.py
-python3 tests/test_schema_fixtures.py
-python3 tests/test_live_endpoints.py
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+PYTHONUTF8=1 .venv/bin/python -m pytest -q --ignore=tests/test_live_endpoints.py
 ```
+
+`tests/test_live_endpoints.py` contacts live websites and runs separately in CI. CI also rejects em dashes in Markdown (except `seo-geo.md`) and checks links in `README.md` and `seo-geo.md`.
 
 ## Style
 
