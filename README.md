@@ -64,7 +64,7 @@ python3.12 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt
 
 Windows PowerShell: use `py -3.12 -m venv .venv`, then `.venv\Scripts\python.exe` in place of `.venv/bin/python`, and set `$env:PYTHONUTF8 = '1'` before running the test suite. Full guide: [Installation](docs/setup/installation.md).
 
-With no URL, `benchmark_demo.py` scores the two reference sites shown below. The scorer only reads public pages (`/`, `/robots.txt`, `/llms.txt`, `/llms-full.txt`), refuses private and local addresses, and identifies itself with a `seo-geo-skill/<version>` User-Agent.
+With no URL, `benchmark_demo.py` scores the two reference sites shown below. The demo reads only public URLs (`/`, `/robots.txt`, `/llms.txt`, `/llms-full.txt`), refuses private and local addresses, and identifies itself with a `seo-geo-skill/<version>` User-Agent.
 
 ## Real example output
 
@@ -79,7 +79,7 @@ openai.com                17     0     6    13     0     0     36
 max points                20    20    25    15    10    10    100
 ```
 
-Live sites change. openai.com scored 7 in the 2026-06-23 canonical dataset, 41 in the 2026-10-01 monthly snapshot and 36 in this run, so your number is the one on the day you run it.
+The demo scores the homepage only. The benchmark (`score(url, pages=4)`) also takes the best On-Page, Schema and AEO result across up to 3 discovered deep pages, so the two are not directly comparable. For reference, openai.com scored 7 in the 2026-06-23 canonical dataset and 41 in the 2026-10-01 monthly snapshot; sites change between runs too.
 
 ## Features
 
@@ -112,6 +112,8 @@ flowchart LR
     GUARD -- yes --> LLMS["/llms.txt + /llms-full.txt"]
     HOME --> LD[Extract JSON-LD]
     HOME --> SIG[Page signals:<br/>title, meta, OG, H1, H2]
+    HOME -. benchmark only .-> DEEP[Up to 3 deep pages:<br/>best-of On-Page, Schema, AEO]
+    DEEP -.-> SIG
     ROB --> TECH[Technical /20]
     HOME --> TECH
     SIG --> ONP[On-Page /15]
@@ -226,7 +228,7 @@ On sites you or your company own or operate: yes, including internal audits at a
 <details>
 <summary><b>Does it only work with Claude?</b></summary>
 
-The skill is a Markdown file any capable agent can follow; it is written and tested for Claude Code. The scorer and tests are plain Python 3.12.
+The skill is a Markdown file any capable agent can follow; it is written for Claude Code. The scorer and tests are plain Python 3.12.
 </details>
 
 ## Roadmap

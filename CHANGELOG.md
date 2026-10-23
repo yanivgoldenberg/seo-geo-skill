@@ -6,6 +6,12 @@ Format: [version] - YYYY-MM-DD
 
 ---
 
+## [Unreleased]
+
+- `scripts/benchmark_demo.py` accepts optional site URLs (homepage-only score).
+- `scripts/build_readme_banner.py` builds the README banners and the 1280x640 social preview from a stated real run.
+- Issue forms with a contact-links config, PR template, Code of Conduct, `CITATION.cff`, `docs/README.md` index; fixed broken anchors in the `seo-geo.md` table of contents.
+
 ## [1.17.0] - 2026-10-23
 
 Public edition with fresh history.
