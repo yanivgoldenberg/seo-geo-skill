@@ -7,6 +7,9 @@ description: Phase 0 audit + 22 optimization phases for Claude Code. Canonical 1
 
 # /seo-geo - Universal SEO + GEO + AEO Optimization
 
+For every new substantive content/service brief or release, apply [mandatory semantic acceptance](docs/SEMANTIC_ACCEPTANCE.md) within the existing workflow. Select `composed-content/2`; connect buyer questions, existing locale/type destinations, typed evidence, a fair benchmark and a literal useful original artifact. All ten current semantic controls must have bound evidence; critical UNKNOWN/FAIL/PENDING blocks the dependent release. Candidate, hosted Preview and public receipts remain distinct. “100/100” means only all applicable reviewed controls passed for the named scope, never guaranteed rankings, citations, meetings or revenue. Preserve native gates, rights and authority. Legacy records retain only their prior evidence level.
+
+
 The complete SEO skill for Claude Code. Covers every dimension of modern search: technical SEO, on-page, structured data, LLM/GEO citation, and AEO. Works on any website regardless of CMS or tech stack.
 
 Author: see repo README.
