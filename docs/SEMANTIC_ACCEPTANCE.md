@@ -4,6 +4,8 @@ Use `composed-content/2` for every new substantive content or service brief and 
 
 "100/100" may mean only that every applicable control in the declared, independently reviewed scope has current evidence and no unresolved finding. It is never a vendor semantic score, proof of Google deployment, or a guarantee of ranking, AI citation, traffic, meetings or revenue. An offline validator can verify declarations and bytes; a reviewer must still verify actual meaning, completeness, authenticity and usefulness. Label candidate, hosted Preview and public acceptance separately.
 
+For community-derived buyer research and topic selection, use [archive buyer research](research/arctic-buyer-research.md) as supporting selection evidence. It does not replace any semantic control, source binding or publication-stage check below.
+
 ## One connected decision-to-release flow
 
 1. Start with an evidenced buyer/ICP problem, entry channel and business decision. Separate observed demand, owner-approved capability, historical result, illustration and hypothesis. Preserve UNKNOWN where observation is missing.
