@@ -12,6 +12,8 @@ For every new substantive content/service brief or release, apply [mandatory sem
 
 For archived community buyer research or content-topic selection, apply the [archive buyer research evidence gate](docs/research/arctic-buyer-research.md). Choose NEW_BLOG, NEW_GUIDE, REFINE_EXISTING or NO_ACTION from actual coverage and evidence; preserve every existing semantic and native release gate.
 
+For an approved expert source and its buyer decision aid or distribution drafts, use the [traceable expert-content handoff](docs/research/expert-content-handoff.md). Keep claim spans, distinct reader tasks, final-version review, actual publication and qualified outcomes separate within the existing workflow. This reference is documentation, not a runtime integration or permission to publish.
+
 The complete SEO skill for Claude Code. Covers every dimension of modern search: technical SEO, on-page, structured data, LLM/GEO citation, and AEO. Works on any website regardless of CMS or tech stack.
 
 Author: see repo README.
