@@ -52,6 +52,8 @@
 - **Fixes** what it finds, phase by phase: JSON-LD schema, `llms.txt`, `robots.txt` AI-crawler rules, entity anchoring, answer-engine structure, agent-readiness signals. Writes are opt-in and dry-run gated.
 - **Proves** it: a reproducible Python scorer, a public 61-site benchmark, and a monthly GitHub Action that commits fresh snapshots.
 
+For substantive expert content and distribution drafts, the [expert-content handoff reference](docs/research/expert-content-handoff.md) connects attributable proof, buyer decisions, distinct derivatives and actual outcome evidence within the existing semantic workflow. It adds documentation, not an automated publisher or a scoring change.
+
 ## Quickstart
 
 Python 3.12. Linux, macOS or WSL2:
