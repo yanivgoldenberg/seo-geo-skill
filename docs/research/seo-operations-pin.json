@@ -1,0 +1,9 @@
+{
+  "schema": "content-flow-source-pin/1",
+  "repository": "https://github.com/yanivgoldenberg/YG-WEBSITE-CONTENT-FLOW",
+  "revision": "9b577f497f37a7ee1b793f8c8211c7778baaab45",
+  "reference": "docs/SEO_OPERATIONS.md",
+  "reference_sha256": "0cc89472c41d5657d24c53e82310dc54ea962c00dd7682b97652352dc604b8bb",
+  "adoption": "Instruction reference only. No recurring job, provider connection, publisher or new runtime validator.",
+  "execution_and_outcomes": "NOT_ASSESSED"
+}

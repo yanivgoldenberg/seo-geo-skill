@@ -7,7 +7,7 @@ permissions:
   contents: write
 jobs:
   benchmark:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, gcp-shared]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
