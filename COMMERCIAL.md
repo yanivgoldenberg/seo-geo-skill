@@ -27,3 +27,10 @@ To request permission or a commercial license, contact
 <https://yanivgoldenberg.com/contact/>.
 
 Every copy, commercial or not, must keep the attribution in `NOTICE`.
+
+## Written permissions granted
+
+- **ChoiceOrigin** (choiceorigin.com), the product and business operated by Yaniv Goldenberg: written permission
+  granted on 23 November 2026 to use, modify and embed this project's code, scoring rubric, benchmark scripts and
+  dataset inside the ChoiceOrigin paid product and services. The attribution in `NOTICE` must be kept. This grant does
+  not extend to any other party.
